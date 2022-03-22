@@ -1,0 +1,21 @@
+<beans xmlns="https://www.springframework.org/schema/beans"
+	xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="https://www.springframework.org/schema/context"
+	xsi:schemaLocation="https://www.springframework.org/schema/beans
+	https://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	https://www.springframework.org/schema/context
+	https://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<context:component-scan base-package="medicaldate" />
+
+	<!-- If you prefer XML based Dependency Injection
+		remove annotation from class and uncomment below configuration -->	
+	<!-- 
+	<bean class="com.journaldev.jsfspring.CarImpl" id="carDAO" />
+	
+	<bean class="com.journaldev.jsfspring.CarBean" id="carBean">
+		<property name="carDao" ref="carDAO"></property>
+	</bean>
+	 -->
+	 
+</beans>
