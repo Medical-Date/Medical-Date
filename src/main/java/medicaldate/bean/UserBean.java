@@ -17,12 +17,14 @@ import javax.faces.view.ViewScoped;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import medicaldate.model.User;
 import medicaldate.repository.UserRepository;
 import medicaldate.services.UserService;
+import medicaldate.util.JsfUtils;
 @Component
 @Slf4j
 @ViewScoped
@@ -72,12 +74,16 @@ public class UserBean  implements Serializable{
 	private UserService userService;
 	@Autowired
     private UserRepository userRepository;
+	@Getter
+	@Setter
+	private User usuario;
+	
 	
 	
 	
 	@PostConstruct
 	public void init() {
-		
+		Long idUsuario = (Long) JsfUtils.getFlashAttribute("idUsuario");
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e1) {
@@ -91,19 +97,26 @@ public class UserBean  implements Serializable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		User user= new User();
-		userName= user.getUserName();
-		firstName= user.getFirstName();
-		lastName=user.getLastName();
-		password= user.getPassword();
-		email= user.getEmail();
-		dbName=user.getDbName();
-		dbPassword=user.getDbPassword();
-		id=user.getId();
-		listaUsuarios= new ArrayList<>();
-		listaUsuarios=userService.getUsers();
 		
 		
+		usuario= new User();
+		
+			userName= usuario.getUserName();
+			firstName= usuario.getFirstName();
+			lastName=usuario.getLastName();
+			password= usuario.getPassword();
+			email= usuario.getEmail();
+			dbName=usuario.getDbName();
+			dbPassword=usuario.getDbPassword();
+			id=usuario.getId();
+			listaUsuarios= new ArrayList<>();
+			listaUsuarios=userService.getUsers();
+		
+		
+		
+			if(idUsuario!=null) {
+				usuario= userService.getUserById(idUsuario);
+			}
 		
 		
 		
@@ -229,6 +242,20 @@ public class UserBean  implements Serializable{
 	public void listaUsuarios() {
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
 				.handleNavigation(FacesContext.getCurrentInstance(), null, "/listUsers.xhtml");
+	}
+	
+	public void onEditar(Long idUsuario) {
+		JsfUtils.setFlashAttribute("idUsuario", idUsuario);
+		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+		.handleNavigation(FacesContext.getCurrentInstance(), null, "/editarUsuario.xhtml");
+	}
+	
+	public void editarUser() {
+		
+		if(usuario!=null) {
+			usuario=userRepository.save(usuario);
+			
+		}
 	}
 
 }

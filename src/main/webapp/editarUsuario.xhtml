@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sec="https://joinfaces.org/security">
+	
+	
+		<h:form id="formFormularioUsers">
+
+			
+			<p:panel id="panelUsuario">
+
+			<!-- PANEL DIALOG SUJETOS OBLIGADOS -->
+	   		<p:fieldset id="bloqueDatosSujeto" legend="#{mensaje['datos.sujeto']}" styleClass="ui-g" toggleable="true" toggleSpeed="250" >
+					<div>
+						<div class="celda-form">
+							<p:outputLabel for="userName"
+								value="Nombre de usuario" />
+							<p:inputText id="userName"
+								value="#{userBean.usuario.userName}" />
+						</div>
+						<div class="celda-form">
+							<p:outputLabel for="firstName"
+								value="Apellido" />
+							<p:inputText id="firstName"
+								value="#{userBean.usuario.firstName}" />
+						</div>	
+						<div class="celda-form">
+							<p:outputLabel for="email"
+								value="Email" />
+							<p:inputText id="email"
+								value="#{userBean.usuario.email}" />
+						</div>	
+						
+						<div class="celda-form">
+							<p:outputLabel for="password"
+								value="Contraseña" />
+							<p:inputText id="password"
+								value="#{userBean.usuario.password}" />
+						</div>
+						
+						<p:commandButton  icon="pi pi-save"
+									id="saveSujetosObligados" value="#{mensaje['guardar']}"
+									actionListener="#{userBean.editarUser()}" />							
+
+				
+					</div>					
+					
+				</p:fieldset>	
+			
+			<p:spacer height="10px" />
+			
+			</p:panel>
+
+			<br/>
+			<p:commandButton id="volver" value="volver"
+				onclick="document.location.href='#{request.contextPath}/hola.xhtml'">
+			</p:commandButton>	
+			
+		</h:form>
+	
+	
+	</html>
