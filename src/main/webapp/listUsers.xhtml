@@ -2,47 +2,34 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 	
 	<h:head>
 	<title>JSF 2, Spring 4, Hibernate 4 and Maven Integration</title>
 </h:head>
 <h:body>
 	<h2>List of Users</h2>
-	<p>
-		<h:dataTable value="#{user.usuariosList}"
-			var="user">
-			<h:column>
-				<f:facet name="header">
-                        ID
-                    </f:facet>
-				<h:outputText value="#{user.firstName}" />
-			</h:column>
-<!-- 			<h:column> -->
-<!-- 				<f:facet name="header"> -->
-<!--                         First Name -->
-<!--                     </f:facet> -->
-<!-- 				<h:outputText value="#{userDetails.firstName}" /> -->
-<!-- 			</h:column> -->
-<!-- 			<h:column> -->
-<!-- 				<f:facet name="header"> -->
-<!--                         Last Name -->
-<!--                     </f:facet> -->
-<!-- 				<h:outputText value="#{userDetails.lastName}" /> -->
-<!-- 			</h:column> -->
-<!-- 			<h:column> -->
-<!-- 				<f:facet name="header"> -->
-<!--                         Email -->
-<!--                     </f:facet> -->
-<!-- 				<h:outputText value="#{userDetails.email}" /> -->
-<!-- 			</h:column> -->
-<!-- 			<h:column> -->
-<!-- 				<f:facet name="header"> -->
-<!--                         DOB -->
-<!--                     </f:facet> -->
-<!-- 				<h:outputText value="#{userDetails.dob}" /> -->
-<!-- 			</h:column> -->
-		</h:dataTable>
-	</p>
+	
+	<div class="card">
+        <p:dataTable var="usuarios" value="#{userBean.listaUsuarios}">
+            <p:column headerText="Nombre">
+                <h:outputText value="#{usuarios.firstName}" />
+            </p:column>
+
+            <p:column headerText="Apellido">
+                <h:outputText value="#{usuarios.lastName}" />
+            </p:column>
+
+            <p:column headerText="Email">
+                <h:outputText value="#{usuarios.email}" />
+            </p:column>
+
+        </p:dataTable>
+    </div>
+    	<p:commandButton id="volver" value="Home"
+				onclick="document.location.href='#{request.contextPath}/hola.xhtml'">
+			</p:commandButton>	
+
 </h:body>
 </html>

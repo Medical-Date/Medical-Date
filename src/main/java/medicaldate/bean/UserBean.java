@@ -6,8 +6,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 
@@ -18,11 +21,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import medicaldate.model.User;
+import medicaldate.repository.UserRepository;
 import medicaldate.services.UserService;
 @Component
 @Slf4j
 @ViewScoped
 public class UserBean  implements Serializable{
+	
+	private static final String ELCAMPO= "el.campo";
 	private static final long serialVersionUID = 1L;
 
 	@Getter
@@ -58,9 +64,14 @@ public class UserBean  implements Serializable{
 	@Getter
 	@Setter
 	private User usuarioConNombre;
+	@Getter
+	@Setter
+	private List<User> listaUsuarios;
 	
 	@Autowired
 	private UserService userService;
+	@Autowired
+    private UserRepository userRepository;
 	
 	
 	
@@ -89,7 +100,11 @@ public class UserBean  implements Serializable{
 		dbName=user.getDbName();
 		dbPassword=user.getDbPassword();
 		id=user.getId();
-		usuarioConNombre=new User();
+		listaUsuarios= new ArrayList<>();
+		listaUsuarios=userService.getUsers();
+		
+		
+		
 		
 		
 		
@@ -111,33 +126,35 @@ public class UserBean  implements Serializable{
 			}
 			try {
 					
-					if (con != null) {
+					if (con != null ) {
+						
 						String sql = "INSERT INTO user(username,firstname, password, lastname, email) VALUES(?,?,?,?,?)";
-						ps = con.prepareStatement(sql);
+							ps = con.prepareStatement(sql);
+							if( validarRegistrar()) {
+								ps.setString(1, userName);							
+								ps.setString(2, firstName);
+								ps.setString(3, password);
+								ps.setString(4, lastName);
+								ps.setString(5, email);
+								i = ps.executeUpdate();
+								System.out.println("Data Added Successfully");
+								con.close();
+								ps.close();
+							}
+							
 						
-						
-						 
-							ps.setString(1, userName);
-							usuarioConNombre= userService.obtenerUsuarioPorNombreUsuario(userName);
-							if(usuarioConNombre!=null) 
-								System.out.println("FALLO");
-							ps.setString(2, firstName);
-							ps.setString(3, password);
-							ps.setString(4, lastName);
-							ps.setString(5, email);
-							i = ps.executeUpdate();
-							System.out.println("Data Added Successfully");
 							
 						
 						
 					}
+						 
+					
 				
 			} catch (Exception e) {
 				System.out.println(e);
 			} finally {
 				try {
-					con.close();
-					ps.close();
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -186,6 +203,32 @@ public class UserBean  implements Serializable{
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
 				.handleNavigation(FacesContext.getCurrentInstance(), null, "/home.xhtml");
+	}
+	private Boolean validarRegistrar() {	
+		Boolean res= true;
+			listaUsuarios= (List<User>) userRepository.findAll();
+			if(!listaUsuarios.isEmpty()) {
+				
+			
+			for(User u: listaUsuarios)
+			if(u.getUserName().equals(userName)) {
+				res=false;
+				break;
+			}else{
+				res=true;
+			}
+			}
+			
+			
+			return res;
+			
+			
+		
+	}
+	
+	public void listaUsuarios() {
+		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+				.handleNavigation(FacesContext.getCurrentInstance(), null, "/listUsers.xhtml");
 	}
 
 }

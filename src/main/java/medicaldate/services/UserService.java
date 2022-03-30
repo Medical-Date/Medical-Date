@@ -2,8 +2,8 @@ package medicaldate.services;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import medicaldate.model.User;
 import medicaldate.repository.UserRepository;
 
@@ -11,6 +11,14 @@ import medicaldate.repository.UserRepository;
 public class UserService  {
 	
 	private UserRepository userRepository;
+	
+	public UserService(	@Autowired UserRepository userRepository) {
+		super();
+		// también lo guardo para mi por si quiero hacer consultas personalizadas.
+		this.userRepository = userRepository;
+
+
+	}
 	
 	public List<User> getUsers(){
 		return (List<User>) userRepository.findAll();
