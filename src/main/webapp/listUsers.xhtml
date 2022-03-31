@@ -12,7 +12,7 @@
 	<title>Medical Date</title>
 </h:head>
  <h:form id="formListadoUsers">
-	<h2>List of Users</h2>
+	<h2>Lista de Usuarios</h2>
 
 	<div class="card">
 		<p:dataTable var="usuarios" value="#{userBean.listaUsuarios}">
@@ -27,6 +27,17 @@
 			<p:column headerText="Email">
 				<h:outputText value="#{usuarios.email}" />
 			</p:column>
+			
+			<p:column headerText="D.N.I.">
+				<h:outputText value="#{usuarios.dni}" />
+			</p:column>
+			<p:column headerText="Dirección">
+				<h:outputText value="#{usuarios.direccion}" />
+			</p:column>
+			<p:column headerText="Teléfono">
+				<h:outputText value="#{usuarios.telefono}" />
+			</p:column>
+			
 			<p:column headerText="Acciones">
 
 				<h:commandButton id="editarUsuarios" widgetVar="editarUsuarios"

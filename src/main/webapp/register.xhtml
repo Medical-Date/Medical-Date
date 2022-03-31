@@ -33,6 +33,29 @@
 							requiredMessage="Por favor introduzca su apellido" /></td>
 					<td><h:message for="lname" style="color:red" /></td>
 				</tr>
+				
+				<tr>
+					<td><h:outputText value="Introduzca su D.N.I." /></td>
+					<td><h:inputText id="dni" value="#{userBean.dni}"
+							required="true"
+							requiredMessage="Por favor introduzca su D.N.I" /></td>
+					<td><h:message for="dni" style="color:red" /></td>
+				</tr>
+				<tr>
+					<td><h:outputText value="Introduzca su direccion" /></td>
+					<td><h:inputText id="direccion" value="#{userBean.direccion}"
+							required="true"
+							requiredMessage="Por favor introduzca su dirección" /></td>
+					<td><h:message for="direccion" style="color:red" /></td>
+				</tr>
+				<tr>
+					<td><h:outputText value="Introduzca su teléfono:" /></td>
+					<td><h:inputText id="telefono" value="#{userBean.telefono}"
+							required="true"
+							requiredMessage="Por favor introduzca su teléfono" /></td>
+					<td><h:message for="telefono" style="color:red" /></td>
+				</tr>
+				
 				<tr>
 					<td><h:outputText value="Introduzca su email:" /></td>
 					<td><h:inputText id="email" value="#{userBean.email}"
