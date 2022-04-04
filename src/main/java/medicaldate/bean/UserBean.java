@@ -216,7 +216,7 @@ public class UserBean implements Serializable {
 	public String login() {
 		dbData(userName);
 		if (userName.equals(dbName) && password.equals(dbPassword)) {
-			return "hola";
+			return "welcome";
 		} else
 			return "unsuccess";
 	}
