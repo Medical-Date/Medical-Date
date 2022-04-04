@@ -8,9 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 //import org.springframework.format.annotation.DateTimeFormat;
 
@@ -43,10 +43,10 @@ public class User {
 	@NotNull
 	private String lastName;
 	
-//	@Column(name = "FECHANACIMIENTO")
-//	@NotNull
-//	@DateTimeFormat(pattern = "yyyy-MM-dd")
-//	private Date fechaNacimiento;
+	@Column(name = "FECHANACIMIENTO")
+	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date fechaNacimiento;
 
 	@Column(name = "DNI")
 	@NotNull
