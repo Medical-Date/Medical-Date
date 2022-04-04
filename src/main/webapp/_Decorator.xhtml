@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	lang="#{localeSwitcher.language}">
+
+
+	<h:head>
+		<!-- Titulo -->
+		<title><ui:insert name="title">
+			</ui:insert></title>
+
+		<title>.:: JoinFaces Example ::.</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="expires" content="-1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- Icono de la pestaña del navegador-->
+		<link href="#{resource['/icon/favicon.ico']}" rel="shortcut icon" />
+		<h:outputScript library="js" name="funcionesJavaScripts.js" />
+		<h:outputScript library="js" name="primefaces_i18n.js" />
+		<!-- Estilos -->
+		<link rel="stylesheet" type="text/css"
+			href="#{resource['/css/style.css']}" />
+		<!-- FontAwesome -->
+		<link rel="stylesheet"
+			href="https://use.fontawesome.com/releases/v5.0.10/css/all.css"
+			integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg"
+			crossorigin="anonymous" />
+
+		<!-- add bootstrap online -->
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet"
+			href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+		<!-- Optional theme -->
+		<link rel="stylesheet"
+			href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" />
+		<!-- Latest compiled and minified JavaScript -->
+		<script type="text/javascript"
+			src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+		<!-- scripts y estilos incluídos -->
+		<ui:insert name="jsIncludes">
+
+		</ui:insert>
+	</h:head>
+
+	<h:body class="bodyMC">
+		<div class="userbar-block">
+			<div>
+				<img class="logo"
+					src="#{resource['/img/logo-web-fps-color_249x48.png']}" alt=""></img>
+			</div>
+			<div class="title">
+				<span class="text-1">MD</span> <span class="text-2">MEDICAL DATE</span>
+			</div>
+		</div>
+
+
+		<!-- Zona de contenidos -->
+		<div class="divBody">
+			<ui:insert name="body">
+	       		Bienvenid@ a MEDICAL DATE
+			</ui:insert>
+		</div>
+
+
+		<!-- PIE  -->
+		<div class="footer-block">
+			<div>
+				<img alt=""
+					src="#{resource['/img/A_junta_trazado_blanco_50x50.png']}" />
+			</div>
+			</div>
+			
+
+<!-- 		</div> -->
+		<!-- Imagen de Cargando -->
+		<!-- ponerlo en los commandButton: onstart="PF('cargando').block()" oncomplete="PF('cargando').unblock()", no ponelo en los botones que tienen immediate="true" o ajax="false" porque no saldrá de todas formas, cuando se cambia de pantalla o se recarga, no sale. -->
+		<pe:blockUI widgetVar="cargando" css="{top: '35%', left: '47%'}">
+			<h:graphicImage value="#{resource['img/cargando2.gif']}" />
+		</pe:blockUI>
+
+	</h:body>
+</html>
