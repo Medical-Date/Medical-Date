@@ -43,10 +43,8 @@ public class User {
 	@NotNull
 	private String lastName;
 	
-	@Column(name = "FECHANACIMIENTO")
-	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date fechaNacimiento;
+	/*@Column(name = "FECHANACIMIENTO")
+	private Date fechaNacimiento;*/
 
 	@Column(name = "DNI")
 	@NotNull
