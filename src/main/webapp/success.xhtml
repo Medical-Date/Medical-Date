@@ -12,15 +12,18 @@
 <h:body>
 	<f:view>
 		<p>Registrado con éxito</p>
-		<p>Buenas, #{user.firstName}</p>
+		<p>Buenas, #{userBean.firstName}</p>
 		<img src="images/hola.jpg" alt="Girl in a jacket" width="500" height="600">
 		</img>
 		
 		<h:form>
 		
+		
+		
 			<p>
 
-				<h:commandLink value="Inicia sesión" action="#{user.logout}" />
+				<h:commandLink value="Inicia sesión" action="#{userBean.logout}" />
+				
 
 			</p>
 		</h:form>
