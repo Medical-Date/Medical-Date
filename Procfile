@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT $JAVA_OPTS -Dspring.profiles.active=heroku -jar target/medicaldate-0.0.1-SNAPSHOT.war
+web: java $JAVA_OPTS -jar target/dependency/webapp-runner.jar --port $PORT target/medicaldate-0.0.1-SNAPSHOT.war
