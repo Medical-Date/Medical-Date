@@ -6,25 +6,21 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+//import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
-import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import lombok.Getter;
 import lombok.Setter;
-
+import medicaldate.model.Roles;
 import medicaldate.model.User;
 import medicaldate.repository.UserRepository;
 import medicaldate.services.UserService;
@@ -43,10 +39,10 @@ public class UserBean implements Serializable {
 	@Getter
 	@Setter
 	private String lastName;
-	
-	@Getter
-	@Setter
-	private Date fechaNacimiento;
+
+//	@Getter
+//	@Setter
+//	private Date fechaNacimiento;
 
 	@Getter
 	@Setter
@@ -102,6 +98,10 @@ public class UserBean implements Serializable {
 	@Setter
 	private User usuario;
 
+	@Getter
+	@Setter
+	private Roles roles;
+
 	@PostConstruct
 	public void init() {
 		Long idUsuario = (Long) JsfUtils.getFlashAttribute("idUsuario");
@@ -124,7 +124,7 @@ public class UserBean implements Serializable {
 		userName = usuario.getUserName();
 		firstName = usuario.getFirstName();
 		lastName = usuario.getLastName();
-		/*fechaNacimiento = new Date();*/
+		/* fechaNacimiento = new Date(); */
 		dni = usuario.getDni();
 		direccion = usuario.getDireccion();
 		telefono = usuario.getTelefono();
@@ -132,6 +132,7 @@ public class UserBean implements Serializable {
 		email = usuario.getEmail();
 		dbName = usuario.getDbName();
 		dbPassword = usuario.getDbPassword();
+		roles = usuario.getRoles();
 		id = usuario.getId();
 		listaUsuarios = new ArrayList<>();
 		listaUsuarios = userService.getUsers();
@@ -158,7 +159,7 @@ public class UserBean implements Serializable {
 
 				if (con != null) {
 
-					String sql = "INSERT INTO user(username,firstname, password, lastname, email, dni, direccion, telefono) VALUES(?,?,?,?,?,?,?,?)";
+					String sql = "INSERT INTO user(username,firstname, password, lastname, email, dni, direccion, telefono,roles) VALUES(?,?,?,?,?,?,?,?,?)";
 					ps = con.prepareStatement(sql);
 					if (validarRegistrar()) {
 						ps.setString(1, userName);
@@ -169,7 +170,8 @@ public class UserBean implements Serializable {
 						ps.setString(6, dni);
 						ps.setString(7, direccion);
 						ps.setString(8, telefono);
-						/*ps.setDate(9, (java.sql.Date) fechaNacimiento);*/
+						/* ps.setDate(9, (java.sql.Date) fechaNacimiento); */
+						ps.setString(9, roles.toString());
 						i = ps.executeUpdate();
 						System.out.println("Data Added Successfully");
 						con.close();
@@ -258,7 +260,7 @@ public class UserBean implements Serializable {
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
 				.handleNavigation(FacesContext.getCurrentInstance(), null, "/editarUsuario.xhtml");
 	}
-	
+
 	public void onEliminar(Long idUsuario) {
 		JsfUtils.setFlashAttribute("idUsuario", idUsuario);
 	}
@@ -269,19 +271,17 @@ public class UserBean implements Serializable {
 
 		}
 	}
-	
+
 	public void eliminarUser(User usuarioSeleccionado) {
 		if (usuario != null) {
 			userRepository.delete(usuarioSeleccionado);
-			
-			
-			
+
 			FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
-			.handleNavigation(FacesContext.getCurrentInstance(), null, "/listUsers.xhtml");
-			
+					.handleNavigation(FacesContext.getCurrentInstance(), null, "/listUsers.xhtml");
+
 			FacesContext.getCurrentInstance().addMessage("", new FacesMessage("Usuario borrado correctamente"));
-			
-			//PrimeFaces.current().ajax().update("formListadoUsers:usuariosTable");
+
+			// PrimeFaces.current().ajax().update("formListadoUsers:usuariosTable");
 
 		}
 	}

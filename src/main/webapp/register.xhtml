@@ -64,6 +64,16 @@
 							required="true" requiredMessage="Por favor introduzca su email" /></td>
 					<td><h:message for="email" style="color:red" /></td>
 				</tr>
+
+				<tr>
+					<h:outputLabel for="roles" value="Rol" />
+					<h:selectOneMenu id="roles" value="#{userBean.roles}">
+						<f:selectItem itemLabel="Administrador" itemValue="ADMINISTRADOR" />
+						<f:selectItem itemLabel="Medico" itemValue="MEDICO" />
+						<f:selectItem itemLabel="Paciente" itemValue="PACIENTE" />
+					</h:selectOneMenu>
+				</tr>
+
 				<tr>
 					<td><h:outputText value="Introduzca su contraseña :" /></td>
 					<td><h:inputSecret id="psw" value="#{userBean.password}"
