@@ -20,6 +20,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>/home.xhtml</url-pattern>
         <url-pattern>/faces/*</url-pattern>
         <url-pattern>*.jsf</url-pattern>
         <url-pattern>*.xhtml</url-pattern>
