@@ -1,13 +1,7 @@
 package medicaldate;
 
-import java.util.Arrays;
-
-import javax.faces.webapp.FacesServlet;
-import javax.servlet.ServletContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
-import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class MedicaldateApplication {
@@ -15,7 +9,7 @@ public class MedicaldateApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MedicaldateApplication.class, args);
 	}
-	
+
 //	 @Bean
 //	    ServletRegistrationBean jsfServletRegistration (ServletContext servletContext) {
 //	        //spring boot only works if this is set
