@@ -10,30 +10,7 @@
       template="_Decorator.xhtml"
 	  lang="#{localeSwitcher.language}">
 	  
-	<ui:define name="body">
-		<!-- ********************** MENU BAR **************** -->
-    	<h:form id="formMenu">
-			<!-- Menú para la versión Web (pantalla más grande) -->
-			<p:menubar class="menuBar visibleWebOnly" autoDisplay="false">
-			
-			<p:menuitem value="Inicio" outcome="home.xhtml" icon="fa fa-home"/>
-		
-			<p:submenu label="Gestión de usuarios">
-			
-			<p:menuitem value="Lista de usuarios"
-					outcome="listUsers.xhtml" />
-				
-			</p:submenu>
-			<p:submenu label="Menu 2">
-				
-			</p:submenu>
-			<p:submenu label="Menu 3">									
-
-			</p:submenu>
-			
-            </p:menubar>   
-		</h:form>
-            
+	<ui:define name="body">            
          <!-- **** CONTENIDO ************** -->
         <p:panel id="contentForm" styleClass="main-content">
           <!-- Notificaciones -->

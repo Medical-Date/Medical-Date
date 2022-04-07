@@ -268,6 +268,10 @@ public class UserBean implements Serializable {
 	public void editarUser() {
 		if (usuario != null) {
 			usuario = userRepository.save(usuario);
+			
+			FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+			.handleNavigation(FacesContext.getCurrentInstance(), null, "/listUsers.xhtml");
+
 
 		}
 	}
