@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 //import java.util.Date;
 import java.util.List;
 
@@ -40,9 +41,13 @@ public class UserBean implements Serializable {
 	@Setter
 	private String lastName;
 
-//	@Getter
-//	@Setter
-//	private Date fechaNacimiento;
+	@Getter
+	@Setter
+	private Date fechaNacimiento;
+	
+	@Getter
+	@Setter
+	private Date fechaNacimientoSql;
 
 	@Getter
 	@Setter
@@ -124,7 +129,14 @@ public class UserBean implements Serializable {
 		userName = usuario.getUserName();
 		firstName = usuario.getFirstName();
 		lastName = usuario.getLastName();
-		/* fechaNacimiento = new Date(); */
+		fechaNacimiento = new Date(); 
+		 java.sql.Date fechaNacimientoSql  = new java.sql.Date(fechaNacimiento.getTime());
+		//fechaNacimiento = new java.sql.Date(message.getCreatedTime().getTime());
+//		fechaNacimientoString= new String();
+//		fechaNacimientoString= fechaNacimiento
+		 fechaNacimiento= fechaNacimientoSql;
+				
+		
 		dni = usuario.getDni();
 		direccion = usuario.getDireccion();
 		telefono = usuario.getTelefono();
@@ -134,6 +146,7 @@ public class UserBean implements Serializable {
 		dbPassword = usuario.getDbPassword();
 		roles = usuario.getRoles();
 		id = usuario.getId();
+		//fechaNacimiento= usuario.getFechaNacimiento();
 		listaUsuarios = new ArrayList<>();
 		listaUsuarios = userService.getUsers();
 
@@ -159,7 +172,7 @@ public class UserBean implements Serializable {
 
 				if (con != null) {
 
-					String sql = "INSERT INTO user(username,firstname, password, lastname, email, dni, direccion, telefono,roles) VALUES(?,?,?,?,?,?,?,?,?)";
+					String sql = "INSERT INTO user(username,firstname, password, lastname, email, dni, direccion, telefono,fechaNacimiento,roles) VALUES(?,?,?,?,?,?,?,?,?,?)";
 					ps = con.prepareStatement(sql);
 					if (validarRegistrar()) {
 						ps.setString(1, userName);
@@ -170,8 +183,9 @@ public class UserBean implements Serializable {
 						ps.setString(6, dni);
 						ps.setString(7, direccion);
 						ps.setString(8, telefono);
-						/* ps.setDate(9, (java.sql.Date) fechaNacimiento); */
-						ps.setString(9, roles.toString());
+						java.sql.Date fechaNacimientoSql  = new java.sql.Date(fechaNacimiento.getTime());
+						ps.setDate(9, fechaNacimientoSql); 
+						ps.setString(10, roles.toString());
 						i = ps.executeUpdate();
 						System.out.println("Data Added Successfully");
 						con.close();
@@ -230,6 +244,11 @@ public class UserBean implements Serializable {
 
 	public void logout() {
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+				.handleNavigation(FacesContext.getCurrentInstance(), null, "/home.xhtml");
+	}
+	
+	public void inicio() {
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
 				.handleNavigation(FacesContext.getCurrentInstance(), null, "/home.xhtml");
 	}

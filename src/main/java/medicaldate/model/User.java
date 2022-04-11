@@ -1,6 +1,11 @@
 package medicaldate.model;
 
-//import java.util.Date;
+
+
+
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,9 +15,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-//import javax.persistence.Temporal;
-//import javax.persistence.TemporalType;
+
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import lombok.Data;
 import lombok.Getter;
@@ -43,9 +48,8 @@ public class User {
 	@NotNull
 	private String lastName;
 
-	/*
-	 * @Column(name = "FECHANACIMIENTO") private Date fechaNacimiento;
-	 */
+	@Column(name = "FECHANACIMIENTO")
+	private Date fechaNacimiento;
 
 	@Column(name = "DNI")
 	@NotNull
@@ -76,5 +80,4 @@ public class User {
 	@Column(name = "ROLES")
 	@Enumerated(EnumType.STRING)
 	private Roles roles;
-
 }
