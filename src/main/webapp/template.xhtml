@@ -1,75 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition 
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:pe="http://primefaces.org/ui/extensions"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      template="_Decorator.xhtml"
-	  lang="#{localeSwitcher.language}">
-	  
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" template="_Decorator.xhtml"
+	lang="#{localeSwitcher.language}">
+
 	<ui:define name="body">
 		<!-- ********************** MENU BAR **************** -->
-    	<h:form id="formMenu">
+		<h:form id="formMenu">
 			<!-- Menú para la versión Web (pantalla más grande) -->
 			<p:menubar class="menuBar visibleWebOnly" autoDisplay="false">
-			
-			<p:menuitem value="Inicio" outcome="home.xhtml" icon="fa fa-home"/>
-		
-			<p:submenu label="Gestión de usuarios">
-			
-			<p:menuitem value="Lista de usuarios"
-					outcome="listUsers.xhtml" />
-				
-			</p:submenu>
-			<p:submenu label="Menu 2">
-				
-			</p:submenu>
-			<p:submenu label="Menu 3">									
 
-			</p:submenu>
-			
-            </p:menubar>   
+				<p:menuitem value="Inicio" outcome="home.xhtml" icon="fa fa-home" />
+
+				<p:submenu label="Gestión de usuarios">
+
+					<p:menuitem value="Lista de usuarios" outcome="listUsers.xhtml" />
+
+				</p:submenu>
+				<p:submenu label="Gestión de pacientes">
+					<p:menuitem value="Lista de pacientes" outcome="listPacientes.xhtml" />
+				
+
+				</p:submenu>
+
+				
+				<p:submenu label="Gestión de medicos">
+					<p:menuitem value="Lista de medicos" outcome="listMedicos.xhtml" />
+					
+
+				</p:submenu>
+
+
+
+
+			</p:menubar>
 		</h:form>
-            
-         <!-- **** CONTENIDO ************** -->
-        <p:panel id="contentForm" styleClass="main-content">
-          <!-- Notificaciones -->
-			<p:messages id="messagesGeneral" showDetail="true" closable="true" showIcon="false" 
-			styleClass="messages-general" skipDetailIfEqualsSummary="true">
-		 		<p:autoUpdate />
-    		</p:messages>
-    		<!-- Evento para ocultar los mensajes info(success) a los 3 segundos -->	
-    		<p:ajaxStatus oncomplete="setTimeout(function() { $('.ui-messages-info').slideUp(); }, 3000)" />
-    		<!-- DESHABILITADO -->
-    		<ui:remove>
-             	<!-- MENU SUPERIOR (Deshabilitado, se mantiene por si se activa el multiidioma) -->
-	      		 <p:panelGrid  styleClass="sinBorderGrid" style="width:100%">
-		             <p:row>
-		             	<p:column>
-					 	<h:selectOneMenu value="#{localeSwitcher.language}"
-							onchange="submit()" style="margin-left:5px;"
-							valueChangeListener="#{localeSwitcher.onLanguageChange}">
-							<f:selectItem itemValue="en" itemLabel="English" />
-							<f:selectItem itemValue="es" itemLabel="Español" />
-							</h:selectOneMenu> 
-						</p:column>  
+
+		<!-- **** CONTENIDO ************** -->
+		<p:panel id="contentForm" styleClass="main-content">
+			<!-- Notificaciones -->
+			<p:messages id="messagesGeneral" showDetail="true" closable="true"
+				showIcon="false" styleClass="messages-general"
+				skipDetailIfEqualsSummary="true">
+				<p:autoUpdate />
+			</p:messages>
+			<!-- Evento para ocultar los mensajes info(success) a los 3 segundos -->
+			<p:ajaxStatus
+				oncomplete="setTimeout(function() { $('.ui-messages-info').slideUp(); }, 3000)" />
+			<!-- DESHABILITADO -->
+			<ui:remove>
+				<!-- MENU SUPERIOR (Deshabilitado, se mantiene por si se activa el multiidioma) -->
+				<p:panelGrid styleClass="sinBorderGrid" style="width:100%">
+					<p:row>
+						<p:column>
+							<h:selectOneMenu value="#{localeSwitcher.language}"
+								onchange="submit()" style="margin-left:5px;"
+								valueChangeListener="#{localeSwitcher.onLanguageChange}">
+								<f:selectItem itemValue="en" itemLabel="English" />
+								<f:selectItem itemValue="es" itemLabel="Español" />
+							</h:selectOneMenu>
+						</p:column>
 					</p:row>
 				</p:panelGrid>-->
 			</ui:remove>
 			<!-- ****************************************** -->
 			<!-- PANEL CENTRAL -->
 			<div id="panelCentral" class="ui-g-12 ui-md-12">
-				<div class="ui-g">	
+				<div class="ui-g">
 					<div class="ui-g-12 ui-g-nopad">
 						<p:outputPanel id="layoutCentral">
 							<ui:insert name="content" />
 						</p:outputPanel>
 					</div>
 				</div>
-			</div>				      
-     	</p:panel>
+			</div>
+		</p:panel>
 	</ui:define>
 </ui:composition>

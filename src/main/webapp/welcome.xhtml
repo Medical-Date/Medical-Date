@@ -13,9 +13,13 @@
 		<h:form id="welcomeForm">
 			<h3>
 				<h:outputText value="Bienvenido a medical date" />
-
-
 			</h3>
+			<f:view>
+        <p>Successfully logged in</p>
+        <p>Hi, #{userBean.onSession()}</p>
+        <h:form>
+        </h:form>
+    </f:view>
 				<p>
 
 					<h:commandLink value="Cierra sesión" action="#{userBean.logout}" />

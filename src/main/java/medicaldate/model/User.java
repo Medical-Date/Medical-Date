@@ -14,6 +14,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import javax.validation.constraints.NotNull;
@@ -77,7 +79,11 @@ public class User {
 	@Column(name = "DBNAME")
 	private String dbName;
 
-	@Column(name = "ROLES")
-	@Enumerated(EnumType.STRING)
-	private Roles roles;
+//	@Column(name = "ROLES")
+//	@Enumerated(EnumType.STRING)
+//	private Roles roles;
+	
+	@OneToOne
+	@JoinColumn(name="rol_id")
+	private Rol rol;
 }

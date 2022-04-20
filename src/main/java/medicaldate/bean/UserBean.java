@@ -21,9 +21,15 @@ import org.springframework.stereotype.Component;
 
 import lombok.Getter;
 import lombok.Setter;
+import medicaldate.model.Medico;
+import medicaldate.model.Paciente;
+import medicaldate.model.Rol;
 import medicaldate.model.Roles;
 import medicaldate.model.User;
+import medicaldate.repository.MedicoRepository;
+import medicaldate.repository.PacienteRepository;
 import medicaldate.repository.UserRepository;
+import medicaldate.services.RolService;
 import medicaldate.services.UserService;
 import medicaldate.util.JsfUtils;
 
@@ -95,17 +101,48 @@ public class UserBean implements Serializable {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private RolService rolService;
 
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private MedicoRepository medicoRepository;
+	@Autowired
+	private PacienteRepository pacienteRepository;
 
 	@Getter
 	@Setter
 	private User usuario;
-
+	
 	@Getter
 	@Setter
+	private Medico medico;
+	
+	@Getter
+	@Setter
+	private Paciente paciente;
+
+	@Setter
 	private Roles roles;
+	
+	@Getter
+	@Setter
+	private Boolean esMedico;
+	@Getter
+	@Setter
+	private Boolean esPaciente;
+	@Getter
+	@Setter
+	private String rolesSelected;
+	
+	@Getter
+	@Setter
+	private List<Rol> listaRoles;
+	
+	@Getter
+	@Setter
+	private List<String> listaRolesPorNombre;
 
 	@PostConstruct
 	public void init() {
@@ -124,6 +161,8 @@ public class UserBean implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		medico= new Medico();
+		paciente= new Paciente();
 
 		usuario = new User();
 		userName = usuario.getUserName();
@@ -144,16 +183,25 @@ public class UserBean implements Serializable {
 		email = usuario.getEmail();
 		dbName = usuario.getDbName();
 		dbPassword = usuario.getDbPassword();
-		roles = usuario.getRoles();
+//		roles = usuario.getRoles();
 		id = usuario.getId();
 		//fechaNacimiento= usuario.getFechaNacimiento();
 		listaUsuarios = new ArrayList<>();
 		listaUsuarios = userService.getUsers();
+		listaRoles = new ArrayList<>();
+		listaRoles = rolService.getRoles();
+		listaRolesPorNombre = new ArrayList<>();
+		rolesSelected="";
+		for(Rol r: listaRoles) {
+			listaRolesPorNombre.add(r.getRol());
+		}
+		
 
 		if (idUsuario != null) {
 			usuario = userService.getUserById(idUsuario);
 		}
 	}
+	
 
 	public String add() {
 		int i = 0;
@@ -172,7 +220,7 @@ public class UserBean implements Serializable {
 
 				if (con != null) {
 
-					String sql = "INSERT INTO user(username,firstname, password, lastname, email, dni, direccion, telefono,fechaNacimiento,roles) VALUES(?,?,?,?,?,?,?,?,?,?)";
+					String sql = "INSERT INTO user(username,firstname, password, lastname, email, dni, direccion, telefono,fechaNacimiento,rol_id) VALUES(?,?,?,?,?,?,?,?,?,?)";
 					ps = con.prepareStatement(sql);
 					if (validarRegistrar()) {
 						ps.setString(1, userName);
@@ -184,9 +232,31 @@ public class UserBean implements Serializable {
 						ps.setString(7, direccion);
 						ps.setString(8, telefono);
 						java.sql.Date fechaNacimientoSql  = new java.sql.Date(fechaNacimiento.getTime());
-						ps.setDate(9, fechaNacimientoSql); 
-						ps.setString(10, roles.toString());
+						ps.setDate(9, fechaNacimientoSql);
+						Rol nuevoRol= new Rol();
+						nuevoRol= rolService.obtenerRolPorNombre(rolesSelected);
+						ps.setLong(10, nuevoRol.getId());
+					
 						i = ps.executeUpdate();
+						
+						if(rolesSelected.equals("MEDICO")) {
+							User nuevoUser= new User();
+							nuevoUser=userService.obtenerUsuarioPorNombreUsuario(userName);
+							Medico nuevoMedico= new Medico();
+							nuevoMedico.setUser(nuevoUser);
+							nuevoMedico.setNombre(medico.getNombre());
+							medicoRepository.save(nuevoMedico);
+						}
+						
+						if(rolesSelected.equals("PACIENTE")) {
+							User nuevoUser= new User();
+							nuevoUser=userService.obtenerUsuarioPorNombreUsuario(userName);
+							Paciente nuevoPaciente= new Paciente();
+							nuevoPaciente.setUser(nuevoUser);
+							nuevoPaciente.setNombre(paciente.getNombre());
+							pacienteRepository.save(nuevoPaciente);
+						}
+						
 						System.out.println("Data Added Successfully");
 						con.close();
 						ps.close();
@@ -279,6 +349,12 @@ public class UserBean implements Serializable {
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
 				.handleNavigation(FacesContext.getCurrentInstance(), null, "/editarUsuario.xhtml");
 	}
+	
+	public String onSession() {
+		dbData(usuario.getUserName());
+		
+		return usuario.getUserName();
+	}
 
 	public void onEliminar(Long idUsuario) {
 		JsfUtils.setFlashAttribute("idUsuario", idUsuario);
@@ -293,7 +369,7 @@ public class UserBean implements Serializable {
 
 
 		}
-	}
+	}	
 
 	public void eliminarUser(User usuarioSeleccionado) {
 		if (usuario != null) {
@@ -308,5 +384,18 @@ public class UserBean implements Serializable {
 
 		}
 	}
+	
+	public void comprobarSiEsMedicoOPaciente() {
+		esMedico=false;
+		esPaciente=false;
+		if(rolesSelected!=null &&  rolesSelected.equals("MEDICO")) {
+			esMedico=true;
+
+
+		}else if(rolesSelected!=null &&  rolesSelected.equals("PACIENTE")) {
+			esPaciente=true;
+		}
+	}
+	
 
 }

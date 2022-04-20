@@ -13,7 +13,7 @@
 			<h2>Lista de Usuarios</h2>
 
 			<div class="card">
-				<p:dataTable var="usuarios" value="#{userBean.listaUsuarios}" id="usuariosTable">
+				<p:dataTable var="usuarios" value="#{listaUsuarioBean.listaUsuarios}" id="usuariosTable">
 					<p:column headerText="Nombre">
 						<h:outputText value="#{usuarios.firstName}" />
 					</p:column>
@@ -40,21 +40,21 @@
 					</p:column>
 
 					<p:column headerText="Rol">
-						<h:outputText value="#{usuarios.roles}" />
+						<h:outputText value="#{usuarios.rol.rol}" />
 					</p:column>
 
 					<p:column headerText="Acciones">
 
 						<p:commandButton id="editarUsuarios" widgetVar="editarUsuarios"
 							icon="pi pi-pencil" value="Editar"
-							actionListener="#{userBean.onEditar(usuarios.id)}">
+							actionListener="#{listaUsuarioBean.onEditar(usuarios.id)}">
 							<f:param name="id" value="#{usuarios.id}" />
 						</p:commandButton>
 						
 							<p:commandButton id="eliminarUsuarios" widgetVar="eliminarUsuarios"
 							 process="@this usuariosTable"
 							icon="pi pi-pencil" value="Eliminar"
-							actionListener="#{userBean.eliminarUser(usuarios)}"
+							actionListener="#{listaUsuarioBean.eliminarUser(usuarios)}"
 							update="formListadoUsers">
 							<f:param name="idEliminar" value="#{usuarios.id}" />
 						</p:commandButton>

@@ -17,6 +17,22 @@
 
 				<div class="ui-g">
 					<div class="ui-g-12 ui-md-12 ui-lg-12">
+					<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-4 ui-md-4">
+								<h:outputLabel for="roles" value="Rol" style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<h:selectOneMenu id="roles" value="#{userBean.rolesSelected}">
+									<f:selectItem itemLabel="" itemValue="" /> 
+									<f:selectItems value="#{userBean.listaRolesPorNombre}" />
+									<p:ajax listener="#{userBean.comprobarSiEsMedicoOPaciente}"
+										update="registerForm" event="change" />
+								</h:selectOneMenu>
+
+
+							</div>
+						</div>
 						<div class="ui-g-12 ui-md-6">
 							<div class="ui-g-4 ui-md-4">
 								<h:outputLabel for="nombreLogin"
@@ -122,21 +138,7 @@
 							</div>
 						</div>
 
-						<div class="ui-g-12 ui-md-6">
-							<div class="ui-g-4 ui-md-4">
-								<h:outputLabel for="roles" value="Rol" style="font-weight:bold" />
-								<br />
-							</div>
-							<div class="ui-g-8 ui-md-2">
-								<h:selectOneMenu id="roles" value="#{userBean.roles}">
-									<f:selectItem itemLabel="Administrador"
-										itemValue="ADMINISTRADOR" />
-									<f:selectItem itemLabel="Medico" itemValue="MEDICO" />
-									<f:selectItem itemLabel="Paciente" itemValue="PACIENTE" />
-								</h:selectOneMenu>
-
-							</div>
-						</div>
+						
 
 						<div class="ui-g-12 ui-md-6">
 							<div class="ui-g-4 ui-md-4">
@@ -152,6 +154,32 @@
 							</div>
 						</div>
 
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-4 ui-md-4">
+								<h:outputLabel for="nombreMedico"
+									value="Introduzca su nombre de médico :"
+									style="font-weight:bold" rendered="#{userBean.esMedico}" />
+								<br />
+								<h:outputLabel for="nombrePaciente"
+									value="Introduzca su nombre de paciente :"
+									style="font-weight:bold" rendered="#{userBean.esPaciente}" />
+								<br />
+								
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<h:inputText id="nombreMedico" value="#{userBean.medico.nombre}"
+									required="true"
+									requiredMessage="Por favor introduzca su nombre de médico"
+									rendered="#{userBean.esMedico}" />
+									
+									<h:inputText id="nombrePaciente" value="#{userBean.paciente.nombre}"
+									required="true"
+									requiredMessage="Por favor introduzca su nombre de paciente"
+									rendered="#{userBean.esPaciente}" />
+
+							</div>
+						</div>
+
 
 						<!-- Botón Registrar -->
 						<div class="ui-g-12">
@@ -163,8 +191,7 @@
 							<div class="ui-g-12 ui-md-10" />
 
 							<div class="ui-g-12 ui-md-2 botonera-wrapper">
-								<p:button id="botonVolver" value="Atrás"
-									title="Atrás"
+								<p:button id="botonVolver" value="Atrás" title="Atrás"
 									outcome="home.xhtml">
 								</p:button>
 							</div>
