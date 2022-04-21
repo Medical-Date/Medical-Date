@@ -23,10 +23,10 @@
 								<br />
 							</div>
 							<div class="ui-g-8 ui-md-2">
-								<h:selectOneMenu id="roles" value="#{userBean.rolesSelected}">
+								<h:selectOneMenu id="roles" value="#{registro.rolesSelected}">
 									<f:selectItem itemLabel="" itemValue="" /> 
-									<f:selectItems value="#{userBean.listaRolesPorNombre}" />
-									<p:ajax listener="#{userBean.comprobarSiEsMedicoOPaciente}"
+									<f:selectItems value="#{registro.listaRolesPorNombre}" />
+									<p:ajax listener="#{registro.comprobarSiEsMedicoOPaciente}"
 										update="registerForm" event="change" />
 								</h:selectOneMenu>
 
@@ -41,7 +41,7 @@
 								<br />
 							</div>
 							<div class="ui-g-8 ui-md-2">
-								<h:inputText id="uname" value="#{userBean.userName}"
+								<h:inputText id="uname" value="#{registro.userName}"
 									required="true"
 									requiredMessage="Por favor introduzca su nombre de usuario" />
 								<h:message for="uname" style="color:red" />
@@ -54,7 +54,7 @@
 								<br />
 							</div>
 							<div class="ui-g-8 ui-md-2">
-								<p:inputText id="fname" value="#{userBean.firstName}"
+								<p:inputText id="fname" value="#{registro.firstName}"
 									required="true"
 									requiredMessage="Por favor introduzca su nombre" />
 								<h:message for="fname" style="color:red" />
@@ -67,7 +67,7 @@
 								<br />
 							</div>
 							<div class="ui-g-8 ui-md-2">
-								<p:inputText id="lname" value="#{userBean.lastName}"
+								<p:inputText id="lname" value="#{registro.lastName}"
 									required="true"
 									requiredMessage="Por favor introduzca su apellido" />
 								<h:message for="lname" style="color:red" />
@@ -80,7 +80,7 @@
 								<br />
 							</div>
 							<div class="ui-g-4 ui-md-2">
-								<p:inputText id="dniUsuario" value="#{userBean.dni}"
+								<p:inputText id="dniUsuario" value="#{registro.dni}"
 									required="true" requiredMessage="Por favor introduzca su D.N.I" />
 								<h:message for="lname" style="color:red" />
 							</div>
@@ -92,7 +92,7 @@
 								<br />
 							</div>
 							<div class="ui-g-8 ui-md-2">
-								<p:inputText id="direccionUsuario" value="#{userBean.direccion}"
+								<p:inputText id="direccionUsuario" value="#{registro.direccion}"
 									required="true"
 									requiredMessage="Por favor introduzca su dirección" />
 							</div>
@@ -104,7 +104,7 @@
 								<br />
 							</div>
 							<div class="ui-g-8 ui-md-2">
-								<p:inputNumber id="telefonoUsuario" value="#{userBean.telefono}"
+								<p:inputNumber id="telefonoUsuario" value="#{registro.telefono}"
 									required="true"
 									requiredMessage="Por favor introduzca su teléfono" />
 
@@ -117,7 +117,7 @@
 								<br />
 							</div>
 							<div class="ui-g-8 ui-md-2">
-								<p:inputText id="email" value="#{userBean.email}"
+								<p:inputText id="email" value="#{registro.email}"
 									required="true" requiredMessage="Por favor introduzca su email" />
 
 							</div>
@@ -131,7 +131,7 @@
 							</div>
 							<div class="ui-g-8 ui-md-2">
 								<p:calendar id="fechaNacimiento"
-									value="#{userBean.fechaNacimiento}" required="true"
+									value="#{registro.fechaNacimiento}" required="true"
 									requiredMessage="Por favor introduzca su fecha de nacimiento"
 									pattern="dd-MM-yyyy" />
 
@@ -148,7 +148,7 @@
 							</div>
 							<div class="ui-g-8 ui-md-2">
 								<h:inputSecret id="contrasenaUsuario"
-									value="#{userBean.password}" required="true"
+									value="#{registro.password}" required="true"
 									requiredMessage="Por favor introduzca su contraseña" />
 
 							</div>
@@ -158,24 +158,24 @@
 							<div class="ui-g-4 ui-md-4">
 								<h:outputLabel for="nombreMedico"
 									value="Introduzca su nombre de médico :"
-									style="font-weight:bold" rendered="#{userBean.esMedico}" />
+									style="font-weight:bold" rendered="#{registro.esMedico}" />
 								<br />
 								<h:outputLabel for="nombrePaciente"
 									value="Introduzca su nombre de paciente :"
-									style="font-weight:bold" rendered="#{userBean.esPaciente}" />
+									style="font-weight:bold" rendered="#{registro.esPaciente}" />
 								<br />
 								
 							</div>
 							<div class="ui-g-8 ui-md-2">
-								<h:inputText id="nombreMedico" value="#{userBean.medico.nombre}"
+								<h:inputText id="nombreMedico" value="#{registro.medico.nombre}"
 									required="true"
 									requiredMessage="Por favor introduzca su nombre de médico"
-									rendered="#{userBean.esMedico}" />
+									rendered="#{registro.esMedico}" />
 									
-									<h:inputText id="nombrePaciente" value="#{userBean.paciente.nombre}"
+									<h:inputText id="nombrePaciente" value="#{registro.paciente.nombre}"
 									required="true"
 									requiredMessage="Por favor introduzca su nombre de paciente"
-									rendered="#{userBean.esPaciente}" />
+									rendered="#{registro.esPaciente}" />
 
 							</div>
 						</div>
@@ -186,7 +186,7 @@
 							<div class="ui-g-12 ui-md-10" />
 							<div class="ui-g-12 ui-md-2 botonera-wrapper">
 
-								<p:commandButton value="Registrarse" action="#{userBean.add}" />
+								<p:commandButton value="Registrarse" action="#{registro.add}" />
 							</div>
 							<div class="ui-g-12 ui-md-10" />
 
