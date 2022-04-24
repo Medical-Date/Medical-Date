@@ -14,30 +14,36 @@
 
 			<div class="card">
 				<p:dataTable var="usuarios" value="#{userBean.listaUsuarios}" id="usuariosTable">
+					<p:column headerText="Usuario">
+						<h:outputText value="#{usuarios.userName}" />
+					</p:column>
+					
 					<p:column headerText="Nombre">
 						<h:outputText value="#{usuarios.firstName}" />
 					</p:column>
 
-					<p:column headerText="Apellido">
+					<p:column headerText="Apellidos">
 						<h:outputText value="#{usuarios.lastName}" />
 					</p:column>
-
-					<p:column headerText="Email">
-						<h:outputText value="#{usuarios.email}" />
+					
+					<p:column headerText="Fecha de Nacimiento">
+						<h:outputText value="#{usuarios.fechaNacimiento}" />
 					</p:column>
-
+					
 					<p:column headerText="D.N.I.">
 						<h:outputText value="#{usuarios.dni}" />
 					</p:column>
+					
 					<p:column headerText="Dirección">
 						<h:outputText value="#{usuarios.direccion}" />
 					</p:column>
+					
 					<p:column headerText="Teléfono">
 						<h:outputText value="#{usuarios.telefono}" />
 					</p:column>
 
-					<p:column headerText="Rol">
-						<h:outputText value="#{usuarios.roles}" />
+					<p:column headerText="Email">
+						<h:outputText value="#{usuarios.email}" />
 					</p:column>
 
 					<p:column headerText="Acciones">

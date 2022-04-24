@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sec="https://joinfaces.org/security" template="/template.xhtml">
+
+	<ui:define name="content">
+		<h:form id="formListadoEnfermedades">
+			<h2>Enfermedades</h2>
+
+			<div class="card">
+				<p:dataTable var="enfermedades"
+					value="#{enfermedadBean.listaEnfermedades}" id="enfermedadesTable">
+					<p:column headerText="Nombre">
+						<h:outputText value="#{enfermedades.nombre}" />
+					</p:column>
+
+					<p:column headerText="Causa">
+						<h:outputText value="#{enfermedades.causa}" />
+					</p:column>
+
+					<p:column headerText="Síntomas">
+						<h:outputText value="#{enfermedades.sintomas}" />
+					</p:column>
+
+					<p:column headerText="Gravedad">
+						<h:outputText value="#{enfermedades.gravedad}" />
+					</p:column>
+					
+					<p:column headerText="Acciones">
+					<p:commandButton id="eliminarEnfermedad" widgetVar="eliminarEnfermedad"
+							 process="@this enfermedadesTable"
+							icon="pi pi-pencil" value="Eliminar"
+							actionListener="#{enfermedadBean.eliminarEnfermedad(enfermedades)}"
+							update="formListadoEnfermedades">
+							<f:param name="idEliminar" value="#{enfermedades.id}" />
+						</p:commandButton>
+						</p:column>
+				</p:dataTable>
+			</div>
+
+			<div class="card2">
+				<p:dataTable var="enfermedades2"
+					value="#{enfermedadBean.listaEnfermedades}" id="enfermedadesTable2">
+					<p:column headerText="Acciones">
+
+						<p:commandButton id="editarEnfermedad"
+							widgetVar="editarEnfermedad" icon="pi pi-pencil" value="Editar"
+							actionListener="#{enfermedadBean.onEditar(enfermedades2.id)}">
+							<f:param name="id" value="#{enfermedades2.id}" />
+						</p:commandButton>
+						
+					</p:column>
+
+				</p:dataTable>
+			</div>
+
+			<p:commandButton id="volver" value="Home"
+				onclick="document.location.href='#{request.contextPath}/welcome.xhtml'">
+			</p:commandButton>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

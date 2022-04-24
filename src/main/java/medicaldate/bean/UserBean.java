@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 //import java.util.Date;
 import java.util.List;
 
@@ -34,15 +35,23 @@ public class UserBean implements Serializable {
 
 	@Getter
 	@Setter
+	private String userName;
+
+	@Getter
+	@Setter
 	private String firstName;
 
 	@Getter
 	@Setter
 	private String lastName;
 
-//	@Getter
-//	@Setter
-//	private Date fechaNacimiento;
+	@Getter
+	@Setter
+	private Date fechaNacimiento;
+
+	@Getter
+	@Setter
+	private Date fechaNacimientoSql;
 
 	@Getter
 	@Setter
@@ -58,11 +67,11 @@ public class UserBean implements Serializable {
 
 	@Getter
 	@Setter
-	private String password;
+	private String email;
 
 	@Getter
 	@Setter
-	private String email;
+	private String password;
 
 	@Getter
 	@Setter
@@ -75,10 +84,6 @@ public class UserBean implements Serializable {
 	@Getter
 	@Setter
 	private Long id;
-
-	@Getter
-	@Setter
-	private String userName;
 
 	@Getter
 	@Setter
@@ -124,7 +129,9 @@ public class UserBean implements Serializable {
 		userName = usuario.getUserName();
 		firstName = usuario.getFirstName();
 		lastName = usuario.getLastName();
-		/* fechaNacimiento = new Date(); */
+		fechaNacimiento = new Date(); 
+		java.sql.Date fechaNacimientoSql  = new java.sql.Date(fechaNacimiento.getTime());
+		fechaNacimiento= fechaNacimientoSql;
 		dni = usuario.getDni();
 		direccion = usuario.getDireccion();
 		telefono = usuario.getTelefono();
@@ -159,19 +166,20 @@ public class UserBean implements Serializable {
 
 				if (con != null) {
 
-					String sql = "INSERT INTO user(username,firstname, password, lastname, email, dni, direccion, telefono,roles) VALUES(?,?,?,?,?,?,?,?,?)";
+					String sql = "INSERT INTO user(username, firstname, lastname, fechaNacimiento, dni, direccion, telefono, email, password, roles) VALUES(?,?,?,?,?,?,?,?,?,?)";
 					ps = con.prepareStatement(sql);
 					if (validarRegistrar()) {
 						ps.setString(1, userName);
 						ps.setString(2, firstName);
-						ps.setString(3, password);
-						ps.setString(4, lastName);
-						ps.setString(5, email);
-						ps.setString(6, dni);
-						ps.setString(7, direccion);
-						ps.setString(8, telefono);
-						/* ps.setDate(9, (java.sql.Date) fechaNacimiento); */
-						ps.setString(9, roles.toString());
+						ps.setString(3, lastName);
+						java.sql.Date fechaNacimientoSql  = new java.sql.Date(fechaNacimiento.getTime());
+						ps.setDate(4, fechaNacimientoSql); 
+						ps.setString(5, dni);
+						ps.setString(6, direccion);
+						ps.setString(7, telefono);
+						ps.setString(8, email);
+						ps.setString(9, password);
+						ps.setString(10, roles.toString());
 						i = ps.executeUpdate();
 						System.out.println("Data Added Successfully");
 						con.close();

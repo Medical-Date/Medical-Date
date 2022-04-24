@@ -1,0 +1,7 @@
+package medicaldate.model;
+
+public enum TipoSangre {
+
+	APOSITIVO, ANEGATIVO, BPOSITIVO, BNEGATIVO, ABPOSITIVO, ABNEGATIVO, CEROPOSITIVO, CERONEGATIVO
+
+}

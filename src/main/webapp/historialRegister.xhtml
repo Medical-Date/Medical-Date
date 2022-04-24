@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sec="https://joinfaces.org/security"
+	template="/templateHome.xhtml">
+
+	<ui:define name="content">
+		<h:form id="registerForm">
+			<table>
+
+				<tr>
+					<td><h:outputText
+							value="Introduzca su contacto de emergencia:" /></td>
+					<td><h:inputText id="conEmer"
+							value="#{historialBean.contactoEmergencia}" required="true"
+							requiredMessage="Por favor introduzca su contacto de emergencia" /></td>
+					<td><h:message for="conEmer" style="color:red" /></td>
+				</tr>
+				<tr>
+					<td><h:outputText
+							value="Introduzca el teléfono de su contacto de emergencia:" /></td>
+					<td><h:inputText id="tlfEmer"
+							value="#{historialBean.tlfContactoEmergencia}" required="true"
+							requiredMessage="Por favor introduzca el teléfono de su contacto de emergencia" /></td>
+					<td><h:message for="tlfEmer" style="color:red" /></td>
+				</tr>
+
+				<tr>
+					<h:outputLabel for="tipoSangre" value="Tipo de Sangre" />
+					<h:selectOneMenu id="tipoSangre"
+						value="#{historialBean.tipoSangre}">
+						<f:selectItem itemLabel="A+" itemValue="APOSITIVO" />
+						<f:selectItem itemLabel="A-" itemValue="ANEGATIVO" />
+						<f:selectItem itemLabel="B+" itemValue="BPOSITIVO" />
+						<f:selectItem itemLabel="B-" itemValue="BNEGATIVO" />
+						<f:selectItem itemLabel="B+" itemValue="ABPOSITIVO" />
+						<f:selectItem itemLabel="B-" itemValue="ABNEGATIVO" />
+						<f:selectItem itemLabel="0+" itemValue="CEROPOSITIVO" />
+						<f:selectItem itemLabel="0-" itemValue="CERONEGATIVO" />
+					</h:selectOneMenu>
+				</tr>
+
+				<tr>
+					<td><h:outputText value="USUARIO:" /></td>
+					<td><h:inputText id="user" value="#{historialBean.usuario.id}"
+							required="true"
+							requiredMessage="-----" /></td>
+					<td><h:message for="user" style="color:red" /></td>
+				</tr>
+
+				<tr>
+					<td />
+					<td><p:commandButton value="Guardar"
+							action="#{historialBean.add}" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLink value="home.xhtml">Inicio</h:outputLink></td>
+				</tr>
+			</table>
+		</h:form>
+	</ui:define>
+</ui:composition>

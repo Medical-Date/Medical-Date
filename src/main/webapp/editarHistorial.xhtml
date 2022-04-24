@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sec="https://joinfaces.org/security" template="/template.xhtml">
+	
+	<ui:define name="content">
+		<h:form id="formFormularioHistoriales">
+
+			
+			<p:panel id="panelHistorial">
+
+			<!-- PANEL DIALOG SUJETOS OBLIGADOS -->
+	   		<p:fieldset id="editarHistorial" legend="Edición de historial clínico" styleClass="ui-g" toggleable="true" toggleSpeed="250" >
+					<div>
+						<div class="celda-form">
+							<p:outputLabel for="contactoEmergencia"
+								value="Contacto de Emergencia" />
+							<p:inputText id="contactoEmergencia"
+								value="#{historialBean.historial.contactoEmergencia}" />
+						</div>
+						
+						<div class="celda-form">
+							<p:outputLabel for="tlfContactoEmergencia"
+								value="Tlf. Contacto Emergencia" />
+							<p:inputText id="tlfContactoEmergencia"
+								value="#{historialBean.historial.tlfContactoEmergencia}" />
+						</div>
+						
+						<p:commandButton  icon="pi pi-save"
+									id="saveHistorial" value="Guardar"
+									actionListener="#{historialBean.editarHistorial()}" />							
+
+				
+					</div>					
+					
+				</p:fieldset>	
+			
+			<p:spacer height="10px" />
+			
+			</p:panel>
+
+			<br/>
+			<p:commandButton id="volver" value="volver"
+				onclick="document.location.href='#{request.contextPath}/listaHistoriales.xhtml'">
+			</p:commandButton>	
+			
+		</h:form>
+	
+	</ui:define>
+	</ui:composition>

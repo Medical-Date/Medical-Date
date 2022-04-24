@@ -16,13 +16,12 @@ public class UserService  {
 		super();
 		// también lo guardo para mi por si quiero hacer consultas personalizadas.
 		this.userRepository = userRepository;
-
-
 	}
 	
 	public List<User> getUsers(){
 		return (List<User>) userRepository.findAll();
 	}
+	
 	public User getUserById(Long id) {
 		return userRepository.findById(id).get();
 	}

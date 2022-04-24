@@ -34,8 +34,14 @@
 							requiredMessage="Por favor introduzca su apellido" /></td>
 					<td><h:message for="lname" style="color:red" /></td>
 				</tr>
-
-	
+				
+				<tr>
+					<td><h:outputText value="Introduzca su fecha de nacimiento" /></td>
+					<td><p:calendar id="fechanacimiento" value="#{userBean.fechaNacimiento}"
+							required="true"
+							requiredMessage="Por favor introduzca su fecha de nacimiento" /></td>
+					<td><h:message for="fechanacimiento" style="color:red" /></td>
+				</tr>
 				
 				<tr>
 					<td><h:outputText value="Introduzca su D.N.I." /></td>

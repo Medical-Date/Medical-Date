@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sec="https://joinfaces.org/security"
+	template="/templateHome.xhtml">
+
+	<ui:define name="content">
+		<h:form id="registerForm">
+			<table>
+
+				<tr>
+					<td><h:outputText
+							value="Introduzca el nombre de la enfermedad:" /></td>
+					<td><h:inputText id="nombre"
+							value="#{enfermedadBean.nombre}" required="true"
+							requiredMessage="Por favor introduzca el nombre de la enfermedad" /></td>
+					<td><h:message for="nombre" style="color:red" /></td>
+				</tr>
+				
+				<tr>
+					<td><h:outputText
+							value="Introduzca la causa de la enfermedad:" /></td>
+					<td><h:inputText id="causa"
+							value="#{enfermedadBean.causa}" required="true"
+							requiredMessage="Por favor introduzca la causa de la enfermedad" /></td>
+					<td><h:message for="causa" style="color:red" /></td>
+				</tr>
+				
+				<tr>
+					<td><h:outputText
+							value="Introduzca los síntomas de la enfermedad:" /></td>
+					<td><h:inputText id="sintomas"
+							value="#{enfermedadBean.sintomas}" required="true"
+							requiredMessage="Por favor introduzca los sintomas de la enfermedad" /></td>
+					<td><h:message for="sintomas" style="color:red" /></td>
+				</tr>
+
+				<tr>
+					<h:outputLabel for="gravedad" value="Gravedad" />
+					<h:selectOneMenu id="gravedad"
+						value="#{enfermedadBean.gravedad}">
+						<f:selectItem itemLabel="Leve" itemValue="LEVE" />
+						<f:selectItem itemLabel="Moderada" itemValue="MODERADA" />
+						<f:selectItem itemLabel="Grave" itemValue="GRAVE" />
+					</h:selectOneMenu>
+				</tr>
+
+				<tr>
+					<td />
+					<td><p:commandButton value="Guardar"
+							action="#{enfermedadBean.add}" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLink value="home.xhtml">Inicio</h:outputLink></td>
+				</tr>
+			</table>
+		</h:form>
+	</ui:define>
+</ui:composition>

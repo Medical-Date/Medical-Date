@@ -1,5 +1,7 @@
 package medicaldate.model;
 
+import java.util.Date;
+
 //import java.util.Date;
 
 import javax.persistence.Column;
@@ -10,8 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-//import javax.persistence.Temporal;
-//import javax.persistence.TemporalType;
+
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;
@@ -26,12 +27,12 @@ import lombok.Setter;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
 	@NotNull
+	@Column(name = "ID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "USERNAME", unique = true)
+	@Column(name = "USERNAME")
 	@NotNull
 	private String userName;
 
@@ -43,9 +44,9 @@ public class User {
 	@NotNull
 	private String lastName;
 
-	/*
-	 * @Column(name = "FECHANACIMIENTO") private Date fechaNacimiento;
-	 */
+	@Column(name = "FECHANACIMIENTO")
+	@NotNull
+	private Date fechaNacimiento;
 
 	@Column(name = "DNI")
 	@NotNull
@@ -67,11 +68,11 @@ public class User {
 	@NotNull
 	private String password;
 
-	@Column(name = "DBPASSWORD")
-	private String dbPassword;
-
 	@Column(name = "DBNAME")
 	private String dbName;
+
+	@Column(name = "DBPASSWORD")
+	private String dbPassword;
 
 	@Column(name = "ROLES")
 	@Enumerated(EnumType.STRING)

@@ -1,13 +1,13 @@
 package medicaldate.repository;
+
 import org.springframework.stereotype.Repository;
 
 import medicaldate.model.User;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
 	
