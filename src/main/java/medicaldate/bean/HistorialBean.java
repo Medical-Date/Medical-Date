@@ -25,6 +25,7 @@ import medicaldate.repository.HistorialRepository;
 import medicaldate.repository.UserRepository;
 import medicaldate.services.EnfermedadService;
 import medicaldate.services.HistorialService;
+import medicaldate.services.UserService;
 import medicaldate.util.JsfUtils;
 
 @Component
@@ -74,6 +75,13 @@ public class HistorialBean implements Serializable {
 	@Autowired
 	private EnfermedadService enfermedadService;
 	
+	@Getter
+	@Setter
+	private List<User> listaUsuarios;
+	
+	@Autowired
+	private UserService userRepository;
+	
 
 	@PostConstruct
 	public void init() {
@@ -96,47 +104,16 @@ public class HistorialBean implements Serializable {
 		}
 	}
 
-	public String add() {
-		int i = 0;
-		PreparedStatement ps = null;
-		Connection con = null;
-		try {
-			con = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/medicaldate?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-					"root", "r00t-P@$$w0rd");
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+	public void guardarHistorial() {
+		
+		historial = new Historial();
+		
+		if(historial!=null) {
+			historial.setContactoEmergencia(contactoEmergencia);
+			historial.setTlfContactoEmergencia(tlfContactoEmergencia);
+			historial.setTipoSangre(tipoSangre);
 		}
-		try {
-
-			if (con != null) {
-
-				String sql = "INSERT INTO historial(contactoEmergencia,tlfContactoEmergencia, tipoSangre, usuario_id) VALUES(?,?,?,?)";
-				ps = con.prepareStatement(sql);
-				ps.setString(1, contactoEmergencia);
-				ps.setString(2, tlfContactoEmergencia);
-				ps.setString(3, tipoSangre.toString());
-				ps.setLong(4, usuario.getId());
-				i = ps.executeUpdate();
-				System.out.println("Data Added Successfully");
-				con.close();
-				ps.close();
-			}
-
-		} catch (Exception e) {
-			System.out.println(e);
-		} finally {
-			try {
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		if (i > 0) {
-			return "success";
-		} else
-			return "unsuccess";
+		
 	}
 	
 	public void editarHistorial() {
