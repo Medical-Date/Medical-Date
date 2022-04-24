@@ -8,21 +8,25 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions"
 	xmlns:sec="https://joinfaces.org/security" template="/templateHome.xhtml">
+	
+
 
 	<ui:define name="content">
 		<h:form id="formHome">
 			<h:panelGrid id="panel" columns="2" border="1" cellpadding="10"
-				cellspacing="1">
+				cellspacing="1" styleClass="panelStyle" >
 				<f:facet name="header">
-					<h:outputText value="Bienvenido a Medical Date" />
+					<h:outputText value="Bienvenido a Medical Date"/>
 				</f:facet>
-				<h:outputLabel value="Inicia sesión" />
+				<h:outputLabel value="Inicia sesión"/>
 				<h:outputLink value="login.xhtml">Iniciar sesión</h:outputLink>
 				<h:outputLabel value="Registrate" />
 				<h:outputLink value="register.xhtml">Registrar</h:outputLink>
 				<f:facet name="footer">
 				</f:facet>
 			</h:panelGrid>
+			
+
 		</h:form>
 	</ui:define>
 </ui:composition>

@@ -13,51 +13,48 @@
 			<h2>Lista de Usuarios</h2>
 
 			<div class="card">
-				<p:dataTable var="usuarios" value="#{userBean.listaUsuarios}" id="usuariosTable">
-					<p:column headerText="Usuario">
-						<h:outputText value="#{usuarios.userName}" />
-					</p:column>
-					
+				<p:dataTable var="usuarios" value="#{listaUsuarioBean.listaUsuarios}" id="usuariosTable">
 					<p:column headerText="Nombre">
 						<h:outputText value="#{usuarios.firstName}" />
 					</p:column>
 
-					<p:column headerText="Apellidos">
+					<p:column headerText="Apellido">
 						<h:outputText value="#{usuarios.lastName}" />
-					</p:column>
-					
-					<p:column headerText="Fecha de Nacimiento">
-						<h:outputText value="#{usuarios.fechaNacimiento}" />
-					</p:column>
-					
-					<p:column headerText="D.N.I.">
-						<h:outputText value="#{usuarios.dni}" />
-					</p:column>
-					
-					<p:column headerText="Dirección">
-						<h:outputText value="#{usuarios.direccion}" />
-					</p:column>
-					
-					<p:column headerText="Teléfono">
-						<h:outputText value="#{usuarios.telefono}" />
 					</p:column>
 
 					<p:column headerText="Email">
 						<h:outputText value="#{usuarios.email}" />
 					</p:column>
 
+					<p:column headerText="D.N.I.">
+						<h:outputText value="#{usuarios.dni}" />
+					</p:column>
+					<p:column headerText="Dirección">
+						<h:outputText value="#{usuarios.direccion}" />
+					</p:column>
+					<p:column headerText="Teléfono">
+						<h:outputText value="#{usuarios.telefono}" />
+					</p:column>
+					<p:column headerText="Fecha de Nacimiento">
+						<h:outputText value="#{usuarios.fechaNacimiento}" />
+					</p:column>
+
+					<p:column headerText="Rol">
+						<h:outputText value="#{usuarios.rol.rol}" />
+					</p:column>
+
 					<p:column headerText="Acciones">
 
 						<p:commandButton id="editarUsuarios" widgetVar="editarUsuarios"
 							icon="pi pi-pencil" value="Editar"
-							actionListener="#{userBean.onEditar(usuarios.id)}">
+							actionListener="#{listaUsuarioBean.onEditar(usuarios.id)}">
 							<f:param name="id" value="#{usuarios.id}" />
 						</p:commandButton>
 						
 							<p:commandButton id="eliminarUsuarios" widgetVar="eliminarUsuarios"
 							 process="@this usuariosTable"
 							icon="pi pi-pencil" value="Eliminar"
-							actionListener="#{userBean.eliminarUser(usuarios)}"
+							actionListener="#{listaUsuarioBean.eliminarUser(usuarios)}"
 							update="formListadoUsers">
 							<f:param name="idEliminar" value="#{usuarios.id}" />
 						</p:commandButton>
