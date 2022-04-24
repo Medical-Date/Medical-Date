@@ -26,7 +26,6 @@ public class Cita {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	@NotNull
 	private Long id;
 	
 	@Column(name = "FECHACITA")

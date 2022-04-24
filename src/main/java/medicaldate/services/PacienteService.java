@@ -23,5 +23,13 @@ public class PacienteService {
 	public List<Paciente> getPacientes(){
 		return (List<Paciente>) pacienteRepository.findAll();
 	}
+	
+	public List<Paciente> getListaPacientesPorNombre(){
+		return  pacienteRepository.obtenerListaPacientePorNombre();
+	}
+	
+	public Paciente getPacientesPorNombre(String nombre){
+		return  pacienteRepository.obtenerPacientePorNombre(nombre);
+	}
 
 }

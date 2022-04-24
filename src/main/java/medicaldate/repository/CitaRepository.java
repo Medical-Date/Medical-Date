@@ -7,5 +7,7 @@ import medicaldate.model.Cita;
 
 @Repository
 public interface CitaRepository extends CrudRepository<Cita, Long>{
+	
+	
 
 }

@@ -15,6 +15,10 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -56,6 +60,17 @@ public class UserBean implements Serializable {
 	@Getter
 	@Setter
 	private String userName;
+//	
+//	DataSource ds;
+//	
+//	 public UserBean() {
+//	        try {
+//	            Context ctx = new InitialContext();
+//	            ds = (DataSource) ctx.lookup("java:comp/env/jdbc/database");
+//	        } catch (NamingException e) {
+//	            e.printStackTrace();
+//	        }
+//	    }
 	
 
 	

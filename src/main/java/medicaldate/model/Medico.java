@@ -35,5 +35,11 @@ public class Medico{
 	@NotNull
 	private String nombre;
 	
+	@OneToOne
+	@JoinColumn(name="cita_id")
+	private Cita cita;
+	
+	
+	
 
 }

@@ -33,5 +33,9 @@ public class Paciente {
 	@Column(name = "NOMBRE", unique = true)
 	@NotNull
 	private String nombre;
+	
+	@OneToOne
+	@JoinColumn(name="cita_id")
+	private Cita cita;
 
 }
