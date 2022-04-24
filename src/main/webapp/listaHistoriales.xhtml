@@ -13,82 +13,57 @@
 			<h2>Historiales Clínicos</h2>
 
 			<div class="card">
-				<p:dataTable var="historiales" value="#{historialBean.listaHistorial}" id="historialesTable">
-					<p:column headerText="Contacto de Emergencia">
-						<h:outputText value="#{historiales.contactoEmergencia}" />
-					</p:column>
-					
-					<p:column headerText="Tlf. Contacto Emergencia">
-						<h:outputText value="#{historiales.tlfContactoEmergencia}" />
+				<p:dataTable var="historial"
+					value="#{listaHistorialBean.listaHistorial}" id="historialTable">
+
+					<p:column headerText="Contacto de emergencia">
+						<h:outputText value="#{historial.contactoEmergencia}" />
 					</p:column>
 
-					<p:column headerText="Tipo de Sangre">
-						<h:outputText value="#{historiales.tipoSangre}" />
+					<p:column headerText="Teléfono del contacto">
+						<h:outputText value="#{historial.tlfContactoEmergencia}" />
 					</p:column>
-	
-				</p:dataTable>
-				</div>
-				
-				<div class="card">
-				<p:dataTable var="enfermedades" value="#{historialBean.listaEnfermedad}" id="enfermedadesTable">
-					<p:column headerText="Nombre">
-						<h:outputText value="#{enfermedades.nombre}" />
+
+					<p:column headerText="Tipo de sangre">
+						<h:outputText value="#{historial.tipoSangre}" />
 					</p:column>
-					
-					<p:column headerText="Gravedad">
-						<h:outputText value="#{enfermedades.gravedad}" />
-					</p:column>
-	
-				</p:dataTable>
-				</div>
-				
-				<div class="card2">
-				<p:dataTable var="historiales2" value="#{historialBean.listaHistorial}" id="historialesTable2">
-					<p:column headerText="Nombre">
-						<h:outputText value="#{historiales2.usuario.firstName}" />
+
+					<p:column headerText="Nombre del paciente">
+						<h:outputText value="#{historial.paciente.nombre}" />
 					</p:column>
 					
-					<p:column headerText="Apellidos">
-						<h:outputText value="#{historiales2.usuario.lastName}" />
+					<p:column headerText="Apellidos del paciente">
+						<h:outputText value="#{historial.paciente.user.lastName}" />
 					</p:column>
-					
-					<p:column headerText="Fecha de Nacimiento">
-						<h:outputText value="#{historiales2.usuario.fechaNacimiento}" />
-					</p:column>
-					
+
 					<p:column headerText="D.N.I.">
-						<h:outputText value="#{historiales2.usuario.dni}" />
+						<h:outputText value="#{historial.paciente.user.dni}" />
 					</p:column>
-					
 					<p:column headerText="Dirección">
-						<h:outputText value="#{historiales2.usuario.direccion}" />
+						<h:outputText value="#{historial.paciente.user.direccion}" />
 					</p:column>
-					
 					<p:column headerText="Teléfono">
-						<h:outputText value="#{historiales2.usuario.telefono}" />
+						<h:outputText value="#{historial.paciente.user.telefono}" />
 					</p:column>
-					
-					<p:column headerText="Email">
-						<h:outputText value="#{historiales2.usuario.email}" />
+					<p:column headerText="Fecha de Nacimiento">
+						<h:outputText value="#{historial.paciente.user.fechaNacimiento}" />
 					</p:column>
 
-				</p:dataTable>
-			</div>
-			
-			<div class="card3">
-			<p:dataTable var="historiales3" value="#{historialBean.listaHistorial}" id="historialesTable3">
-			<p:column headerText="Acciones">
-			
+					<p:column headerText="Acciones">
+
 						<p:commandButton id="editarHistorial" widgetVar="editarHistorial"
 							icon="pi pi-pencil" value="Editar"
-							actionListener="#{historialBean.onEditar(historiales3.id)}">
-							<f:param name="id" value="#{historiales3.id}" />
+							actionListener="#{historialBean.onEditar(historial.id)}">
+							<f:param name="id" value="#{historial.id}" />
 						</p:commandButton>
-						</p:column>
+					</p:column>
 
 				</p:dataTable>
+
 			</div>
-			
+
+
+
 			<p:commandButton id="volver" value="Home"
 				onclick="document.location.href='#{request.contextPath}/welcome.xhtml'">
 			</p:commandButton>

@@ -19,12 +19,14 @@ import lombok.Getter;
 import lombok.Setter;
 import medicaldate.model.Enfermedad;
 import medicaldate.model.Historial;
+import medicaldate.model.Paciente;
 import medicaldate.model.TipoSangre;
 import medicaldate.model.User;
 import medicaldate.repository.HistorialRepository;
 import medicaldate.repository.UserRepository;
 import medicaldate.services.EnfermedadService;
 import medicaldate.services.HistorialService;
+import medicaldate.services.PacienteService;
 import medicaldate.services.UserService;
 import medicaldate.util.JsfUtils;
 
@@ -33,7 +35,7 @@ import medicaldate.util.JsfUtils;
 public class HistorialBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Getter
 	@Setter
 	private Long id;
@@ -53,7 +55,7 @@ public class HistorialBean implements Serializable {
 	@Getter
 	@Setter
 	private User usuario;
-	
+
 	@Getter
 	@Setter
 	private Historial historial;
@@ -61,66 +63,81 @@ public class HistorialBean implements Serializable {
 	@Getter
 	@Setter
 	private List<Historial> listaHistorial;
-	
+
 	@Getter
 	@Setter
 	private List<Enfermedad> listaEnfermedad;
-	
+
 	@Autowired
 	private HistorialRepository historialRepository;
 
 	@Autowired
 	private HistorialService historialService;
-	
+
 	@Autowired
 	private EnfermedadService enfermedadService;
-	
+
 	@Getter
 	@Setter
-	private List<User> listaUsuarios;
-	
+	private List<Paciente> listaPaciente;
+
 	@Autowired
-	private UserService userRepository;
-	
+	private UserService userService;
+
+	@Autowired
+	private PacienteService pacienteService;
+
+	@Getter
+	@Setter
+	private String pacienteSelected;
 
 	@PostConstruct
 	public void init() {
 		Long idHistorial = (Long) JsfUtils.getFlashAttribute("idHistorial");
-		
+
 		historial = new Historial();
+		usuario = new User();
+		pacienteSelected = "";
+
 		id = historial.getId();
 		contactoEmergencia = historial.getContactoEmergencia();
 		tlfContactoEmergencia = historial.getTlfContactoEmergencia();
 		tipoSangre = historial.getTipoSangre();
-		usuario = new User();
-		usuario = historial.getUsuario();
 		listaHistorial = new ArrayList<Historial>();
 		listaHistorial = historialService.getHistoriales();
 		listaEnfermedad = new ArrayList<Enfermedad>();
 		listaEnfermedad = enfermedadService.getEnfermedades();
-		
+		listaPaciente = new ArrayList<>();
+		listaPaciente = pacienteService.getListaPacientesPorNombre();
+
 		if (idHistorial != null) {
 			historial = historialService.getHistorialById(idHistorial);
 		}
 	}
 
 	public void guardarHistorial() {
-		
+
 		historial = new Historial();
-		
-		if(historial!=null) {
+
+		if (historial != null) {
+			Paciente pacienteSeleccionado = pacienteService.getPacientesPorNombre(pacienteSelected);
+
 			historial.setContactoEmergencia(contactoEmergencia);
 			historial.setTlfContactoEmergencia(tlfContactoEmergencia);
 			historial.setTipoSangre(tipoSangre);
+			historial.setPaciente(pacienteSeleccionado);
+			historialRepository.save(historial);
+			FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+					.handleNavigation(FacesContext.getCurrentInstance(), null, "/listaHistoriales.xhtml");
 		}
-		
+
 	}
-	
+
 	public void editarHistorial() {
 		if (historial != null) {
-			historial = historialRepository.save(historial);		
+			historial = historialRepository.save(historial);
 			FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
-			.handleNavigation(FacesContext.getCurrentInstance(), null, "/listaHistoriales.xhtml");
+					.handleNavigation(FacesContext.getCurrentInstance(), null, "/listaHistoriales.xhtml");
 		}
 	}
 

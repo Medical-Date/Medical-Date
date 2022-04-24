@@ -29,7 +29,6 @@ import lombok.Setter;
 public class Historial {
 
 	@Id
-	@NotNull
 	@Column(name = "ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -48,9 +47,8 @@ public class Historial {
 	private TipoSangre tipoSangre;
 
 	@OneToOne
-	@JoinColumn(name = "USUARIO_ID")
-	@NotNull
-	private User usuario;
+	@JoinColumn(name="paciente_id")
+	private Paciente paciente;
 	
 	@JoinTable(name = "rel_historial_enfermedad", joinColumns = @JoinColumn(name = "FK_HISTORIAL", nullable = false), inverseJoinColumns = @JoinColumn(name = "FK_ENFERMEDAD", nullable = false))
 	@ManyToMany(cascade = CascadeType.ALL)

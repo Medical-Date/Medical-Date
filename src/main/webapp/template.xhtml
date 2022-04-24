@@ -24,6 +24,7 @@
 				<p:submenu label="Gestión de pacientes">
 					<p:menuitem value="Lista de pacientes"
 						outcome="listPacientes.xhtml" />
+								<p:menuitem value="Asignar médico"	outcome="asignarMedico.xhtml" />
 
 
 				</p:submenu>
@@ -42,13 +43,16 @@
 
 				</p:submenu>
 
-				<p:submenu label="Historiales">
+				<p:submenu label="Gestión de historiales">
 					<p:menuitem value="Historial Clínico"
 						outcome="listaHistoriales.xhtml" />
+						<p:menuitem value="Añadir historial clínico"
+						outcome="historialRegister.xhtml" />
 
 				</p:submenu>
-				<p:submenu label="Otros">
-					<p:menuitem value="Enfermedades" outcome="listaEnfermedades.xhtml" />
+				<p:submenu label="Vademécum">
+					<p:menuitem value="Lista de enfermedades" outcome="listaEnfermedades.xhtml" />
+					<p:menuitem value="Añadir enfermedad" outcome="enfermedadRegister.xhtml" />
 				</p:submenu>
 
 			</p:menubar>

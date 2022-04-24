@@ -20,6 +20,8 @@ import lombok.Getter;
 import lombok.Setter;
 import medicaldate.model.Enfermedad;
 import medicaldate.model.Gravedad;
+import medicaldate.model.Historial;
+import medicaldate.model.Paciente;
 import medicaldate.model.User;
 import medicaldate.repository.EnfermedadRepository;
 import medicaldate.services.EnfermedadService;
@@ -82,48 +84,20 @@ public class EnfermedadBean implements Serializable {
 			enfermedad = enfermedadService.getEnfermedadById(idEnfermedad);
 		}
 	}
+	
+	public void guardarEnfermedad() {
 
-	public String add() {
-		int i = 0;
-		PreparedStatement ps = null;
-		Connection con = null;
-		try {
-			con = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/medicaldate?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-					"root", "r00t-P@$$w0rd");
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		enfermedad = new Enfermedad();
+		if (enfermedad != null) {
+			enfermedad.setCausa(causa);
+			enfermedad.setGravedad(gravedad);
+			enfermedad.setNombre(nombre);
+			enfermedad.setSintomas(sintomas);
+			enfermedadRepository.save(enfermedad);
+			FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+					.handleNavigation(FacesContext.getCurrentInstance(), null, "/listaEnfermedades.xhtml");
 		}
-		try {
 
-			if (con != null) {
-
-				String sql = "INSERT INTO enfermedad(nombre, causa, sintomas, gravedad) VALUES(?,?,?,?)";
-				ps = con.prepareStatement(sql);
-				ps.setString(1, nombre);
-				ps.setString(2, causa);
-				ps.setString(3, sintomas);
-				ps.setString(4, gravedad.toString());
-				i = ps.executeUpdate();
-				System.out.println("Data Added Successfully");
-				con.close();
-				ps.close();
-			}
-
-		} catch (Exception e) {
-			System.out.println(e);
-		} finally {
-			try {
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		if (i > 0) {
-			return "success";
-		} else
-			return "unsuccess";
 	}
 
 	public void editarEnfermedad() {

@@ -8,7 +8,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions"
 	xmlns:sec="https://joinfaces.org/security"
-	template="/templateHome.xhtml">
+	template="/template.xhtml">
 
 	<ui:define name="content">
 		<h:form id="registerForm">
@@ -54,7 +54,7 @@
 				<tr>
 					<td />
 					<td><p:commandButton value="Guardar"
-							action="#{enfermedadBean.add}" /></td>
+							action="#{enfermedadBean.guardarEnfermedad}" /></td>
 				</tr>
 				<tr>
 					<td><h:outputLink value="home.xhtml">Inicio</h:outputLink></td>

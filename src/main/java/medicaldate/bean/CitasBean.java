@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,6 +93,9 @@ public class CitasBean implements Serializable {
 				
 			pacienteSeleccionado.setCita(cita);
 			pacienteRepository.save(pacienteSeleccionado);
+			
+			FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+			.handleNavigation(FacesContext.getCurrentInstance(), null, "/listCitas.xhtml");
 			
 			
 		}

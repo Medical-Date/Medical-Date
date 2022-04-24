@@ -39,26 +39,15 @@
 							update="formListadoEnfermedades">
 							<f:param name="idEliminar" value="#{enfermedades.id}" />
 						</p:commandButton>
+						<p:commandButton id="editarEnfermedad"
+							widgetVar="editarEnfermedad" icon="pi pi-pencil" value="Editar"
+							actionListener="#{enfermedadBean.onEditar(enfermedades.id)}">
+							<f:param name="id" value="#{enfermedades.id}" />
+						</p:commandButton>
+						
 						</p:column>
 				</p:dataTable>
 			</div>
-
-			<div class="card2">
-				<p:dataTable var="enfermedades2"
-					value="#{enfermedadBean.listaEnfermedades}" id="enfermedadesTable2">
-					<p:column headerText="Acciones">
-
-						<p:commandButton id="editarEnfermedad"
-							widgetVar="editarEnfermedad" icon="pi pi-pencil" value="Editar"
-							actionListener="#{enfermedadBean.onEditar(enfermedades2.id)}">
-							<f:param name="id" value="#{enfermedades2.id}" />
-						</p:commandButton>
-						
-					</p:column>
-
-				</p:dataTable>
-			</div>
-
 			<p:commandButton id="volver" value="Home"
 				onclick="document.location.href='#{request.contextPath}/welcome.xhtml'">
 			</p:commandButton>

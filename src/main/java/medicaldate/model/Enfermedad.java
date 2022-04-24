@@ -25,7 +25,6 @@ import lombok.Setter;
 public class Enfermedad {
 
 	@Id
-	@NotNull
 	@Column(name = "ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
