@@ -42,10 +42,8 @@ public class Medico{
 	@OneToOne
 	@JoinColumn(name="cita_id")
 	private Cita cita;
-	
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "medico")
-	private Set<Paciente> paciente;
+	
 	
 	
 	

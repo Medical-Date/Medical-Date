@@ -16,10 +16,13 @@ import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
 import medicaldate.model.Medico;
+import medicaldate.model.MedicosPacientes;
 import medicaldate.model.Paciente;
 import medicaldate.repository.MedicoRepository;
+import medicaldate.repository.MedicosPacientesRepository;
 import medicaldate.repository.PacienteRepository;
 import medicaldate.services.MedicoService;
+import medicaldate.services.MedicosPacientesService;
 import medicaldate.services.PacienteService;
 
 @Component
@@ -44,6 +47,9 @@ public class MedicoBean implements Serializable {
 	@Setter
 	private Paciente paciente;
 	
+	@Getter
+	@Setter
+	private MedicosPacientes medicoPaciente;
 	
 
 	@Autowired
@@ -51,6 +57,12 @@ public class MedicoBean implements Serializable {
 	
 	@Autowired
 	private MedicoRepository medicoRepository;
+	
+	@Autowired
+	private MedicosPacientesService medicosPacientesService;
+	
+	@Autowired
+	private MedicosPacientesRepository medicosPacientesRepository;
 	
 	
 	@Autowired
@@ -64,7 +76,7 @@ public class MedicoBean implements Serializable {
 	private String pacienteSelected;
 	@Getter
 	@Setter
-	private List<Paciente> listaPacientes;
+	private List<Paciente> listaPacientesPorNombre;
 	@Getter
 	@Setter
 	private List<Medico> listaMedicosPorNombre;
@@ -80,10 +92,10 @@ public class MedicoBean implements Serializable {
 		medicoSelected= "";
 		pacienteSelected= "";
 		listaMedicos = new ArrayList<>();
-		listaPacientes = new ArrayList<>();
+		listaPacientesPorNombre = new ArrayList<>();
 
 		listaMedicosPorNombre = medicoService.getListaMedicosPorNombre();
-		listaPacientes = pacienteService.getListaPacientesPorNombre();
+		listaPacientesPorNombre = pacienteService.getListaPacientesPorNombre();
 
 		
 		
@@ -107,19 +119,20 @@ public class MedicoBean implements Serializable {
 	}
 	
 	public void asignarMedico() {
+		medicoPaciente= new MedicosPacientes();
 		if(medico != null && paciente!=null) {
-			Set<Paciente> conjuntoDePacientes= new HashSet<>();
 			Paciente pacienteSeleccionado = pacienteService.getPacientesPorNombre(pacienteSelected);
 			Medico medicoSeleccionado = medicoService.getMedicosPorNombre(medicoSelected);
 			paciente= pacienteSeleccionado;
 			medico=medicoSeleccionado;
-			paciente.setMedico(medicoSeleccionado);
-			conjuntoDePacientes.add(paciente);
-			medico.setPaciente(conjuntoDePacientes);
 			
+			medicoPaciente.setIdMedico(medico);
+			medicoPaciente.setIdPaciente(paciente);
 			
-			pacienteRepository.save(paciente);		
-			medicoRepository.save(medico);
+			medicosPacientesRepository.save(medicoPaciente);
+			
+			FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+			.handleNavigation(FacesContext.getCurrentInstance(), null, "/listMedicosAsignados.xhtml");
 		}
 		
 	}
