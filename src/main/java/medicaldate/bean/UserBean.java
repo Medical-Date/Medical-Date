@@ -6,39 +6,26 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-//import java.util.Date;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import lombok.Getter;
 import lombok.Setter;
-import medicaldate.model.Medico;
-import medicaldate.model.Paciente;
 import medicaldate.model.Rol;
-import medicaldate.model.Roles;
 import medicaldate.model.User;
-import medicaldate.repository.MedicoRepository;
-import medicaldate.repository.PacienteRepository;
-import medicaldate.repository.UserRepository;
-import medicaldate.services.RolService;
+import medicaldate.services.PacienteService;
 import medicaldate.services.UserService;
-import medicaldate.util.JsfUtils;
+
 
 @Component
-@ViewScoped
+@SessionScoped
+@ManagedBean(name = "user")
 public class UserBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -60,20 +47,17 @@ public class UserBean implements Serializable {
 	@Getter
 	@Setter
 	private String userName;
-//	
-//	DataSource ds;
-//	
-//	 public UserBean() {
-//	        try {
-//	            Context ctx = new InitialContext();
-//	            ds = (DataSource) ctx.lookup("java:comp/env/jdbc/database");
-//	        } catch (NamingException e) {
-//	            e.printStackTrace();
-//	        }
-//	    }
 	
+	@Setter
+	private String nombreCompleto;
+	
+	@Getter
+	@Setter
+	private User user;
+	
+	@Autowired
+	private UserService userService;
 
-	
 	public void dbData(String uName) {
 		if (uName != null) {
 			PreparedStatement ps = null;
@@ -117,6 +101,15 @@ public class UserBean implements Serializable {
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
 				.handleNavigation(FacesContext.getCurrentInstance(), null, "/home.xhtml");
 	}
+	
+	public User getUser() {
+		user= new User();
+		
+		user= userService.obtenerUsuarioPorNombreUsuario(userName);
+		return user;
+	}
+	
+	
 
 	
 

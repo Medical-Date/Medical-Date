@@ -59,6 +59,18 @@
 			<div class="title">
 				<span class="text-1">MD</span> <span class="text-2">MEDICAL DATE</span>
 			</div>
+			
+			<div class="user-menu">
+				<img class="user-icon" src="#{resource['/img/user.png']}" alt=""></img>
+				<div class="user">
+					<div class="name">
+						<!-- @TODO Sustituir <h:outputText value=" #{loginBean.usuarioActual_nombreCompleto}" />  -->
+						<h:outputText
+							value="#{userBean.getUser().firstName} (#{userBean.getUser().rol.rol}) - #{sesionBean.nombre()}" />
+					</div>
+					
+				</div>		
+			</div>
 		</div>
 
 
