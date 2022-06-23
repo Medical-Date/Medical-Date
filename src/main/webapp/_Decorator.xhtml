@@ -66,7 +66,7 @@
 					<div class="name">
 						<!-- @TODO Sustituir <h:outputText value=" #{loginBean.usuarioActual_nombreCompleto}" />  -->
 						<h:outputText
-							value="#{userBean.getUser().firstName} (#{userBean.getUser().rol.rol}) - #{sesionBean.nombre()}" />
+							value="#{LoginController.currentUser.userName} - #{LoginController.currentUser.rol.rol}" />
 					</div>
 					
 				</div>		

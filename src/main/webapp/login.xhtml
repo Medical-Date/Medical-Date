@@ -17,7 +17,7 @@
 				</tr>
 				<tr>
 					<td><h:outputText value="Introduzca su nombre de usuario : " /></td>
-					<td><h:inputText id="inputName" value="#{userBean.userName}"
+					<td><h:inputText id="inputName" value="#{LoginController.userName}"
 							required="true" requiredMessage="El usuario no puede estar vacío" />
 					</td>
 					<td><h:message for="inputName" style="color:red" /></td>
@@ -25,13 +25,13 @@
 				<tr>
 					<td><h:outputText value="Introduzca su contraseña :" /></td>
 					<td><h:inputSecret id="inputPassword"
-							value="#{userBean.password}" required="true"
+							value="#{LoginController.password}" required="true"
 							requiredMessage="La contraseña no puede estar vacía" /></td>
 					<td><h:message for="inputPassword" style="color:red" /></td>
 				</tr>
 				<tr>
 					<td><h:commandButton value="Acceder"
-							action="#{userBean.login}" /></td>
+							action="#{LoginController.doLogin}" /></td>
 					<td><h:outputText value="¿No estás registrado? " /> <h:outputLink
 							value="register.xhtml">Resgistrate aquí</h:outputLink></td>
 				</tr>

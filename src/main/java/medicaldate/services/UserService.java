@@ -3,6 +3,9 @@ package medicaldate.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import medicaldate.model.Paciente;
@@ -34,6 +37,23 @@ public class UserService  {
 	
 	public List<User> getListaUsuariosPorNombre(){
 		return  userRepository.obtenerListaUsuariosPorNombre();
+	}
+	
+	public boolean existsUser(String formUserName) {
+		return obtenerUsuarioPorNombreUsuario(formUserName)!=null;
+	}
+	public void saveUser(User user) {
+		userRepository.save(user);		
+	}
+	
+	public User getCurrentUser() {
+		User result=null;
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+		    String currentUserName = authentication.getName();		    
+		    result=userRepository.obtenerUsuarioPorNombreUsuario(currentUserName);
+		}
+		return result;
 	}
 
 }

@@ -17,16 +17,16 @@
 
 				<div class="ui-g">
 					<div class="ui-g-12 ui-md-12 ui-lg-12">
-						<div class="ui-g-12 ui-md-6">
+					<div class="ui-g-12 ui-md-6">
 							<div class="ui-g-4 ui-md-4">
 								<h:outputLabel for="roles" value="Rol" style="font-weight:bold" />
 								<br />
 							</div>
 							<div class="ui-g-8 ui-md-2">
-								<h:selectOneMenu id="roles" value="#{SignUpController.rolesSelected}">
-									<f:selectItem itemLabel="" itemValue="" />
-									<f:selectItems value="#{SignUpController.listaRolesPorNombre}" />
-									<p:ajax listener="#{SignUpController.comprobarSiEsMedicoOPaciente}"
+								<h:selectOneMenu id="roles" value="#{registro.rolesSelected}">
+									<f:selectItem itemLabel="" itemValue="" /> 
+									<f:selectItems value="#{registro.listaRolesPorNombre}" />
+									<p:ajax listener="#{registro.comprobarSiEsMedicoOPaciente}"
 										update="registerForm" event="change" />
 								</h:selectOneMenu>
 
@@ -41,7 +41,7 @@
 								<br />
 							</div>
 							<div class="ui-g-8 ui-md-2">
-								<h:inputText id="uname" value="#{SignUpController.userName}"
+								<h:inputText id="uname" value="#{SignUpController.formUsername}"
 									required="true"
 									requiredMessage="Por favor introduzca su nombre de usuario" />
 								<h:message for="uname" style="color:red" />
@@ -54,7 +54,7 @@
 								<br />
 							</div>
 							<div class="ui-g-8 ui-md-2">
-								<p:inputText id="fname" value="#{SignUpController.firstName}"
+								<p:inputText id="fname" value="#{registro.firstName}"
 									required="true"
 									requiredMessage="Por favor introduzca su nombre" />
 								<h:message for="fname" style="color:red" />
@@ -67,7 +67,7 @@
 								<br />
 							</div>
 							<div class="ui-g-8 ui-md-2">
-								<p:inputText id="lname" value="#{SignUpController.lastName}"
+								<p:inputText id="lname" value="#{registro.lastName}"
 									required="true"
 									requiredMessage="Por favor introduzca su apellido" />
 								<h:message for="lname" style="color:red" />
@@ -80,7 +80,7 @@
 								<br />
 							</div>
 							<div class="ui-g-4 ui-md-2">
-								<p:inputText id="dniUsuario" value="#{SignUpController.dni}"
+								<p:inputText id="dniUsuario" value="#{registro.dni}"
 									required="true" requiredMessage="Por favor introduzca su D.N.I" />
 								<h:message for="lname" style="color:red" />
 							</div>
@@ -92,7 +92,7 @@
 								<br />
 							</div>
 							<div class="ui-g-8 ui-md-2">
-								<p:inputText id="direccionUsuario" value="#{SignUpController.direccion}"
+								<p:inputText id="direccionUsuario" value="#{registro.direccion}"
 									required="true"
 									requiredMessage="Por favor introduzca su dirección" />
 							</div>
@@ -104,7 +104,7 @@
 								<br />
 							</div>
 							<div class="ui-g-8 ui-md-2">
-								<p:inputNumber id="telefonoUsuario" value="#{SignUpController.telefono}"
+								<p:inputNumber id="telefonoUsuario" value="#{registro.telefono}"
 									required="true"
 									requiredMessage="Por favor introduzca su teléfono" />
 
@@ -117,7 +117,7 @@
 								<br />
 							</div>
 							<div class="ui-g-8 ui-md-2">
-								<p:inputText id="email" value="#{SignUpController.email}"
+								<p:inputText id="email" value="#{registro.email}"
 									required="true" requiredMessage="Por favor introduzca su email" />
 
 							</div>
@@ -131,14 +131,14 @@
 							</div>
 							<div class="ui-g-8 ui-md-2">
 								<p:calendar id="fechaNacimiento"
-									value="#{SignUpController.fechaNacimiento}" required="true"
+									value="#{registro.fechaNacimiento}" required="true"
 									requiredMessage="Por favor introduzca su fecha de nacimiento"
 									pattern="dd-MM-yyyy" />
 
 							</div>
 						</div>
 
-
+						
 
 						<div class="ui-g-12 ui-md-6">
 							<div class="ui-g-4 ui-md-4">
@@ -148,50 +148,34 @@
 							</div>
 							<div class="ui-g-8 ui-md-2">
 								<h:inputSecret id="contrasenaUsuario"
-									value="#{SignUpController.password}" required="true"
+									value="#{SignUpController.formPassword}" required="true"
 									requiredMessage="Por favor introduzca su contraseña" />
 
 							</div>
 						</div>
-						
-						<div class="ui-g-12 ui-md-6">
-							<div class="ui-g-4 ui-md-4">
-								<h:outputLabel for="repiteContrasenaUsuario"
-									value="Repita su contraseña :" style="font-weight:bold" />
-								<br />
-							</div>
-							<div class="ui-g-8 ui-md-2">
-								<h:inputSecret id="repiteContrasenaUsuario"
-									value="#{SignUpController.passwordRepeat}" required="true"
-									requiredMessage="Por favor introduzca de nuevo su contraseña" />
-
-							</div>
-						</div>
-						
-						
 
 						<div class="ui-g-12 ui-md-6">
 							<div class="ui-g-4 ui-md-4">
 								<h:outputLabel for="nombreMedico"
 									value="Introduzca su nombre de médico :"
-									style="font-weight:bold" rendered="#{SignUpController.esMedico}" />
+									style="font-weight:bold" rendered="#{registro.esMedico}" />
 								<br />
 								<h:outputLabel for="nombrePaciente"
 									value="Introduzca su nombre de paciente :"
-									style="font-weight:bold" rendered="#{SignUpController.esPaciente}" />
+									style="font-weight:bold" rendered="#{registro.esPaciente}" />
 								<br />
-
+								
 							</div>
 							<div class="ui-g-8 ui-md-2">
-								<h:inputText id="nombreMedico" value="#{SignUpController.medico.nombre}"
+								<h:inputText id="nombreMedico" value="#{registro.medico.nombre}"
 									required="true"
 									requiredMessage="Por favor introduzca su nombre de médico"
-									rendered="#{SignUpController.esMedico}" />
-
-								<h:inputText id="nombrePaciente"
-									value="#{SignUpController.paciente.nombre}" required="true"
+									rendered="#{registro.esMedico}" />
+									
+									<h:inputText id="nombrePaciente" value="#{registro.paciente.nombre}"
+									required="true"
 									requiredMessage="Por favor introduzca su nombre de paciente"
-									rendered="#{SignUpController.esPaciente}" />
+									rendered="#{registro.esPaciente}" />
 
 							</div>
 						</div>
@@ -202,7 +186,7 @@
 							<div class="ui-g-12 ui-md-10" />
 							<div class="ui-g-12 ui-md-2 botonera-wrapper">
 
-								<p:commandButton value="Registrarse" action="#{SignUpController.doSave}" />
+								<p:commandButton value="Registrarse" action="#{registro.add}" />
 							</div>
 							<div class="ui-g-12 ui-md-10" />
 
