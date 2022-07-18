@@ -12,5 +12,8 @@ public interface RolRepository extends CrudRepository<Rol, Long>{
 	
 	@Query("SELECT rol FROM Rol rol WHERE rol.rol = ?1")
 	public Rol obtenerRolPorNombre(@Param("rol") String rol);
+	
+	@Query("SELECT rol FROM Rol rol WHERE rol.rol = 'ADMINISTRADOR'")
+	public Rol obtenerRolAdmin();
 
 }

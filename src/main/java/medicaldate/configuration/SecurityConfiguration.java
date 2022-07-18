@@ -12,6 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import medicaldate.model.Rol;
+import medicaldate.services.RolService;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -21,8 +24,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()							
-				.anyRequest().permitAll()
+		http.authorizeRequests()
+		.antMatchers("/listMedicos.xhtml").hasAnyAuthority("ADMINISTRADOR")
+		.antMatchers("/listPacientes.xhtml").hasAnyAuthority("ADMINISTRADOR")
 				.and()
 				 	.formLogin()
 				 	.loginPage("/login")
@@ -45,15 +49,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	      .dataSource(dataSource)
 	      .usersByUsernameQuery(
 	       "select username,password,enabled "
-	        + "from users "
+	        + "from user "
 	        + "where username = ?")
-	      .authoritiesByUsernameQuery(
-	       "select username, authority "
-	        + "from authorities "
-	        + "where username = ?")	      	      
+	      .authoritiesByUsernameQuery("select username, rol from rolUsuarios where username=?")   	      
 	      .passwordEncoder(passwordEncoder());	
 	}
-	
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {	    
 		PasswordEncoder encoder =  NoOpPasswordEncoder.getInstance();

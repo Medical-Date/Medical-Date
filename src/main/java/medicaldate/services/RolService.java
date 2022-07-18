@@ -29,6 +29,10 @@ public class RolService {
 		return rolRepository.obtenerRolPorNombre(rol);
 	}
 	
+	public Rol obtenerRolAdmin() {
+		return rolRepository.obtenerRolAdmin();
+	}
+	
 	
 
 

@@ -12,6 +12,10 @@
 
 	<ui:define name="content">
 		<h:form id="registerForm">
+		<p:messages for="messagesFormulario" id="messagesFormulario"
+				showDetail="true" closable="true">
+				<p:autoUpdate />
+			</p:messages>
 			<p:panel id="panelFichaNuevoUsuario" header="Introduza los datos"
 				class="ui-g-12 ui-md-12 ui-lg-12">
 
@@ -26,8 +30,7 @@
 								<h:selectOneMenu id="roles" value="#{SignUpController.rolesSelected}">
 									<f:selectItem itemLabel="" itemValue="" />
 									<f:selectItems value="#{SignUpController.listaRolesPorNombre}" />
-									<p:ajax listener="#{SignUpController.comprobarSiEsMedicoOPaciente}"
-										update="registerForm" event="change" />
+									<p:ajax listener="#{SignUpController.comprobarSiEsMedicoOPaciente}" event="change" />
 								</h:selectOneMenu>
 
 
@@ -42,9 +45,9 @@
 							</div>
 							<div class="ui-g-8 ui-md-2">
 								<h:inputText id="uname" value="#{SignUpController.userName}"
-									required="true"
-									requiredMessage="Por favor introduzca su nombre de usuario" />
-								<h:message for="uname" style="color:red" />
+								
+									 />
+								
 							</div>
 						</div>
 						<div class="ui-g-12 ui-md-6">
@@ -148,8 +151,8 @@
 							</div>
 							<div class="ui-g-8 ui-md-2">
 								<h:inputSecret id="contrasenaUsuario"
-									value="#{SignUpController.password}" required="true"
-									requiredMessage="Por favor introduzca su contraseña" />
+									value="#{SignUpController.password}" 
+									/>
 
 							</div>
 						</div>

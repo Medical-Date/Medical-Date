@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.context.annotation.SessionScope;
@@ -17,12 +18,15 @@ import lombok.Setter;
 import medicaldate.model.Medico;
 import medicaldate.model.Paciente;
 import medicaldate.model.Rol;
+import medicaldate.model.RolUsuarios;
 import medicaldate.model.Roles;
 import medicaldate.model.User;
 import medicaldate.repository.MedicoRepository;
 import medicaldate.repository.PacienteRepository;
+import medicaldate.repository.RolUsuariosRepository;
 import medicaldate.repository.UserRepository;
 import medicaldate.services.RolService;
+import medicaldate.services.RolUsuariosService;
 import medicaldate.services.UserService;
 import medicaldate.util.JsfUtils;
 
@@ -70,6 +74,9 @@ public class SignUpBackingBean {
 
 	@Autowired
 	private RolService rolService;
+	
+	@Autowired
+	private RolUsuariosRepository rolUsuariosRepository;
 
 	@Getter
 	@Setter
@@ -161,7 +168,13 @@ public class SignUpBackingBean {
 
 	public String doSave() {
 		String result = "home";
+		Boolean validacionesGuardar=validacionesGuardar();
 		if (password.equals(passwordRepeat)) {
+			
+			
+			if(validacionesGuardar) {
+				
+			
 
 			if (!usersService.existsUser(userName)) {
 				User user = new User();
@@ -179,23 +192,34 @@ public class SignUpBackingBean {
 				user.setRol(nuevoRol);	
 				user.setEnabled(true);
 				usersService.saveUser(user);
+				RolUsuarios nuevoRolUsuarios= new RolUsuarios();
 				if (rolesSelected.equals("MEDICO")) {
 					User nuevoUser = new User();
 					nuevoUser = userService.obtenerUsuarioPorNombreUsuario(userName);
 					Medico nuevoMedico = new Medico();
 					nuevoMedico.setUser(nuevoUser);
 					nuevoMedico.setNombre(medico.getNombre());
-					medicoRepository.save(nuevoMedico);
-				}
-
-				if (rolesSelected.equals("PACIENTE")) {
+					medicoRepository.save(nuevoMedico);					
+					nuevoRolUsuarios.setRol(rolesSelected);
+					nuevoRolUsuarios.setUsername(userName);
+					rolUsuariosRepository.save(nuevoRolUsuarios);
+					
+				}else if (rolesSelected.equals("PACIENTE")) {
 					User nuevoUser = new User();
 					nuevoUser = userService.obtenerUsuarioPorNombreUsuario(userName);
 					Paciente nuevoPaciente = new Paciente();
 					nuevoPaciente.setUser(nuevoUser);
 					nuevoPaciente.setNombre(paciente.getNombre());
 					pacienteRepository.save(nuevoPaciente);
+					nuevoRolUsuarios.setRol(rolesSelected);
+					nuevoRolUsuarios.setUsername(userName);
+					rolUsuariosRepository.save(nuevoRolUsuarios);
+				}else {
+					nuevoRolUsuarios.setRol(rolesSelected);
+					nuevoRolUsuarios.setUsername(userName);
+					rolUsuariosRepository.save(nuevoRolUsuarios);
 				}
+				
 				loginBackingBean.setCurrentUser(user);
 				clear();
 				/*
@@ -213,10 +237,32 @@ public class SignUpBackingBean {
 			FacesContext.getCurrentInstance().addMessage("loginForm:inputPassword", msg);
 			result = "register";
 		}
+		
+		}else {
+			result="";
+		}
+		
 
 		return result;
 	}
 	
+	private Boolean validacionesGuardar() {
+		Boolean esValido=true;
+		
+		if((userName.isBlank() || userName == null) || (password.isBlank() || password == null)) {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"","Debe rellenar los campos obligatorios");
+			FacesContext.getCurrentInstance().addMessage("messagesFormulario", msg);
+			esValido=false;
+		}
+		if(userName.length()<3) {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"","El nombre debe ser mayor que 3");
+			FacesContext.getCurrentInstance().addMessage("messagesFormulario", msg);
+			esValido=false;
+		}
+		
+		return esValido;
+	}
+
 	public void comprobarSiEsMedicoOPaciente() {
 		esMedico=false;
 		esPaciente=false;

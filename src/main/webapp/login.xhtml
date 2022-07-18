@@ -7,19 +7,25 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions"
-	xmlns:sec="https://joinfaces.org/security" template="/templateHome.xhtml">
+	xmlns:sec="https://joinfaces.org/security"
+	template="/templateHome.xhtml">
 
 	<ui:define name="content">
 		<h:form id="loginForm">
+
+			<p:messages for="messagesFormulario" id="messagesFormulario"
+				showDetail="true" closable="true">
+				<p:autoUpdate />
+			</p:messages>
 			<table frame="box">
 				<tr>
 					<th>Inicio de sesión</th>
 				</tr>
 				<tr>
 					<td><h:outputText value="Introduzca su nombre de usuario : " /></td>
-					<td><h:inputText id="inputName" value="#{LoginController.userName}"
-							required="true" requiredMessage="El usuario no puede estar vacío" />
-					</td>
+					<td><h:inputText id="inputName"
+							value="#{LoginController.userName}" required="true"
+							requiredMessage="El usuario no puede estar vacío" /></td>
 					<td><h:message for="inputName" style="color:red" /></td>
 				</tr>
 				<tr>
