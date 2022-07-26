@@ -9,43 +9,33 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-
 @Data
 @Entity
-@Table(name = "PACIENTE")
+@Table(name = "MEDICOS_CENTROS_PACIENTES")
 @Getter
 @Setter
-public class Paciente {
+public class MedicosCentroPaciente {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private Long id;
 	
-	@OneToOne
-	@JoinColumn(name="user_id")
-	private User user;
+	@ManyToOne( fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_medico", foreignKey = @ForeignKey(name = "FK_MEDICOSCENTRO_MEDICO"))
+	private Medico idMedico;
 	
-	@Column(name = "NOMBRE", unique = true)
-	@NotNull
-	private String nombre;
+	@ManyToOne( fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_centro", foreignKey = @ForeignKey(name = "FK_MEDICOSCENTRO_CENTRO"))
+	private Centros idCentro;
 	
-	@OneToOne
-	@JoinColumn(name="cita_id")
-	private Cita cita;
-	
-	@JoinColumn(name="tieneCentro")
-	private Boolean tieneCentro;
-	
-	@JoinColumn(name="tieneMedico")
-	private Boolean tieneMedico;
-
+	@ManyToOne( fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_paciente", foreignKey = @ForeignKey(name = "FK_MEDICOSPACIENTES_PACIENTE"))
+	private Paciente idPaciente;
 
 }

@@ -9,14 +9,14 @@ import org.springframework.stereotype.Repository;
 
 import medicaldate.model.Centros;
 import medicaldate.model.Medico;
-
+import medicaldate.model.MedicosCentro;
+import medicaldate.model.Paciente;
 @Repository
-public interface CentrosRepository extends CrudRepository<Centros, Long>{
+public interface MedicosCentroRepository extends CrudRepository<MedicosCentro, Long>{
 	
-	@Query("SELECT nombre FROM Centros")
-	public List<Centros> obtenerListaCentrosPorNombre();
+	@Query("SELECT m FROM MedicosCentro m WHERE m.idCentro.id = ?1")
+	public List<MedicosCentro> obtenerMedicoPorCentro(@Param("id") long id);
+
 	
-	@Query("SELECT c FROM Centros c WHERE c.nombre = ?1")
-	public Centros obtenerCentrosPorNombre(@Param("nombre") String nombre);
 
 }

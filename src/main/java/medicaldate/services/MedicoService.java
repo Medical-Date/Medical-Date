@@ -3,6 +3,7 @@ package medicaldate.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import medicaldate.model.Medico;
@@ -32,6 +33,11 @@ public class MedicoService {
 	public Medico getMedicosPorNombre(String nombre){
 		return  medicoRepository.obtenerMedicoPorNombre(nombre);
 	}
+	
+	public List<Medico> getListaMedicosPorNombreNoAsignados(){
+		return medicoRepository.obtenerListaMedicoPorNombreNoAsignados();
+	}
+	
 	
 
 	

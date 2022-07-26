@@ -31,5 +31,9 @@ public class PacienteService {
 	public Paciente getPacientesPorNombre(String nombre){
 		return  pacienteRepository.obtenerPacientePorNombre(nombre);
 	}
+	
+	public List<Paciente> obtenerListaPacientePorNombreSinCentroAsignado(){
+		return pacienteRepository.obtenerListaPacientePorNombreSinCentroAsignado();
+	}
 
 }

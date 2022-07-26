@@ -118,24 +118,6 @@ public class MedicoBean implements Serializable {
 		}
 	}
 	
-	public void asignarMedico() {
-		medicoPaciente= new MedicosPacientes();
-		if(medico != null && paciente!=null) {
-			Paciente pacienteSeleccionado = pacienteService.getPacientesPorNombre(pacienteSelected);
-			Medico medicoSeleccionado = medicoService.getMedicosPorNombre(medicoSelected);
-			paciente= pacienteSeleccionado;
-			medico=medicoSeleccionado;
-			
-			medicoPaciente.setIdMedico(medico);
-			medicoPaciente.setIdPaciente(paciente);
-			
-			medicosPacientesRepository.save(medicoPaciente);
-			
-			FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
-			.handleNavigation(FacesContext.getCurrentInstance(), null, "/listMedicosAsignados.xhtml");
-		}
-		
-	}
 
 
 }
