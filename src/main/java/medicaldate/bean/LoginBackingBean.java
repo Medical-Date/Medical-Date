@@ -3,6 +3,7 @@ package medicaldate.bean;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
@@ -16,71 +17,109 @@ import medicaldate.model.User;
 import medicaldate.services.UserService;
 import medicaldate.util.JsfUtils;
 
-
 @Controller("LoginController")
 @SessionScope
 public class LoginBackingBean {
 	@Getter
 	User currentUser;
-	@Getter @Setter
+	@Getter
+	@Setter
 	String userName;
-	@Getter @Setter
+	@Getter
+	@Setter
 	String password;
-		
+
 	@Autowired
-	UserService userService;		
-	
-	
+	UserService userService;
+
 	public void setCurrentUser(User currentUser) {
 		this.currentUser = currentUser;
-		userName=currentUser.getUserName();
-		password=this.currentUser.getPassword();
+		userName = currentUser.getUserName();
+		password = this.currentUser.getPassword();
 		doLogin();
 	}
-	
+
 	public void usuarioLogado() {
-		User user= userService.getCurrentUser();
-		
+		User user = userService.getCurrentUser();
+
 		user.getFirstName();
 	}
 
-	
-	
-	
 	public String doLogin() {
-		String result="welcome.xhtml";
-						
-		if(userService.existsUser(userName))
-		{
-			User user=userService.obtenerUsuarioPorNombreUsuario(userName);
-			if(user!=null && user.getPassword().contentEquals(password)) {
-				currentUser=user;
-				UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(userName, password);		
+		String result = "welcome.xhtml";
+
+		Boolean esValido = validacionesGuardar();
+		if (esValido) {
+
+			User user = userService.obtenerUsuarioPorNombreUsuario(userName);
+			if (user != null && user.getPassword().contentEquals(password)) {
+				currentUser = user;
+				UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(userName,
+						password);
 				SecurityContext sc = SecurityContextHolder.getContext();
 				sc.setAuthentication(authReq);
 				clear();
-			}else {				
-				FacesMessage msg=new FacesMessage("Password Invalid");
-				//FacesContext.getCurrentInstance().addMessage(null, msg);
-				JsfUtils.addErrorMessage("ERROR", "Contraseña incorrecta");
-				result="login";
-			}			
-		}else {
-			FacesMessage msg=new FacesMessage("User not found!");
-			FacesContext.getCurrentInstance().addMessage(null, msg);
-			result="login";
+			}
+		} else {
+			result = "login.xhtml";
 		}
-		return result;	
+
+		return result;
+	}
+
+	private Boolean validacionesGuardar() {
+		Boolean esValido = true;
+		String camposValidos = "";
+		String usuarioNoExiste = "";
+		String contraseñaIncorrecta = "";
+
+		if ((userName.isBlank() || userName == null) && (password.isBlank() || password == null)) {
+			camposValidos = "Debe rellenar el nombre de usuario y la contraseña";
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", camposValidos));
+			esValido = false;
+		}
+
+		if (!userName.isEmpty() && !(userService.existsUser(userName))) {
+			usuarioNoExiste = "El usuario no existe";
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", usuarioNoExiste));
+			esValido = false;
+		}
+		if (userName != null) {
+
+			User user = userService.obtenerUsuarioPorNombreUsuario(userName);
+			if (user != null && !(user.getPassword().contentEquals(password))) {
+				contraseñaIncorrecta = "La contaseña es incorrecta";
+				FacesContext.getCurrentInstance().addMessage(null, new 
+						FacesMessage(FacesMessage.SEVERITY_ERROR, "", contraseñaIncorrecta));
+				esValido = false;
+			}
+		}
+
+		
+
+		return esValido;
 	}
 	
 	public String doLogout() {
-		this.currentUser=null;
+		this.currentUser = null;
 		return "index";
 	}
-	
+
+	public Boolean existeUsuarioLogado() {
+		Boolean res = false;
+		if (this.currentUser == null) {
+			return res;
+		} else {
+			res = true;
+		}
+		return res;
+	}
+
 	private void clear() {
-		password="";
-		userName="";
+		password = "";
+		userName = "";
 	}
 
 	@Override
@@ -124,11 +163,11 @@ public class LoginBackingBean {
 		} else if (!userService.equals(other.userService))
 			return false;
 		return true;
-	}	
-	
+	}
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 4806972322119675590L;
-	
+
 }

@@ -4311,11 +4311,11 @@ div#menuForm\:menuPrincipal span.ui-menuitem-text {
 		display: none !important;
 	}
 	/* poner las notificaciones en el centro para la web */
-	.ui-growl {
-		top: 10%;
-		right: 50%;
+/*	.ui-growl {
+		top: 62%;
+		right: 10%;
 	}
-}
+}*/
 
 @media screen and (max-width : 1000px) {
 	.visibleWebOnly {
@@ -4511,3 +4511,8 @@ max-presupuesto{
 	width:75%; 
 	z-index:99;
 }
+.textoMedicalDate{
+	font-weight: bold;
+    font-size: 50px;
+}
+

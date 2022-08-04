@@ -1,5 +1,7 @@
 package medicaldate.bean;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +21,6 @@ import medicaldate.model.Medico;
 import medicaldate.model.Paciente;
 import medicaldate.model.Rol;
 import medicaldate.model.RolUsuarios;
-import medicaldate.model.Roles;
 import medicaldate.model.User;
 import medicaldate.repository.MedicoRepository;
 import medicaldate.repository.PacienteRepository;
@@ -55,8 +56,6 @@ public class SignUpBackingBean {
 	@Setter
 	private Paciente paciente;
 
-	@Setter
-	private Roles roles;
 
 	@Getter
 	@Setter
@@ -164,13 +163,12 @@ public class SignUpBackingBean {
 		for (Rol r : listaRoles) {
 			listaRolesPorNombre.add(r.getRol());
 		}
+		listaRolesPorNombre.remove("USUARIO");
 	}
 
 	public String doSave() {
 		String result = "home";
-		Boolean validacionesGuardar=validacionesGuardar();
-		if (password.equals(passwordRepeat)) {
-			
+		Boolean validacionesGuardar=validacionesGuardar();		
 			
 			if(validacionesGuardar) {
 				
@@ -188,80 +186,110 @@ public class SignUpBackingBean {
 				user.setTelefono(telefono);
 				user.setFechaNacimiento(fechaNacimiento);
 				Rol nuevoRol = new Rol();
-				nuevoRol = rolService.obtenerRolPorNombre(rolesSelected);
+				nuevoRol = rolService.obtenerRolPorNombre("USUARIO");
 				user.setRol(nuevoRol);	
 				user.setEnabled(true);
-				usersService.saveUser(user);
-				RolUsuarios nuevoRolUsuarios= new RolUsuarios();
-				if (rolesSelected.equals("MEDICO")) {
-					User nuevoUser = new User();
-					nuevoUser = userService.obtenerUsuarioPorNombreUsuario(userName);
-					Medico nuevoMedico = new Medico();
-					nuevoMedico.setUser(nuevoUser);
-					nuevoMedico.setNombre(medico.getNombre());
-					medicoRepository.save(nuevoMedico);					
-					nuevoRolUsuarios.setRol(rolesSelected);
-					nuevoRolUsuarios.setUsername(userName);
-					rolUsuariosRepository.save(nuevoRolUsuarios);
-					
-				}else if (rolesSelected.equals("PACIENTE")) {
-					User nuevoUser = new User();
-					nuevoUser = userService.obtenerUsuarioPorNombreUsuario(userName);
-					Paciente nuevoPaciente = new Paciente();
-					nuevoPaciente.setUser(nuevoUser);
-					nuevoPaciente.setNombre(paciente.getNombre());
-					pacienteRepository.save(nuevoPaciente);
-					nuevoRolUsuarios.setRol(rolesSelected);
-					nuevoRolUsuarios.setUsername(userName);
-					rolUsuariosRepository.save(nuevoRolUsuarios);
-				}else {
-					nuevoRolUsuarios.setRol(rolesSelected);
-					nuevoRolUsuarios.setUsername(userName);
-					rolUsuariosRepository.save(nuevoRolUsuarios);
-				}
-				
+				usersService.saveUser(user);				
 				loginBackingBean.setCurrentUser(user);
 				clear();
-				/*
-				 * FacesMessage msg=new FacesMessage("User Created!!!");
-				 * FacesContext.getCurrentInstance().addMessage(null, msg);
-				 */
-				return "login";
-			} else {
-				FacesMessage msg = new FacesMessage("User name already taken.");
-				FacesContext.getCurrentInstance().addMessage(null, msg);
-				result = "register";
-			}
+
+				return "solicitudRegistro.xhtml";
 		} else {
-			FacesMessage msg = new FacesMessage("Passwords do not match!.");
-			FacesContext.getCurrentInstance().addMessage("loginForm:inputPassword", msg);
-			result = "register";
+			
+			result = "register.xhtml";
 		}
 		
 		}else {
-			result="";
+			result = "register.xhtml";
 		}
-		
 
+	
 		return result;
 	}
 	
 	private Boolean validacionesGuardar() {
 		Boolean esValido=true;
+		String camposValidos="";
 		
-		if((userName.isBlank() || userName == null) || (password.isBlank() || password == null)) {
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"","Debe rellenar los campos obligatorios");
-			FacesContext.getCurrentInstance().addMessage("messagesFormulario", msg);
+		if((userName.isBlank() || userName == null) || 
+			(password.isBlank() || password == null) ||
+			(passwordRepeat.isBlank() || passwordRepeat == null) ||
+			(dni.isBlank() || dni == null) ||
+			(firstName.isBlank() || firstName == null) ||
+			(lastName.isBlank() || lastName == null) ||
+			(fechaNacimiento == null) ||
+			(direccion.isBlank() || direccion == null) ||
+			(telefono.isBlank() || telefono == null) ||
+			(email.isBlank() || email == null) ) {
+			camposValidos="Debe rellenar todos los campos obligatorios";
+
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", camposValidos));
 			esValido=false;
 		}
-		if(userName.length()<3) {
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"","El nombre debe ser mayor que 3");
-			FacesContext.getCurrentInstance().addMessage("messagesFormulario", msg);
+		
+		LocalDate fechaActual= LocalDate.now();
+		if(fechaNacimiento!=null) {		
+		if(fechaNacimiento.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isAfter(fechaActual) || fechaNacimiento.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isEqual(fechaActual))  {
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "La fecha de nacimiento debe ser anterior a la actual"));
 			esValido=false;
 		}
+			
+		}
+		if(!dni.isBlank() &&  !JsfUtils.esNIEValido(dni) ) {
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "El DNI no es válido"));
+			esValido=false;
+		}
+		if(!telefono.isBlank() && !(telefono.startsWith("6")) && !(telefono.startsWith("7")) && !(telefono.startsWith("9")) && !(telefono.startsWith("8"))) {
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "El número de teléfono no es válido"));
+			esValido=false;
+		}
+		if(!telefono.isBlank() && telefono.length()!=9) {
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "El número de teléfono debe tener 9 dígitos"));
+			esValido=false;
+		}
+		
+		if(!email.isBlank() &&  !email.contains("@")) {
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Formato de email no válido"));
+			esValido=false;
+		}
+		if(!userName.isBlank() &&  userName.length()<3) {
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "El nombre de usuario debe ser mayor de 2 caracteres"));
+			esValido=false;
+		}
+		if(!firstName.isBlank() &&  firstName.length()<3) {
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "El nombre debe ser mayor de 2 caracteres"));
+			esValido=false;
+		}
+		if(!lastName.isBlank() &&  lastName.length()<3) {
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "El apellido debe ser mayor de 2 caracteres"));
+			esValido=false;
+		}
+		if(!password.equals(passwordRepeat)) {
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "La contraseña no coincide"));
+			esValido=false;
+		}
+		if(!password.isBlank() && password.length()<8) {
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "La contraseña debe tener más de 7 caracteres"));
+			esValido=false;
+		}
+
+
 		
 		return esValido;
 	}
+	
+	
 
 	public void comprobarSiEsMedicoOPaciente() {
 		esMedico=false;

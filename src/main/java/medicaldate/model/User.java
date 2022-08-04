@@ -20,8 +20,7 @@ import javax.persistence.Table;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-
-
+import javax.validation.constraints.Size;
 
 import lombok.Data;
 import lombok.Getter;
@@ -41,17 +40,21 @@ public class User {
 
 	@Column(name = "USERNAME", unique = true)
 	@NotNull
+	@Size(max = 20, min=3)
 	private String userName;
 
 	@Column(name = "FIRSTNAME")
 	@NotNull
+	@Size(max = 20, min=3)
 	private String firstName;
 
 	@Column(name = "LASTNAME")
 	@NotNull
+	@Size(max = 30, min=3)
 	private String lastName;
 
 	@Column(name = "FECHANACIMIENTO")
+	@NotNull
 	private Date fechaNacimiento;
 
 	@Column(name = "DNI")
@@ -60,29 +63,22 @@ public class User {
 
 	@Column(name = "DIRECCION")
 	@NotNull
+	@Size(max = 50)
 	private String direccion;
 
 	@Column(name = "TELEFONO")
 	@NotNull
+	@Size(max = 9, min=9)
 	private String telefono;
 
 	@Column(name = "EMAIL")
 	@NotNull
+	@Size(max = 50)
 	private String email;
 
 	@Column(name = "PASSWORD")
 	@NotNull
 	private String password;
-
-	@Column(name = "DBPASSWORD")
-	private String dbPassword;
-
-	@Column(name = "DBNAME")
-	private String dbName;
-
-//	@Column(name = "ROLES")
-//	@Enumerated(EnumType.STRING)
-//	private Roles roles;
 
 	@OneToOne
 	@JoinColumn(name = "rol_id")

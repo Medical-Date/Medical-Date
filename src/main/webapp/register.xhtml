@@ -9,42 +9,62 @@
 	xmlns:pe="http://primefaces.org/ui/extensions"
 	xmlns:sec="https://joinfaces.org/security"
 	template="/templateHome.xhtml">
+	
+	<script>
+    PrimeFaces.locales['es'] = {
+        closeText: 'Cerrar',
+        prevText: 'Anterior',
+        nextText: 'Siguiente',
+        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+        dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+        weekHeader: 'Semana',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: '',
+        timeOnlyTitle: 'Sólo hora',
+        timeText: 'Tiempo',
+        hourText: 'Hora',
+        minuteText: 'Minuto',
+        secondText: 'Segundo',
+        millisecondText: 'Milisegundo',
+        currentText: 'Fecha actual',
+        ampm: false,
+        month: 'Mes',
+        week: 'Semana',
+        day: 'Día',
+        allDayText: 'Todo el día',
+        today: 'Hoy',
+        clear: 'Claro'
+    };
+
+</script>
 
 	<ui:define name="content">
+
 		<h:form id="registerForm">
-		<p:messages for="messagesFormulario" id="messagesFormulario"
-				showDetail="true" closable="true">
-				<p:autoUpdate />
-			</p:messages>
-			<p:panel id="panelFichaNuevoUsuario" header="Introduza los datos"
+		
+		<p:messages id="mensaje" showDetail="true" autoUpdate="true" 
+			closable="true" globalOnly="true"/>
+		
+			<p:panel id="panelFichaNuevoUsuario" header="Introduza sus datos"
 				class="ui-g-12 ui-md-12 ui-lg-12">
 
 				<div class="ui-g">
 					<div class="ui-g-12 ui-md-12 ui-lg-12">
-						<div class="ui-g-12 ui-md-6">
-							<div class="ui-g-4 ui-md-4">
-								<h:outputLabel for="roles" value="Rol" style="font-weight:bold" />
-								<br />
-							</div>
-							<div class="ui-g-8 ui-md-2">
-								<h:selectOneMenu id="roles" value="#{SignUpController.rolesSelected}">
-									<f:selectItem itemLabel="" itemValue="" />
-									<f:selectItems value="#{SignUpController.listaRolesPorNombre}" />
-									<p:ajax listener="#{SignUpController.comprobarSiEsMedicoOPaciente}" event="change" />
-								</h:selectOneMenu>
-
-
-							</div>
-						</div>
+						
 						<div class="ui-g-12 ui-md-6">
 							<div class="ui-g-4 ui-md-4">
 								<h:outputLabel for="nombreLogin"
-									value="Introduzca su nombre de usuario:"
+									value="Introduzca su nombre de usuario: *"
 									style="font-weight:bold" />
 								<br />
 							</div>
 							<div class="ui-g-8 ui-md-2">
-								<h:inputText id="uname" value="#{SignUpController.userName}"
+								<h:inputText id="uname" value="#{SignUpController.userName}" maxlength="20"
 								
 									 />
 								
@@ -52,101 +72,97 @@
 						</div>
 						<div class="ui-g-12 ui-md-6">
 							<div class="ui-g-4 ui-md-4">
-								<h:outputLabel for="nombreUsuario" value="Introduzca su nombre:"
-									style="font-weight:bold" />
-								<br />
-							</div>
-							<div class="ui-g-8 ui-md-2">
-								<p:inputText id="fname" value="#{SignUpController.firstName}"
-									required="true"
-									requiredMessage="Por favor introduzca su nombre" />
-								<h:message for="fname" style="color:red" />
-							</div>
-						</div>
-						<div class="ui-g-12 ui-md-6">
-							<div class="ui-g-4 ui-md-4">
-								<h:outputLabel for="apellidoUsuario"
-									value="Introduzca su apellido:" style="font-weight:bold" />
-								<br />
-							</div>
-							<div class="ui-g-8 ui-md-2">
-								<p:inputText id="lname" value="#{SignUpController.lastName}"
-									required="true"
-									requiredMessage="Por favor introduzca su apellido" />
-								<h:message for="lname" style="color:red" />
-							</div>
-						</div>
-						<div class="ui-g-12 ui-md-6">
-							<div class="ui-g-4 ui-md-4">
-								<h:outputLabel for="dniUsuario" value="Introduzca su D.N.I."
+								<h:outputLabel for="dniUsuario" value="Introduzca su D.N.I. *"
 									style="font-weight:bold" />
 								<br />
 							</div>
 							<div class="ui-g-4 ui-md-2">
-								<p:inputText id="dniUsuario" value="#{SignUpController.dni}"
-									required="true" requiredMessage="Por favor introduzca su D.N.I" />
-								<h:message for="lname" style="color:red" />
+								<p:inputText id="dniUsuario" value="#{SignUpController.dni}"/>
+								
 							</div>
 						</div>
 						<div class="ui-g-12 ui-md-6">
 							<div class="ui-g-4 ui-md-4">
-								<h:outputLabel for="direccionUsuario"
-									value="Introduzca su direccion" style="font-weight:bold" />
-								<br />
-							</div>
-							<div class="ui-g-8 ui-md-2">
-								<p:inputText id="direccionUsuario" value="#{SignUpController.direccion}"
-									required="true"
-									requiredMessage="Por favor introduzca su dirección" />
-							</div>
-						</div>
-						<div class="ui-g-12 ui-md-6">
-							<div class="ui-g-4 ui-md-4">
-								<h:outputLabel for="telefonoUsuario"
-									value="Introduzca su teléfono:" style="font-weight:bold" />
-								<br />
-							</div>
-							<div class="ui-g-8 ui-md-2">
-								<p:inputNumber id="telefonoUsuario" value="#{SignUpController.telefono}"
-									required="true"
-									requiredMessage="Por favor introduzca su teléfono" />
-
-							</div>
-						</div>
-						<div class="ui-g-12 ui-md-6">
-							<div class="ui-g-4 ui-md-4">
-								<h:outputLabel for="emailUsuario" value="Introduzca su email:"
+								<h:outputLabel for="nombreUsuario" value="Introduzca su nombre: *"
 									style="font-weight:bold" />
 								<br />
 							</div>
 							<div class="ui-g-8 ui-md-2">
-								<p:inputText id="email" value="#{SignUpController.email}"
-									required="true" requiredMessage="Por favor introduzca su email" />
-
+								<p:inputText id="fname" value="#{SignUpController.firstName}" maxlength="20"/>
+								
+							</div>
+						</div>
+						
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-4 ui-md-4">
+								<h:outputLabel for="apellidoUsuario"
+									value="Introduzca sus apellidos: *" style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<p:inputText id="lname" value="#{SignUpController.lastName}" maxlength="30"
+								 />
+								
 							</div>
 						</div>
 						<div class="ui-g-12 ui-md-6">
 							<div class="ui-g-4 ui-md-4">
 								<h:outputLabel for="fechalUsuario"
-									value="Introduzca su fecha de nacimiento:"
+									value="Introduzca su fecha de nacimiento: *"
 									style="font-weight:bold" />
 								<br />
 							</div>
 							<div class="ui-g-8 ui-md-2">
 								<p:calendar id="fechaNacimiento"
-									value="#{SignUpController.fechaNacimiento}" required="true"
-									requiredMessage="Por favor introduzca su fecha de nacimiento"
-									pattern="dd-MM-yyyy" />
+									value="#{SignUpController.fechaNacimiento}" 
+									pattern="dd-MM-yyyy" locale="es"/>
+<!-- 								<p:datePicker id="fechaNacimiento" value="#{SignUpController.fechaNacimiento}" monthNavigator="true" yearNavigator="true" showWeek="true"/> -->
 
 							</div>
 						</div>
+						
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-4 ui-md-4">
+								<h:outputLabel for="direccionUsuario"
+									value="Introduzca su direccion: *" style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<p:inputText id="direccionUsuario" value="#{SignUpController.direccion}" maxlength="50"/>
+							</div>
+						</div>
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-4 ui-md-4">
+								<h:outputLabel for="telefonoUsuario"
+									value="Introduzca su teléfono: *" style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<p:inputNumber id="telefonoUsuario" value="#{SignUpController.telefono}"  maxValue="999999999"
+									decimalPlaces="0"
+								 />
+
+							</div>
+						</div>
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-4 ui-md-4">
+								<h:outputLabel for="emailUsuario" value="Introduzca su email: *"
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<p:inputText id="email" value="#{SignUpController.email}" maxlength="50"/>
+
+							</div>
+						</div>
+						
 
 
 
 						<div class="ui-g-12 ui-md-6">
 							<div class="ui-g-4 ui-md-4">
 								<h:outputLabel for="contrasenaUsuario"
-									value="Introduzca su contraseña :" style="font-weight:bold" />
+									value="Introduzca su contraseña: *" style="font-weight:bold" />
 								<br />
 							</div>
 							<div class="ui-g-8 ui-md-2">
@@ -160,13 +176,12 @@
 						<div class="ui-g-12 ui-md-6">
 							<div class="ui-g-4 ui-md-4">
 								<h:outputLabel for="repiteContrasenaUsuario"
-									value="Repita su contraseña :" style="font-weight:bold" />
+									value="Repita su contraseña: *" style="font-weight:bold" />
 								<br />
 							</div>
 							<div class="ui-g-8 ui-md-2">
 								<h:inputSecret id="repiteContrasenaUsuario"
-									value="#{SignUpController.passwordRepeat}" required="true"
-									requiredMessage="Por favor introduzca de nuevo su contraseña" />
+									value="#{SignUpController.passwordRepeat}" />
 
 							</div>
 						</div>

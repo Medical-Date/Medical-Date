@@ -10,38 +10,39 @@
 	xmlns:sec="https://joinfaces.org/security"
 	template="/templateHome.xhtml">
 
-	<ui:define name="content">
-		<h:form id="loginForm">
 
-			<p:messages for="messagesFormulario" id="messagesFormulario"
-				showDetail="true" closable="true">
-				<p:autoUpdate />
-			</p:messages>
-			<table frame="box">
-				<tr>
-					<th>Inicio de sesión</th>
-				</tr>
-				<tr>
-					<td><h:outputText value="Introduzca su nombre de usuario : " /></td>
-					<td><h:inputText id="inputName"
-							value="#{LoginController.userName}" required="true"
-							requiredMessage="El usuario no puede estar vacío" /></td>
-					<td><h:message for="inputName" style="color:red" /></td>
-				</tr>
-				<tr>
-					<td><h:outputText value="Introduzca su contraseña :" /></td>
-					<td><h:inputSecret id="inputPassword"
-							value="#{LoginController.password}" required="true"
-							requiredMessage="La contraseña no puede estar vacía" /></td>
-					<td><h:message for="inputPassword" style="color:red" /></td>
-				</tr>
-				<tr>
-					<td><h:commandButton value="Acceder"
-							action="#{LoginController.doLogin}" /></td>
-					<td><h:outputText value="¿No estás registrado? " /> <h:outputLink
-							value="register.xhtml">Resgistrate aquí</h:outputLink></td>
-				</tr>
-			</table>
+	<ui:define name="content">
+		<h:form id="loginForm">	
+		
+		<p:messages id="mensaje" showDetail="true" autoUpdate="true" 
+			closable="true" globalOnly="true"/>
+
+			<h:panelGrid id="panel" columns="2" border="1" cellpadding="10"
+				cellspacing="1" styleClass="panelStyle">
+				<f:facet name="header">
+					<h:outputText value="Bienvenido a Medical Date" />
+				</f:facet>
+
+				<h:outputText value="Introduzca su nombre de usuario" />
+				<h:inputText id="inputName" value="#{LoginController.userName}"/>
+
+				<h:outputText value="Introduzca su contraseña" />
+				<h:inputSecret id="inputPassword"
+					value="#{LoginController.password}"  />
+
+				<h:commandButton value="Acceder" action="#{LoginController.doLogin}" />
+				<h:outputLink value="register.xhtml">Resgistrate aquí</h:outputLink>
+
+
+			</h:panelGrid>
+
+
 		</h:form>
 	</ui:define>
+
+
+
+
+
+
 </ui:composition>

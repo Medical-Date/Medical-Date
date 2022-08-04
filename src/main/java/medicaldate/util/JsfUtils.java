@@ -1,6 +1,8 @@
 package medicaldate.util;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -13,6 +15,8 @@ public class JsfUtils {
 	private JsfUtils() {
 		super();
 	}
+	public static final String FORMATO_NIE="^[a-zA-Z](\\d{7})[TRWAGMYFPDXBNJZSQVHLCKEtrwagmyfpdxbnjzsqvhlcke]$";
+	public static final String FORMATO_NIF_NIE_LETRAS="TRWAGMYFPDXBNJZSQVHLCKE";
 
 	/**
 	 * Recupera el atributo de sesion con el nombre 'name'.
@@ -135,6 +139,35 @@ public class JsfUtils {
 		log.warn(msg);
 		FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_WARN, title, msg);
 		FacesContext.getCurrentInstance().addMessage(etiqueta, facesMsg);
+	}
+	
+	public static boolean esNIEValido(String entrada) {
+		String nie = new String(entrada);
+
+		final Pattern niePattern = Pattern.compile(FORMATO_NIE);
+		final Matcher m = niePattern.matcher(nie);
+		boolean res = false;
+		if (m.matches()) {
+			if (nie.toUpperCase().startsWith("X")) {
+				nie = nie.replaceFirst("X", "0");
+			} else if (nie.toUpperCase().startsWith("Y")) {
+				nie = nie.replaceFirst("Y", "1");
+			} else if (nie.toUpperCase().startsWith("Z")) {
+				nie = nie.replaceFirst("Z", "2");
+			}
+
+			final String letra = nie.substring(nie.length() - 1);
+			// Extraer letra del NIF
+			final String letras = FORMATO_NIF_NIE_LETRAS;
+			int dni = Integer.parseInt(nie.substring(0, nie.length() - 1));
+			dni = (dni % 23);
+			final String reference = letras.substring(dni, dni + 1);
+
+			if (reference.equalsIgnoreCase(letra)) {
+				res = true;
+			}
+		}
+		return res;
 	}
 
 }

@@ -10,9 +10,26 @@
 	xmlns:sec="https://joinfaces.org/security" template="/template.xhtml">
 
 	<ui:define name="content">
-		<h:form id="welcomeForm">
+		<h:form id="SolicitudRegForm">
+		<p:messages id="mensaje" showDetail="true" autoUpdate="true" 
+			closable="true" globalOnly="true"/>
 			<div>
 				<h:outputText value="Bienvenido a Medical Date #{LoginController.currentUser.userName}" />
+			</div>
+			
+			<div>
+				<p:outputLabel for="rol" value="¿Cómo desea registrarse?"/>
+                <p:selectOneMenu id="rol" value="#{solicitudesRegistrosBean.rolesSelected}">
+                    <f:selectItems value="#{solicitudesRegistrosBean.listaRolesPorNombre}" />
+
+                </p:selectOneMenu>
+				
+			</div>
+			
+			<div>
+			<p:commandButton value="Enviar solicitud" action="#{solicitudesRegistrosBean.enviarSolicitud}" />
+			
+			
 			</div>
 			
 			

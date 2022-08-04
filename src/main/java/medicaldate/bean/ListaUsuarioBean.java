@@ -24,7 +24,6 @@ import lombok.Setter;
 import medicaldate.model.Medico;
 import medicaldate.model.Paciente;
 import medicaldate.model.Rol;
-import medicaldate.model.Roles;
 import medicaldate.model.User;
 import medicaldate.repository.MedicoRepository;
 import medicaldate.repository.PacienteRepository;
@@ -122,9 +121,6 @@ public class ListaUsuarioBean implements Serializable {
 	@Getter
 	@Setter
 	private Paciente paciente;
-
-	@Setter
-	private Roles roles;
 	
 	@Getter
 	@Setter

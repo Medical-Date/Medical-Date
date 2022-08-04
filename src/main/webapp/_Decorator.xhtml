@@ -54,24 +54,24 @@
 		<div class="userbar-block">
 			<div>
 				<img class="logo"
-					src="#{resource['/img/Emblema_Universidad_de_Sevilla.png']}" alt=""></img>
+					src="#{resource['/img/LogoMD.PNG']}" alt=""></img>
 			</div>
-			<div class="title">
-				<span class="text-1">MD</span> <span class="text-2">MEDICAL DATE</span>
+			<div class="ui-g-4 ui-md-4 ui-lg-4">
+				<h:outputText value="MEDICAL DATE" class="textoMedicalDate"/>
 			</div>
 			
 			<div class="user-menu">
-				<img class="user-icon" src="#{resource['/img/user.png']}" alt=""></img>
+				<img class="user-icon" src="#{resource['/img/user.png']}" alt="" ></img>
 				<div class="user">
 					<div class="name">
-						<!-- @TODO Sustituir <h:outputText value=" #{loginBean.usuarioActual_nombreCompleto}" />  -->
-						<h:outputText
-							value="#{LoginController.currentUser.userName} - #{LoginController.currentUser.rol.rol}" />
+						<h:outputText value="#{LoginController.currentUser.userName} - #{LoginController.currentUser.rol.rol}"  rendered="#{LoginController.existeUsuarioLogado() eq true}" />
 					</div>
 					
 				</div>		
 			</div>
 		</div>
+		
+		 <p:growl id="growl-sticky" for="sticky-key" showDetail="true" sticky="true" />
 
 
 		<!-- Zona de contenidos -->
