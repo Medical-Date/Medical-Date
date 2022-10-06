@@ -1,7 +1,5 @@
 package medicaldate.model;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.springframework.lang.Nullable;
 
 import lombok.Data;
 import lombok.Getter;
@@ -34,5 +34,9 @@ public class SolicitudesRegistros {
 	@OneToOne
 	@JoinColumn(name="rol_id")
 	private Rol rol;
+	
+	@Nullable
+	@Column(name = "ESTADO")
+	private Boolean estado;
 
 }

@@ -60,6 +60,9 @@ public class LoginBackingBean {
 				sc.setAuthentication(authReq);
 				clear();
 			}
+			if(user.getRol().getRol().equals("USUARIO")) {
+				result="solicitudEspera.xhtml";
+			}
 		} else {
 			result = "login.xhtml";
 		}

@@ -18,6 +18,7 @@ import medicaldate.model.Rol;
 import medicaldate.model.SolicitudesRegistros;
 import medicaldate.model.User;
 import medicaldate.repository.SolicitudesRegistrosRepository;
+import medicaldate.repository.UserRepository;
 import medicaldate.services.RolService;
 import medicaldate.services.SolicitudesRegistrosService;
 import medicaldate.services.UserService;
@@ -35,6 +36,8 @@ public class SolicitudesRegistrosBean implements Serializable{
 	private SolicitudesRegistrosRepository solicitudesRegistrosRepository;
 	@Autowired
 	private SolicitudesRegistrosService solicitudesRegistrosService;
+	@Autowired
+	private UserRepository userRepository;
 	@Getter
 	@Setter
 	private List<String> listaRolesPorNombre;
@@ -50,11 +53,24 @@ public class SolicitudesRegistrosBean implements Serializable{
 	private RolService rolService;
 	@Autowired
 	UserService userService;
+	@Getter
+	@Setter
+	private List<SolicitudesRegistros> listaSolicitudesRegistros;
+	@Getter
+	@Setter
+	private List<SolicitudesRegistros> listaSolicitudesRegistrosRechazadas;
+	@Getter
+	@Setter
+	private List<SolicitudesRegistros> listaSolicitudesRegistrosAceptadas;
+	
 
 
 	@PostConstruct
 	public void init() {
 		solicitudesRegistros= new SolicitudesRegistros();
+		listaSolicitudesRegistros= new ArrayList<>();
+		listaSolicitudesRegistrosRechazadas= new ArrayList<>();
+		listaSolicitudesRegistrosAceptadas=new ArrayList<>();
 		listaRoles = new ArrayList<>();
 		listaRoles = rolService.getRoles();
 		rolesSelected = "";
@@ -63,6 +79,10 @@ public class SolicitudesRegistrosBean implements Serializable{
 			listaRolesPorNombre.add(r.getRol());
 		}
 		listaRolesPorNombre.remove("USUARIO");
+		listaRolesPorNombre.remove("ADMINISTRADOR");
+		listaSolicitudesRegistros= solicitudesRegistrosService.listaSolicitudesPendientes();
+		listaSolicitudesRegistrosRechazadas=solicitudesRegistrosService.listaSolicitudesRechazadas();
+		listaSolicitudesRegistrosAceptadas=solicitudesRegistrosService.listaSolicitudesAceptadas();
 		
 	}
 	
@@ -75,9 +95,51 @@ public class SolicitudesRegistrosBean implements Serializable{
 		s.setUser(user);
 		s.setRol(nuevoRol);
 		solicitudesRegistrosRepository.save(s);
-		res="solicitudRegistro.xhtml";
+		res="solicitudEspera.xhtml";
 		FacesContext.getCurrentInstance().addMessage(null, new 
 				FacesMessage(FacesMessage.SEVERITY_INFO, "", "Su solicitud se ha enviado correctamente"));
+		return res;
+	}
+	
+	public void aceptarSolicitud(SolicitudesRegistros solReg) {
+		User usuarioSolicitante=new User();
+		usuarioSolicitante= solReg.getUser();
+		solReg.setEstado(true);
+		solicitudesRegistrosRepository.save(solReg);
+		usuarioSolicitante.setRol(solReg.getRol());
+		userRepository.save(usuarioSolicitante);
+		FacesContext.getCurrentInstance().addMessage(null, new 
+				FacesMessage(FacesMessage.SEVERITY_INFO, "", "La solicitud se ha aceptado correctamente"));
+		listaSolicitudesRegistros.remove(solReg);
+		listaSolicitudesRegistrosAceptadas.add(solReg);
+	}
+	public void rechazarSolicitud(SolicitudesRegistros solReg) {
+		solReg.setEstado(false);
+		solicitudesRegistrosRepository.save(solReg);
+		listaSolicitudesRegistrosRechazadas.add(solReg);
+		listaSolicitudesRegistros.remove(solReg);
+		FacesContext.getCurrentInstance().addMessage(null, new 
+				FacesMessage(FacesMessage.SEVERITY_INFO, "", "La solicitud se ha rechazado correctamente"));
+	}
+	
+	public Boolean estaAceptada(SolicitudesRegistros solReg) {
+		Boolean res = true;
+		if(solReg.getEstado()!=null &&solReg.getEstado().equals(true)) {
+			res=false;
+		}
+		return res;
+		
+	}
+	
+	public String estadoSolicitud(SolicitudesRegistros solReg) {
+		String res="";
+		if(solReg.getEstado()!=null &&    solReg.getEstado().equals(false)) {
+			res="RECHAZADA";
+		}else if(solReg.getEstado()!=null && solReg.getEstado().equals(true)) {
+			res="ACEPTADA";
+		}else {
+			res="PENDIENTE";
+		}
 		return res;
 	}
 	

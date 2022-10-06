@@ -9,40 +9,21 @@
 	xmlns:pe="http://primefaces.org/ui/extensions"
 	xmlns:sec="https://joinfaces.org/security"
 	template="/templateHome.xhtml">
-	
+
+	<script src='webapp/calendar_es.js'></script>
+
 	<script>
-    PrimeFaces.locales['es'] = {
-        closeText: 'Cerrar',
-        prevText: 'Anterior',
-        nextText: 'Siguiente',
-        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
-        dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
-        weekHeader: 'Semana',
-        firstDay: 1,
-        isRTL: false,
-        showMonthAfterYear: false,
-        yearSuffix: '',
-        timeOnlyTitle: 'Sólo hora',
-        timeText: 'Tiempo',
-        hourText: 'Hora',
-        minuteText: 'Minuto',
-        secondText: 'Segundo',
-        millisecondText: 'Milisegundo',
-        currentText: 'Fecha actual',
-        ampm: false,
-        month: 'Mes',
-        week: 'Semana',
-        day: 'Día',
-        allDayText: 'Todo el día',
-        today: 'Hoy',
-        clear: 'Claro'
-    };
-
-</script>
-
+		$(function() {
+			$('#calendar').fullCalendar({
+				header : {
+					left : 'title',
+					right : 'prev,next today'
+				},
+				locale : 'es'
+			});
+		});
+	</script>
+	
 	<ui:define name="content">
 
 		<h:form id="registerForm">
@@ -112,14 +93,17 @@
 									style="font-weight:bold" />
 								<br />
 							</div>
-							<div class="ui-g-8 ui-md-2">
+							<div class="ui-g-8 ui-md-2" id="calendar">
 								<p:calendar id="fechaNacimiento"
 									value="#{SignUpController.fechaNacimiento}" 
-									pattern="dd-MM-yyyy" locale="es"/>
-<!-- 								<p:datePicker id="fechaNacimiento" value="#{SignUpController.fechaNacimiento}" monthNavigator="true" yearNavigator="true" showWeek="true"/> -->
+									pattern="dd-MM-yyyy"  navigator="true" yearRange="c-100:c+0" locale="es"/>
+<!-- 							<p:datePicker id="fechaNacimiento" value="#{SignUpController.fechaNacimiento}" monthNavigator="true" yearNavigator="true" showWeek="true"/>  -->
 
 							</div>
-						</div>
+							
+							</div>
+							
+							
 						
 						<div class="ui-g-12 ui-md-6">
 							<div class="ui-g-4 ui-md-4">
