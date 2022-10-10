@@ -161,26 +161,12 @@ public class ListaUsuarioBean implements Serializable {
 				.handleNavigation(FacesContext.getCurrentInstance(), null, "/listUsers.xhtml");
 	}
 
-	public void onEditar(Long idUsuario) {
-		JsfUtils.setFlashAttribute("idUsuario", idUsuario);
-		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
-				.handleNavigation(FacesContext.getCurrentInstance(), null, "/editarUsuario.xhtml");
-	}
+
 	
 	public void onEliminar(Long idUsuario) {
 		JsfUtils.setFlashAttribute("idUsuario", idUsuario);
 	}
 
-	public void editarUser() {
-		if (usuario != null) {
-			usuario = userRepository.save(usuario);
-			
-			FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
-			.handleNavigation(FacesContext.getCurrentInstance(), null, "/listUsers.xhtml");
-
-
-		}
-	}	
 
 	public void eliminarUser(User usuarioSeleccionado) {
 		if (usuarioSeleccionado != null) {

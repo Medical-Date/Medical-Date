@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sec="https://joinfaces.org/security" template="/template.xhtml">
+
+	<script src='webapp/calendar_es.js'></script>
+
+	<script>
+		$(function() {
+			$('#calendar').fullCalendar({
+				header : {
+					left : 'title',
+					right : 'prev,next today'
+				},
+				locale : 'es'
+			});
+		});
+	</script>
+
+	<ui:define name="content">
+
+		<h:form id="editarMiPerfilForm">
+
+			<p:messages id="mensaje" showDetail="true" autoUpdate="true"
+				closable="true" globalOnly="true" />
+
+			<p:panel id="panelEditarMiPerfil" header="Editar mi perfil"
+				class="ui-g-12 ui-md-12 ui-lg-12">
+
+				<div class="ui-g">
+					<div class="ui-g-12 ui-md-12 ui-lg-12">
+
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-3 ui-md-3">
+								<h:outputLabel for="nombreLogin" value="Nombre de usuario: "
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<h:inputText id="uname"
+									value="#{LoginController.currentUser.userName}" />
+
+							</div>
+						</div>
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-3 ui-md-3">
+								<h:outputLabel for="dniUsuario" value="D.N.I.: "
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-4 ui-md-2">
+								<h:inputText id="dniUsuario"
+									value="#{LoginController.currentUser.dni}" disabled="true"/>
+
+							</div>
+						</div>
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-3 ui-md-3">
+								<h:outputLabel for="nombreUsuario" value="Nombre: "
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<h:inputText id="fname"
+									value="#{LoginController.currentUser.firstName}" />
+
+							</div>
+						</div>
+
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-3 ui-md-3">
+								<h:outputLabel for="apellidoUsuario" value="Apellidos: "
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<h:inputText id="lname"
+									value="#{LoginController.currentUser.lastName}" />
+
+							</div>
+						</div>
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-3 ui-md-3">
+								<h:outputLabel for="fechalUsuario" value="Fecha de nacimiento: "
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<p:calendar id="fechaNacimiento"
+									value="#{LoginController.currentUser.fechaNacimiento}"
+									pattern="dd-MM-yyyy" navigator="true" yearRange="c-100:c+0"
+									locale="es" disabled="true"/>
+
+
+							</div>
+
+						</div>
+
+
+
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-3 ui-md-3">
+								<h:outputLabel for="direccionUsuario" value="Dirección: "
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<h:inputText id="direccionUsuario"
+									value="#{LoginController.currentUser.direccion}" />
+							</div>
+						</div>
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-3 ui-md-3">
+								<h:outputLabel for="telefonoUsuario" value="Teléfono: "
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<h:inputText id="telefonoUsuario"
+									value="#{LoginController.currentUser.telefono}" />
+
+							</div>
+						</div>
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-3 ui-md-3">
+								<h:outputLabel for="emailUsuario" value="Email: "
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<h:inputText id="email"
+									value="#{LoginController.currentUser.email}" />
+
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+				<div class="ui-g-12">
+
+					<div class="ui-g-12 ui-md-10" />
+					<div class="ui-g-12 ui-md-2 botonera-wrapper">
+
+						<p:commandButton icon="pi pi-save" id="saveUsuario"
+							value="Guardar" actionListener="#{LoginController.editarUser()}" />
+					</div>
+					<div class="ui-g-12 ui-md-10" />
+
+
+					<div class="ui-g-12 ui-md-2 botonera-wrapper">
+					<p:commandButton id="volver" value="Volver"
+						onclick="document.location.href='#{request.contextPath}/miPerfil.xhtml'">
+					</p:commandButton>
+				</div>
+				</div>
+
+			
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

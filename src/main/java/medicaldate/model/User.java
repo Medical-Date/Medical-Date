@@ -40,17 +40,14 @@ public class User {
 
 	@Column(name = "USERNAME", unique = true)
 	@NotNull
-	@Size(max = 20, min=3)
 	private String userName;
 
 	@Column(name = "FIRSTNAME")
 	@NotNull
-	@Size(max = 20, min=3)
 	private String firstName;
 
 	@Column(name = "LASTNAME")
 	@NotNull
-	@Size(max = 30, min=3)
 	private String lastName;
 
 	@Column(name = "FECHANACIMIENTO")
@@ -63,17 +60,14 @@ public class User {
 
 	@Column(name = "DIRECCION")
 	@NotNull
-	@Size(max = 50)
 	private String direccion;
 
 	@Column(name = "TELEFONO")
 	@NotNull
-	@Size(max = 9, min=9)
 	private String telefono;
 
 	@Column(name = "EMAIL")
 	@NotNull
-	@Size(max = 50)
 	private String email;
 
 	@Column(name = "PASSWORD")

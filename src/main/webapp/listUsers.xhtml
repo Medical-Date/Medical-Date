@@ -44,12 +44,6 @@
 					</p:column>
 
 					<p:column headerText="Acciones">
-
-						<p:commandButton id="editarUsuarios" widgetVar="editarUsuarios"
-							icon="pi pi-pencil" value="Editar"
-							actionListener="#{listaUsuarioBean.onEditar(usuarios.id)}">
-							<f:param name="id" value="#{usuarios.id}" />
-						</p:commandButton>
 						
 							<p:commandButton id="eliminarUsuarios" widgetVar="eliminarUsuarios"
 							 process="@this usuariosTable"

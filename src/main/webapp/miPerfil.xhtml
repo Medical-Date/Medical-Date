@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sec="https://joinfaces.org/security" template="/template.xhtml">
+
+	<script src='webapp/calendar_es.js'></script>
+
+	<script>
+		$(function() {
+			$('#calendar').fullCalendar({
+				header : {
+					left : 'title',
+					right : 'prev,next today'
+				},
+				locale : 'es'
+			});
+		});
+	</script>
+
+	<ui:define name="content">
+
+		<h:form id="miPerfilForm">
+
+			<p:messages id="mensaje" showDetail="true" autoUpdate="true"
+				closable="true" globalOnly="true" />
+
+			<p:panel id="panelMiPerfil" header="Mi perfil"
+				class="ui-g-12 ui-md-12 ui-lg-12">
+
+				<div class="ui-g">
+					<div class="ui-g-12 ui-md-12 ui-lg-12">
+
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-3 ui-md-3">
+								<h:outputLabel for="nombreLogin" value="Nombre de usuario: "
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<h:outputText id="uname"
+									value="#{LoginController.currentUser.userName}" />
+
+							</div>
+						</div>
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-3 ui-md-3">
+								<h:outputLabel for="dniUsuario" value="D.N.I.: "
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-4 ui-md-2">
+								<h:outputText id="dniUsuario"
+									value="#{LoginController.currentUser.dni}" />
+
+							</div>
+						</div>
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-3 ui-md-3">
+								<h:outputLabel for="nombreUsuario" value="Nombre: "
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<h:outputText id="fname"
+									value="#{LoginController.currentUser.firstName}" />
+
+							</div>
+						</div>
+
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-3 ui-md-3">
+								<h:outputLabel for="apellidoUsuario" value="Apellidos: "
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<h:outputText id="lname"
+									value="#{LoginController.currentUser.lastName}" />
+
+							</div>
+						</div>
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-3 ui-md-3">
+								<h:outputLabel for="fechalUsuario" value="Fecha de nacimiento: "
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<h:outputText id="fechalUsuario"
+									value="#{LoginController.currentUser.fechaNacimiento}">
+									<f:convertDateTime type="date" timeZone="CST"
+										pattern="dd/MM/yyyy" />
+								</h:outputText>
+
+							</div>
+
+						</div>
+
+
+
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-3 ui-md-3">
+								<h:outputLabel for="direccionUsuario" value="Dirección: "
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<h:outputText id="direccionUsuario"
+									value="#{LoginController.currentUser.direccion}" />
+							</div>
+						</div>
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-3 ui-md-3">
+								<h:outputLabel for="telefonoUsuario" value="Teléfono: "
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<h:outputText id="telefonoUsuario"
+									value="#{LoginController.currentUser.telefono}" />
+
+							</div>
+						</div>
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-3 ui-md-3">
+								<h:outputLabel for="emailUsuario" value="Email: "
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<h:outputText id="email"
+									value="#{LoginController.currentUser.email}" />
+
+							</div>
+						</div>
+
+
+
+
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-3 ui-md-3">
+								<h:outputLabel for="contrasenaUsuario" value="Contraseña: "
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2 botonera-wrapper">
+								<p:button id="reestablecerContraseña"
+									value="Reestablecer contraseña" title="Reestablecer contraseña"
+									outcome="reestablecerPassword.xhtml">
+								</p:button>
+							</div>
+						</div>
+
+						<div class="ui-g-12">
+							<div class="ui-g-12 ui-md-10" />
+							<div class="ui-g-12 ui-md-2 botonera-wrapper">
+
+								<p:commandButton id="editarPerfil" widgetVar="editarPerfil"
+									icon="pi pi-pencil" value="Editar perfil"
+									actionListener="#{LoginController.onEditar(LoginController.currentUser.id)}">
+									<f:param name="id" value="#{LoginController.currentUser.id}" />
+								</p:commandButton>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

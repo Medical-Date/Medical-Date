@@ -1,5 +1,8 @@
 package medicaldate.bean;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
@@ -28,6 +31,14 @@ public class LoginBackingBean {
 	@Getter
 	@Setter
 	String password;
+
+	@Getter
+	@Setter
+	String newPassword;
+
+	@Getter
+	@Setter
+	String repeatNewPassword;
 
 	@Autowired
 	UserService userService;
@@ -60,8 +71,8 @@ public class LoginBackingBean {
 				sc.setAuthentication(authReq);
 				clear();
 			}
-			if(user.getRol().getRol().equals("USUARIO")) {
-				result="solicitudEspera.xhtml";
+			if (user.getRol().getRol().equals("USUARIO")) {
+				result = "solicitudEspera.xhtml";
 			}
 		} else {
 			result = "login.xhtml";
@@ -78,15 +89,15 @@ public class LoginBackingBean {
 
 		if ((userName.isBlank() || userName == null) && (password.isBlank() || password == null)) {
 			camposValidos = "Debe rellenar el nombre de usuario y la contraseña";
-			FacesContext.getCurrentInstance().addMessage(null, new 
-					FacesMessage(FacesMessage.SEVERITY_ERROR, "", camposValidos));
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "", camposValidos));
 			esValido = false;
 		}
 
 		if (!userName.isEmpty() && !(userService.existsUser(userName))) {
 			usuarioNoExiste = "El usuario no existe";
-			FacesContext.getCurrentInstance().addMessage(null, new 
-					FacesMessage(FacesMessage.SEVERITY_ERROR, "", usuarioNoExiste));
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "", usuarioNoExiste));
 			esValido = false;
 		}
 		if (userName != null) {
@@ -94,17 +105,85 @@ public class LoginBackingBean {
 			User user = userService.obtenerUsuarioPorNombreUsuario(userName);
 			if (user != null && !(user.getPassword().contentEquals(password))) {
 				contraseñaIncorrecta = "La contaseña es incorrecta";
-				FacesContext.getCurrentInstance().addMessage(null, new 
-						FacesMessage(FacesMessage.SEVERITY_ERROR, "", contraseñaIncorrecta));
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "", contraseñaIncorrecta));
 				esValido = false;
 			}
 		}
 
-		
-
 		return esValido;
 	}
+
+	public Boolean validacionesReestablecerPassword() {
+		Boolean esValido = true;
+		String camposVacios = "";
+		if ((password.isBlank() || password == null) || (newPassword.isBlank() || newPassword == null)
+				|| (repeatNewPassword.isBlank() || repeatNewPassword == null)) {
+			camposVacios = "Debe rellenar todos los campos";
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "", camposVacios));
+			esValido = false;
+
+		}
+
+		return esValido;
+
+	}
 	
+	private Boolean validacionesEditarMiPerfil() {
+		Boolean esValido=true;
+		String camposValidos="";
+		
+		if((currentUser.getUserName().isBlank() || currentUser.getUserName() == null) || 
+			(currentUser.getFirstName().isBlank() || currentUser.getFirstName() == null) ||
+			(currentUser.getLastName().isBlank() || currentUser.getLastName() == null) ||
+			(currentUser.getDireccion().isBlank() || currentUser.getDireccion() == null) ||
+			(currentUser.getTelefono().isBlank() || currentUser.getTelefono() == null) ||
+			(currentUser.getEmail().isBlank() || currentUser.getEmail() == null) ) {
+			camposValidos="Debe rellenar todos los campos obligatorios";
+
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", camposValidos));
+			esValido=false;
+		}
+
+		if(!currentUser.getTelefono().isBlank() && !(currentUser.getTelefono().startsWith("6")) && !(currentUser.getTelefono().startsWith("7")) && !(currentUser.getTelefono().startsWith("9")) && !(currentUser.getTelefono().startsWith("8"))) {
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "El número de teléfono no es válido"));
+			esValido=false;
+		}
+		if(!currentUser.getTelefono().isBlank() && currentUser.getTelefono().length()!=9) {
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "El número de teléfono debe tener 9 dígitos"));
+			esValido=false;
+		}
+		
+		if(!currentUser.getEmail().isBlank() &&  !currentUser.getEmail().contains("@")) {
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Formato de email no válido"));
+			esValido=false;
+		}
+		if(!userName.isBlank() &&  userName.length()<3) {
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "El nombre de usuario debe ser mayor de 2 caracteres"));
+			esValido=false;
+		}
+		if(!currentUser.getFirstName().isBlank() &&  currentUser.getFirstName().length()<3) {
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "El nombre debe ser mayor de 2 caracteres"));
+			esValido=false;
+		}
+		if(!currentUser.getLastName().isBlank() &&  currentUser.getLastName().length()<3) {
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "El apellido debe ser mayor de 2 caracteres"));
+			esValido=false;
+		}
+
+
+		
+		return esValido;
+	}
+
 	public String doLogout() {
 		this.currentUser = null;
 		return "index";
@@ -124,6 +203,72 @@ public class LoginBackingBean {
 		password = "";
 		userName = "";
 	}
+
+	public String reestablecerPassword() {
+		String res = "";
+
+		String passNoCoinc = "";
+		String nuevaPassNoCoinc = "";
+
+		String passwordUsuarioLogado = currentUser.getPassword();
+
+		Boolean esValido = validacionesReestablecerPassword();
+		if (esValido) {
+
+			if (!password.equals(passwordUsuarioLogado)) {
+
+				passNoCoinc = "La contraseña actual no coincide";
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "", passNoCoinc));
+				res = "reestablecerPassword.xhtml";
+			} else if (!newPassword.equals(repeatNewPassword)) {
+				nuevaPassNoCoinc = "La nueva contraseña no coincide";
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "", nuevaPassNoCoinc));
+				res = "reestablecerPassword.xhtml";
+
+			} else {
+
+				currentUser.setPassword(newPassword);
+				userService.saveUser(currentUser);
+				FacesContext.getCurrentInstance().addMessage(null, new 
+						FacesMessage(FacesMessage.SEVERITY_INFO, "", "Su contraseña se ha actualizado correctamente"));
+				res = "miPerfil.xhtml";
+
+			}
+
+		}
+
+		return res;
+
+	}
+	
+	
+	public void onEditar(Long idUsuario) {
+		JsfUtils.setFlashAttribute("idUsuario", idUsuario);
+		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+				.handleNavigation(FacesContext.getCurrentInstance(), null, "/editarMiPerfil.xhtml");
+	}
+	
+
+	public void editarUser() {
+		
+		Boolean esValido = validacionesEditarMiPerfil();
+		if (esValido) {
+		
+		if (currentUser != null) {
+			userService.saveUser(currentUser);
+			
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_INFO, "", "Su perfil se ha actualizado correctamente"));
+			
+			FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+			.handleNavigation(FacesContext.getCurrentInstance(), null, "/miPerfil.xhtml");
+		}
+
+
+		}
+	}	
 
 	@Override
 	public int hashCode() {
