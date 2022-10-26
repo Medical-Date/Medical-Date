@@ -13,7 +13,7 @@
 			<h2>Lista de Cita</h2>
 
 			<div class="card">
-				<p:dataTable var="cita" value="#{listaCitasBean.listaCitas}"
+				<p:dataTable var="cita" value="#{citasBean.listaCitasByMedicoLogado}"  rendered="#{LoginController.currentUser.rol.rol == 'MEDICO'}"
 					id="citasTable">
 
 					<p:column headerText="Medico">
@@ -24,9 +24,46 @@
 						<h:outputText value="#{cita.paciente.nombre}" />
 					</p:column>
 					
-					<p:column headerText="Fecha">
-						<h:outputText value="#{cita.fechaCita}" />
+					<p:column headerText="Día">
+						<h:outputText value="#{citasBean.mostrarDiaCita(cita.diaCita)}"/>
 					</p:column>
+					
+					<p:column headerText="Hora">
+						<h:outputText value="#{cita.horaCita}" />
+					</p:column>
+					
+					<p:column headerText="Disponibilidad">
+						<h:outputText value="#{citasBean.mostrarDisponibilidad(cita.disponible)}" />
+					</p:column>
+					
+
+				</p:dataTable>
+
+			</div>
+			
+			<div class="card">
+				<p:dataTable var="cita" value="#{citasBean.listaCitasByPacienteLogado}"  rendered="#{LoginController.currentUser.rol.rol == 'PACIENTE'}"
+					id="citasPacienteTable" >
+					
+					<f:facet name="header">
+               		Citas de su médico
+          			  </f:facet>
+					
+					<p:column headerText="Día">
+						<h:outputText value="#{citasBean.mostrarDiaCita(cita.diaCita)}"/>
+					</p:column>
+					
+					<p:column headerText="Hora">
+						<h:outputText value="#{cita.horaCita}" />
+					</p:column>
+					
+					<p:column headerText="Disponibilidad" >
+						<h:outputText value="#{citasBean.mostrarDisponibilidad(cita.disponible)}"  />
+					</p:column>
+					<p:column headerText="Acciones" >
+						<p:commandButton value="Seleccionar cita" action="#{citasBean.seleccionarCita(cita)}" rendered="#{cita.disponible eq true}" update="formListadoCitas"/>
+					</p:column>
+					
 
 				</p:dataTable>
 

@@ -53,5 +53,9 @@ public class Historial {
 	@JoinTable(name = "rel_historial_enfermedad", joinColumns = @JoinColumn(name = "FK_HISTORIAL", nullable = false), inverseJoinColumns = @JoinColumn(name = "FK_ENFERMEDAD", nullable = false))
 	@ManyToMany(cascade = CascadeType.ALL)
 	private List<Enfermedad> enfermedad;
+	
+	@OneToOne
+	@JoinColumn(name="user_id")
+	private User user;
 
 }

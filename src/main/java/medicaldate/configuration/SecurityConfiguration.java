@@ -27,6 +27,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 		.antMatchers("/listMedicos.xhtml").hasAnyAuthority("ADMINISTRADOR")
 		.antMatchers("/listPacientes.xhtml").hasAnyAuthority("ADMINISTRADOR")
+		.antMatchers("/asignacionCalendario.xhtml").hasAnyAuthority("ADMINISTRADOR")
 				.and()
 				 	.formLogin()
 				 	.loginPage("/login")

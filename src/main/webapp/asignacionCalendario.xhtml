@@ -10,7 +10,7 @@
 	xmlns:sec="https://joinfaces.org/security" template="/template.xhtml">
 
 	<ui:define name="content">
-		<h:form id="formFormularioCitas">
+		<h:form id="formFormularioAdignacionCalendario">
 
 			<p:panel id="panelGestionCitas" header="Registrar cita"
 				class="ui-g-12 ui-md-12 ui-lg-12">
@@ -35,35 +35,41 @@
 
 						</div>
 
-						<div class="ui-g-4 ui-md-1">
-							<h:outputLabel for="paciente" value="Pacientes"
-								style="font-weight:bold" />
-							<br />
-						</div>
-
-
-						<div class="ui-g-2 ui-md-2">
-							<h:selectOneMenu id="paciente"
-								value="#{citasBean.pacienteSelected}">
-								<f:selectItem itemLabel="" itemValue="" />
-								<f:selectItems value="#{citasBean.listaPacientes}" />
-
-							</h:selectOneMenu>
-
-
-						</div>
-
 						<div class="ui-g-4 ui-md-2">
-							<h:outputLabel for="fechaCita"
-								value="Introduzca la fecha para la cita:"
+							<h:outputLabel for="dia"
+								value="Introduzca el día:"
 								style="font-weight:bold" />
 							<br />
 						</div>
 
 						<div class="ui-g-2 ui-md-2">
-							<p:calendar id="fechaCita" value="#{citasBean.fechaCita}"
-								locale="de" navigator="true" pattern="dd-MM-yyyy"
-								requiredMessage="Por favor introduzca la fecha para la cita" />
+							<p:calendar id="dia" value="#{citasBean.calendario.dia}"
+								locale="de" navigator="true" pattern="dd/MM/yyyy" />
+
+						</div>
+						<div class="ui-g-4 ui-md-2">
+							<h:outputLabel for="horaEntrada"
+								value="Introduzca la hora de entrada:"
+								style="font-weight:bold" />
+							<br />
+						</div>
+						
+						<div class="ui-g-2 ui-md-2">
+							<p:calendar id="horaEntrada" value="#{citasBean.calendario.horaEntrada}"
+								pattern="HH:mm" timeOnly="true" />
+
+						</div>
+						
+						<div class="ui-g-4 ui-md-2">
+							<h:outputLabel for="horaSalida"
+								value="Introduzca la hora de salida:"
+								style="font-weight:bold" />
+							<br />
+						</div>
+						
+						<div class="ui-g-2 ui-md-2">
+							<p:calendar id="horaSalida" value="#{citasBean.calendario.horaSalida}"
+								pattern="HH:mm" timeOnly="true" />
 
 						</div>
 						
@@ -73,7 +79,7 @@
 							<div class="ui-g-12 ui-md-10" />
 							<div class="ui-g-12 ui-md-2 botonera-wrapper">
 
-								<p:commandButton value="Registrar" action="#{citasBean.guardarCita}" />
+								<p:commandButton value="Crear calendario" action="#{citasBean.crearCalendario}" />
 							</div>
 							<div class="ui-g-12 ui-md-10" />
 

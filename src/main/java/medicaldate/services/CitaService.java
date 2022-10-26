@@ -3,6 +3,7 @@ package medicaldate.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import medicaldate.model.Cita;
@@ -22,6 +23,18 @@ public class CitaService {
 	
 	public List<Cita> getCitas(){
 		return (List<Cita>) citaRepository.findAll();
+	}
+	
+	public List<Cita> getListaCitasByUsuario(Long id){
+		return citaRepository.getListaCitasByUsuario(id);
+	}
+	
+	public List<Cita> getListaCitasMedicoByPaciente(Long id){
+		return citaRepository.getListaCitasMedicoByPaciente(id);
+	}
+	public List<Cita> getListaCitasByPaciente(Long id){
+		return citaRepository.getListaCitasByPaciente(id);
+		
 	}
 
 }

@@ -172,7 +172,83 @@
 
 					</div>
 				</div>
+				<p:fieldset legend="Historial clínico" toggleable="true" toggleSpeed="500" rendered="#{LoginController.currentUser.historial != null}" >
+			
+							<div class="ui-g-12 ui-md-12 ui-lg-12">
+
+								<div class="ui-g-4 ui-md-4">
+									<div class="ui-g-3 ui-md-3">
+										<h:outputLabel for="tipoSangre" value="Tipo de sangre: "
+											style="font-weight:bold" />
+										<br />
+									</div>
+									<div class="ui-g-4 ui-md-4">
+										<h:outputText id="tipoSangre"
+											value="#{LoginController.currentUser.historial.tipoSangre}" />
+
+									</div>
+								</div>
+								
+								<div class="ui-g-4 ui-md-4">
+									<div class="ui-g-4 ui-md-4">
+										<h:outputLabel for="contactoEmergencia" value="Contacto de emergencia: "
+											style="font-weight:bold" />
+										<br />
+									</div>
+									<div class="ui-g-4 ui-md-4">
+										<h:outputText id="contactoEmergencia"
+											value="#{LoginController.currentUser.historial.contactoEmergencia}" />
+
+									</div>
+								</div>
+								
+								<div class="ui-g-4 ui-md-4">
+									<div class="ui-g-6 ui-md-6">
+										<h:outputLabel for="tlfnEmergencia" value="Teléfono del contacto de emergencia: "
+											style="font-weight:bold" />
+										<br />
+									</div>
+									<div class="ui-g-4 ui-md-4">
+										<h:outputText id="tlfnEmergencia"
+											value="#{LoginController.currentUser.historial.tlfContactoEmergencia}" />
+
+									</div>
+								</div>
+							</div>
+
+
+				
+				</p:fieldset>
+				
+				<p:fieldset legend="Mis citas" toggleable="true" toggleSpeed="500">
+			
+							<p:dataTable var="cita" value="#{citasBean.listaMisCitas}"
+					id="misCitasTable">
+
+					<p:column headerText="Medico">
+						<h:outputText value="#{cita.medico.nombre}" />
+					</p:column>
+					
+					<p:column headerText="Día">
+						<h:outputText value="#{citasBean.mostrarDiaCita(cita.diaCita)}"/>
+					</p:column>
+					
+					<p:column headerText="Hora">
+						<h:outputText value="#{cita.horaCita}" />
+					</p:column>
+					<p:column headerText="Acciones" >
+						<p:commandButton value="Cancelar cita" action="#{citasBean.cancelarCita(cita)}" update="miPerfilForm:misCitasTable"/>
+					</p:column>
+					
+
+				</p:dataTable>
+
+
+				
+				</p:fieldset>
+				
 			</p:panel>
+
 		</h:form>
 	</ui:define>
 </ui:composition>

@@ -83,6 +83,10 @@ public class User {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Set<Authorities> authorities;
 	
+	@OneToOne
+	@JoinColumn(name="historial_id")
+	private Historial historial;
+	
 	public User(){
 		authorities=new HashSet<Authorities>();
 	}

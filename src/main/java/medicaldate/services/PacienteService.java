@@ -3,6 +3,7 @@ package medicaldate.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import medicaldate.model.Paciente;
@@ -34,6 +35,10 @@ public class PacienteService {
 	
 	public List<Paciente> obtenerListaPacientePorNombreSinCentroAsignado(){
 		return pacienteRepository.obtenerListaPacientePorNombreSinCentroAsignado();
+	}
+	public Paciente obtenerPacientePorUsuarioLogado(Long id) {
+		return pacienteRepository.obtenerPacientePorUsuarioLogado(id);
+		
 	}
 
 }

@@ -38,12 +38,10 @@ public class Medico{
 	@Column(name = "NOMBRE", unique = true)
 	private String nombre;
 	
-	@OneToOne
-	@JoinColumn(name="cita_id")
-	private Cita cita;
-	
+
 	@JoinColumn(name="esAsignado")
 	private Boolean esAsignado;
+
 
 	
 	

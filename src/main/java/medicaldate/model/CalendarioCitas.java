@@ -3,13 +3,13 @@ package medicaldate.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.ForeignKey;
 
 import lombok.Data;
 import lombok.Getter;
@@ -17,10 +17,10 @@ import lombok.Setter;
 
 @Data
 @Entity
-@Table(name = "MEDICOS_PACIENTES")
+@Table(name = "CALENDARIO_CITAS")
 @Getter
 @Setter
-public class MedicosPacientes {
+public class CalendarioCitas {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,11 +28,11 @@ public class MedicosPacientes {
 	private Long id;
 	
 	@ManyToOne( fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_medico", foreignKey = @ForeignKey(name = "FK_MEDICOSPACIENTES_MEDICO"))
-	private Medico idMedico;
+	@JoinColumn(name = "id_calendario", foreignKey = @ForeignKey(name = "FK_CALENDARIOCITAS_CALENDARIO"))
+	private Calendario idCalendario;
 	
 	@ManyToOne( fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_paciente", foreignKey = @ForeignKey(name = "FK_MEDICOSPACIENTES_PACIENTE"))
-	private Paciente idPaciente;
+	@JoinColumn(name = "id_citas", foreignKey = @ForeignKey(name = "FK_CALENDARIOCITAS_CITAS"))
+	private Cita idCitas;
 
 }

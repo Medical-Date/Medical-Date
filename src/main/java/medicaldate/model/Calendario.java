@@ -1,9 +1,9 @@
 package medicaldate.model;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 
-import javax.enterprise.inject.Default;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,9 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.annotations.ColumnDefault;
 
 import lombok.Data;
 import lombok.Getter;
@@ -22,33 +19,27 @@ import lombok.Setter;
 
 @Data
 @Entity
-@Table(name = "CITA")
+@Table(name = "CALENDARIO")
 @Getter
 @Setter
-public class Cita {
+public class Calendario {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private Long id;
 	
-	@Column(name = "DIA_CITA")
-	private Date diaCita;
-	
-	@Column(name = "HORA_CITA")
-	private LocalTime horaCita;
-	
 	@OneToOne
-	@JoinColumn(name="id_medico")
+	@JoinColumn(name="medico_id")
 	private Medico medico;
 	
-	@OneToOne
-	@JoinColumn(name="id_paciente")
-	private Paciente paciente;
+	@Column(name = "dia")
+	Date dia;
 	
-	@Column(name = "disponible")
-	@ColumnDefault("1")
-	private Boolean disponible;
+	@Column(name = "hora_entrada")
+	Date horaEntrada;
 	
+	@Column(name = "hora_salida")
+	Date horaSalida;
 
 }
