@@ -237,7 +237,7 @@ public class SignUpBackingBean {
 		}
 			
 		}
-		if(!dni.isBlank() &&  !JsfUtils.esNIEValido(dni) ) {
+		if(!dni.isBlank() &&  !JsfUtils.validarDNI(dni) ) {
 			FacesContext.getCurrentInstance().addMessage(null, new 
 					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "El DNI no es válido"));
 			esValido=false;

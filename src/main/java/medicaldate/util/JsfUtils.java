@@ -1,5 +1,6 @@
 package medicaldate.util;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,9 +15,10 @@ public class JsfUtils {
 	/** Constructor basico. */
 	private JsfUtils() {
 		super();
-	}
-	public static final String FORMATO_NIE="^[a-zA-Z](\\d{7})[TRWAGMYFPDXBNJZSQVHLCKEtrwagmyfpdxbnjzsqvhlcke]$";
-	public static final String FORMATO_NIF_NIE_LETRAS="TRWAGMYFPDXBNJZSQVHLCKE";
+	}	
+	private static final Pattern REGEXP = Pattern.compile("[0-9]{8}[A-Z]");
+	private static final String DIGITO_CONTROL = "TRWAGMYFPDXBNJZSQVHLCKE";
+	private static final String[] INVALIDOS = new String[] { "00000000T", "00000001R", "99999999R" };
 
 	/**
 	 * Recupera el atributo de sesion con el nombre 'name'.
@@ -140,34 +142,13 @@ public class JsfUtils {
 		FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_WARN, title, msg);
 		FacesContext.getCurrentInstance().addMessage(etiqueta, facesMsg);
 	}
+
+
+	public static boolean validarDNI(String dni) {
+	    return Arrays.binarySearch(INVALIDOS, dni) < 0 // (1)
+	        && REGEXP.matcher(dni).matches() // (2)
+	        && dni.charAt(8) == DIGITO_CONTROL.charAt(Integer.parseInt(dni.substring(0, 8)) % 23); // (3)
+	  }
 	
-	public static boolean esNIEValido(String entrada) {
-		String nie = new String(entrada);
-
-		final Pattern niePattern = Pattern.compile(FORMATO_NIE);
-		final Matcher m = niePattern.matcher(nie);
-		boolean res = false;
-		if (m.matches()) {
-			if (nie.toUpperCase().startsWith("X")) {
-				nie = nie.replaceFirst("X", "0");
-			} else if (nie.toUpperCase().startsWith("Y")) {
-				nie = nie.replaceFirst("Y", "1");
-			} else if (nie.toUpperCase().startsWith("Z")) {
-				nie = nie.replaceFirst("Z", "2");
-			}
-
-			final String letra = nie.substring(nie.length() - 1);
-			// Extraer letra del NIF
-			final String letras = FORMATO_NIF_NIE_LETRAS;
-			int dni = Integer.parseInt(nie.substring(0, nie.length() - 1));
-			dni = (dni % 23);
-			final String reference = letras.substring(dni, dni + 1);
-
-			if (reference.equalsIgnoreCase(letra)) {
-				res = true;
-			}
-		}
-		return res;
-	}
 
 }
