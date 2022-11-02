@@ -14,9 +14,13 @@ import org.springframework.stereotype.Component;
 
 import lombok.Getter;
 import lombok.Setter;
+import medicaldate.model.Medico;
+import medicaldate.model.Paciente;
 import medicaldate.model.Rol;
 import medicaldate.model.SolicitudesRegistros;
 import medicaldate.model.User;
+import medicaldate.repository.MedicoRepository;
+import medicaldate.repository.PacienteRepository;
 import medicaldate.repository.SolicitudesRegistrosRepository;
 import medicaldate.repository.UserRepository;
 import medicaldate.services.RolService;
@@ -62,6 +66,10 @@ public class SolicitudesRegistrosBean implements Serializable{
 	@Getter
 	@Setter
 	private List<SolicitudesRegistros> listaSolicitudesRegistrosAceptadas;
+	@Autowired
+	private PacienteRepository pacienteRepository;
+	@Autowired
+	private MedicoRepository medicoRepository;
 	
 
 
@@ -108,6 +116,21 @@ public class SolicitudesRegistrosBean implements Serializable{
 		solicitudesRegistrosRepository.save(solReg);
 		usuarioSolicitante.setRol(solReg.getRol());
 		userRepository.save(usuarioSolicitante);
+		if(usuarioSolicitante.getRol().getRol().equals("PACIENTE")) {
+			Paciente nuevoPaciente= new Paciente();
+			nuevoPaciente.setNombre(usuarioSolicitante.getFirstName());
+			nuevoPaciente.setUser(usuarioSolicitante);
+			nuevoPaciente.setTieneCentro(false);
+			nuevoPaciente.setTieneMedico(false);
+			pacienteRepository.save(nuevoPaciente);
+		}
+		if(usuarioSolicitante.getRol().getRol().equals("MEDICO")) {
+			Medico nuevoMedico= new Medico();
+			nuevoMedico.setNombre(usuarioSolicitante.getFirstName());
+			nuevoMedico.setUser(usuarioSolicitante);
+			nuevoMedico.setEsAsignado(false);
+			medicoRepository.save(nuevoMedico);
+		}
 		FacesContext.getCurrentInstance().addMessage(null, new 
 				FacesMessage(FacesMessage.SEVERITY_INFO, "", "La solicitud se ha aceptado correctamente"));
 		listaSolicitudesRegistros.remove(solReg);

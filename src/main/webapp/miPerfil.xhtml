@@ -220,10 +220,10 @@
 				
 				</p:fieldset>
 				
-				<p:fieldset legend="Mis citas" toggleable="true" toggleSpeed="500">
+				<p:fieldset legend="Mis citas" toggleable="true" toggleSpeed="500" rendered="#{LoginController.currentUser.historial != null}">
 			
 							<p:dataTable var="cita" value="#{citasBean.listaMisCitas}"
-					id="misCitasTable">
+					id="misCitasTable" >
 
 					<p:column headerText="Medico">
 						<h:outputText value="#{cita.medico.nombre}" />
