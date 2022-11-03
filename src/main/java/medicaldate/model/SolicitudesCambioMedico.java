@@ -33,8 +33,7 @@ public class SolicitudesCambioMedico {
 	@OneToOne
 	@JoinColumn(name="medico_nuevo_id")
 	private Medico medico;
-	
-	@NotNull
+
 	@Column(name = "ESTADO")
 	private Boolean estado;
 	

@@ -2,6 +2,7 @@ package medicaldate.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -14,16 +15,25 @@ import org.springframework.stereotype.Component;
 
 import lombok.Getter;
 import lombok.Setter;
+import medicaldate.model.Cita;
 import medicaldate.model.Medico;
+import medicaldate.model.MedicosCentroPaciente;
 import medicaldate.model.Paciente;
 import medicaldate.model.Rol;
+import medicaldate.model.SolicitudesCambioMedico;
 import medicaldate.model.SolicitudesRegistros;
 import medicaldate.model.User;
+import medicaldate.repository.CitaRepository;
 import medicaldate.repository.MedicoRepository;
+import medicaldate.repository.MedicosCentroPacienteRepository;
 import medicaldate.repository.PacienteRepository;
+import medicaldate.repository.SolicitudesCambioMedicoRepository;
 import medicaldate.repository.SolicitudesRegistrosRepository;
 import medicaldate.repository.UserRepository;
+import medicaldate.services.CitaService;
+import medicaldate.services.MedicosCentroPacienteService;
 import medicaldate.services.RolService;
+import medicaldate.services.SolicitudesCambioMedicoService;
 import medicaldate.services.SolicitudesRegistrosService;
 import medicaldate.services.UserService;
 
@@ -71,11 +81,43 @@ public class SolicitudesRegistrosBean implements Serializable{
 	@Autowired
 	private MedicoRepository medicoRepository;
 	
+	@Getter
+	@Setter
+	private List<SolicitudesCambioMedico> listaSolicitudesCambioMedico;
+	@Getter
+	@Setter
+	private List<SolicitudesCambioMedico> listaSolicitudesCambioMedicoRechazadas;
+	@Getter
+	@Setter
+	private List<SolicitudesCambioMedico> listaSolicitudesCambioMedicoAceptadas;
+	@Getter @Setter
+	private SolicitudesCambioMedico solicitudesCambioMedico;
+	
+	@Autowired
+	private SolicitudesCambioMedicoRepository solicitudesCambioMedicoRepository;
+	@Autowired
+	private SolicitudesCambioMedicoService solicitudesCambioMedicoService;
+	@Getter
+	@Setter
+	private Medico medicoAnterior;
+	@Autowired
+	private MedicosCentroPacienteService medicosCentroPacienteService;
+	@Getter
+	@Setter
+	private MedicosCentroPaciente medicoCentroPaciente;
+	@Autowired
+	private CitaService citaService;
+	@Autowired
+	private CitaRepository citaRepository;
+	@Autowired
+	private MedicosCentroPacienteRepository medicosCentroPacienteRepository;
+	
 
 
 	@PostConstruct
 	public void init() {
 		solicitudesRegistros= new SolicitudesRegistros();
+		solicitudesCambioMedico= new SolicitudesCambioMedico();
 		listaSolicitudesRegistros= new ArrayList<>();
 		listaSolicitudesRegistrosRechazadas= new ArrayList<>();
 		listaSolicitudesRegistrosAceptadas=new ArrayList<>();
@@ -92,6 +134,18 @@ public class SolicitudesRegistrosBean implements Serializable{
 		listaSolicitudesRegistrosRechazadas=solicitudesRegistrosService.listaSolicitudesRechazadas();
 		listaSolicitudesRegistrosAceptadas=solicitudesRegistrosService.listaSolicitudesAceptadas();
 		
+		cargarSolicitudesCambioMedico();
+		
+	}
+	
+	public void cargarSolicitudesCambioMedico() {
+		listaSolicitudesCambioMedico= new ArrayList<>();
+		listaSolicitudesCambioMedicoRechazadas= new ArrayList<>();
+		listaSolicitudesCambioMedicoAceptadas= new ArrayList<>();
+		solicitudesCambioMedico= new SolicitudesCambioMedico();
+		listaSolicitudesCambioMedico=solicitudesCambioMedicoService.listaSolicitudesCambioMedicoPendientes();
+		listaSolicitudesCambioMedicoRechazadas=solicitudesCambioMedicoService.listaSolicitudesCambioMedicoRechazadas();
+		listaSolicitudesCambioMedicoAceptadas=solicitudesCambioMedicoService.listaSolicitudesCambioMedicoAceptadas();
 	}
 	
 	public String enviarSolicitud() {
@@ -166,6 +220,50 @@ public class SolicitudesRegistrosBean implements Serializable{
 		return res;
 	}
 	
+	public String estadoSolicitudCambioMedico(SolicitudesCambioMedico solCambiReg) {
+		String res="";
+		if(solCambiReg.getEstado()!=null &&    solCambiReg.getEstado().equals(false)) {
+			res="RECHAZADA";
+		}else if(solCambiReg.getEstado()!=null && solCambiReg.getEstado().equals(true)) {
+			res="ACEPTADA";
+		}else {
+			res="PENDIENTE";
+		}
+		return res;
+	}
+	
+	public String obtenerMedicoNuevoPorPaciente(Paciente idPaciente) {
+		String res="";
+		medicoCentroPaciente = medicosCentroPacienteService.obtenerMedicoCentroPacientePorPaciente(idPaciente.getId());
+		medicoAnterior= medicoCentroPaciente.getIdMedico();
+		res=medicoAnterior.getUser().getFirstName() +" "+ medicoAnterior.getUser().getLastName();
+		return res;
+	}
+	
+	public void aceptarSolicitudCambioMedico(SolicitudesCambioMedico solCambiReg) {
+		List<Cita> citasPenditesPaciente= new ArrayList<>();
+		
+		
+		solCambiReg.setEstado(true);
+		solicitudesCambioMedicoRepository.save(solCambiReg);
+		medicoCentroPaciente = medicosCentroPacienteService.obtenerMedicoCentroPacientePorPaciente(solCambiReg.getPaciente().getId());
+		medicoCentroPaciente.setIdMedico(solCambiReg.getMedico());
+		medicosCentroPacienteRepository.save(medicoCentroPaciente);
+		
+		citasPenditesPaciente= citaService.getListaCitasByPaciente(solCambiReg.getPaciente().getId());
+		Date fechaActual= new Date();
+		for(Cita c: citasPenditesPaciente) {
+			if(c.getDiaCita().after(fechaActual)) {
+				c.setDisponible(true);
+				c.setPaciente(null);
+				citaRepository.save(c);
+			}
+		}	
+		FacesContext.getCurrentInstance().addMessage(null, new 
+				FacesMessage(FacesMessage.SEVERITY_INFO, "", "La solicitud se ha aceptado correctamente"));
+		listaSolicitudesCambioMedico.remove(solCambiReg);
+		listaSolicitudesCambioMedicoAceptadas.add(solCambiReg);
+	}
 	
 
 }
