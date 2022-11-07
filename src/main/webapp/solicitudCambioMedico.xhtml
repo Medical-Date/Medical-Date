@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sec="https://joinfaces.org/security" template="/template.xhtml">
+
+	<ui:define name="content">
+		<h:form id="solicitudCambioMedicoForm">
+			<p:messages id="mensaje" showDetail="true" autoUpdate="true"
+				closable="true" globalOnly="true" />
+				
+				<p:panel id="panelSolCambMedico" header="Solicitud cambio de Médico"
+				class="ui-g-12 ui-md-12 ui-lg-12">
+
+			<div class="ui-g-12 ui-md-12">
+				<h:outputText
+					value="No es posible solicitar el cambio de médico ya que no hay médicos disponibles en su centro "
+					rendered="#{empty solicitudesCambioMedicoBean.listaNombreMedicos}" />
+			</div>
+
+			<div class="ui-g-12 ui-md-12">
+				<h:outputText
+					value=" #{solicitudesCambioMedicoBean.pacienteLogado.nombre} su médico actual es #{solicitudesCambioMedicoBean.medicoAnterior.nombre}"
+					style="font-weight:bold" />
+			</div>
+
+
+
+			<div class="ui-g-12 ui-md-12">
+				<div class="ui-g-2 ui-md-2">
+					<h:outputText value="Lista de médicos en su centro: "
+						rendered="#{not empty solicitudesCambioMedicoBean.listaNombreMedicos}" />
+				</div>
+				<div class="ui-g-6 ui-md-6">
+					<h:selectOneMenu id="medico"
+						value="#{solicitudesCambioMedicoBean.medicoSelected}"
+						rendered="#{not empty  solicitudesCambioMedicoBean.listaNombreMedicos}">
+
+						<f:selectItems
+							value="#{solicitudesCambioMedicoBean.listaNombreMedicos}" />
+
+					</h:selectOneMenu>
+
+
+				</div>
+			</div>
+
+
+
+			<div class="ui-g-12 ui-md-12">
+				<div class="ui-g-2 ui-md-2">
+					<h:outputText
+						value="Indique el motivo de la solicitud de cambio de médico"
+						rendered="#{not empty  solicitudesCambioMedicoBean.listaNombreMedicos}" />
+				</div>
+				<div class="ui-g-2 ui-md-2">
+					<p:inputTextarea rows="10" cols="50"
+						value="#{solicitudesCambioMedicoBean.solicitudCambioMedico.motivo}"
+						rendered="#{not empty  solicitudesCambioMedicoBean.listaNombreMedicos}" />
+				</div>
+
+			</div>
+
+			<!-- Botón Registrar -->
+			<div class="ui-g-12">
+				<div class="ui-g-12 ui-md-10" />
+				<div class="ui-g-12 ui-md-2 botonera-wrapper">
+
+					<p:commandButton value="Enviar solicitud"
+						action="#{solicitudesCambioMedicoBean.enviarSolicitud}"
+						rendered="#{not empty  solicitudesCambioMedicoBean.listaNombreMedicos}" />
+				</div>
+				<div class="ui-g-12 ui-md-10" />
+
+				<div class="ui-g-12 ui-md-2 botonera-wrapper">
+					<p:button id="botonVolver" value="Atrás" title="Atrás"
+						outcome="home.xhtml">
+					</p:button>
+				</div>
+
+			</div>
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

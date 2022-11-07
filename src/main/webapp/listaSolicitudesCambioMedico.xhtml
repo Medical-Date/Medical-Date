@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sec="https://joinfaces.org/security" template="/template.xhtml">
+
+	<ui:define name="content">
+		<h:form id="formListadoSolicitudesCambioMedico">
+			<p:messages id="mensaje" showDetail="true" autoUpdate="true"
+				closable="true" globalOnly="true" />
+			<h2>Lista de Solicitudes cambio de médico</h2>
+
+			<div class="card">
+				<p:dataTable var="solCambMed"
+					value="#{solicitudesRegistrosBean.listaSolicitudesCambioMedico}"
+					id="solCambMedTable">
+					<f:facet name="header">
+                Lista de solicitudes pendientes
+            </f:facet>
+					<p:column headerText="Nombre del paciente">
+						<h:outputText
+							value="#{solCambMed.paciente.user.firstName} #{solCambMed.paciente.user.lastName}" />
+					</p:column>
+
+					<p:column headerText="Médico actual">
+						<h:outputText
+							value="#{solicitudesRegistrosBean.obtenerMedicoNuevoPorPaciente(solCambMed.paciente)}" />
+					</p:column>
+
+					<p:column headerText="Nuevo médico">
+						<h:outputText
+							value="#{solCambMed.medico.user.firstName} #{solCambMed.medico.user.lastName}" />
+					</p:column>
+
+					<p:column headerText="Motivo">
+						<h:outputText value="#{solCambMed.motivo}" />
+					</p:column>
+					<p:column headerText="Estado">
+						<h:outputText
+							value="#{solicitudesRegistrosBean.estadoSolicitudCambioMedico(solCambMed)}" />
+					</p:column>
+					<p:column headerText="Acciones">
+						<p:commandButton id="aceptarSolicitudCambioMed"
+							widgetVar="aceptarSolicitud" icon="pi pi-pencil" value="Aceptar"
+							action="#{solicitudesRegistrosBean.aceptarSolicitudCambioMedico(solCambMed)}"
+							update="formListadoSolicitudesCambioMedico:solCambMedTable,formListadoSolicitudesCambioMedico:solCambMedAceptadaTable">
+							<f:param name="idAceptarSolicitudCambioMed" value="#{solCambMed.id}" />
+						</p:commandButton>
+
+					</p:column>
+				</p:dataTable>
+
+			</div>
+			
+			<p:spacer height="100"/>
+				<div class="card">
+				<p:dataTable var="solCambMedAceptada" value="#{solicitudesRegistrosBean.listaSolicitudesCambioMedicoAceptadas}" id="solCambMedAceptadaTable">
+				  <f:facet name="header">
+                Lista de solicitudes cambio médico aceptada
+            </f:facet>
+			<p:column headerText="Nombre del paciente">
+						<h:outputText
+							value="#{solCambMedAceptada.paciente.user.firstName} #{solCambMedAceptada.paciente.user.lastName}" />
+					</p:column>
+
+					<p:column headerText="Médico solicitado">
+						<h:outputText
+							value="#{solCambMedAceptada.medico.user.firstName} #{solCambMedAceptada.medico.user.lastName}" />
+					</p:column>
+
+					<p:column headerText="Motivo">
+						<h:outputText value="#{solCambMedAceptada.motivo}" />
+					</p:column>
+					<p:column headerText="Estado">
+						<h:outputText
+							value="#{solicitudesRegistrosBean.estadoSolicitudCambioMedico(solCambMedAceptada)}" />
+					</p:column>
+				</p:dataTable>
+			</div>
+			
+			
+			
+			<p:commandButton id="volver" value="Home"
+				onclick="document.location.href='#{request.contextPath}/welcome.xhtml'">
+			</p:commandButton>
+
+		</h:form>
+	</ui:define>
+</ui:composition>
