@@ -23,5 +23,8 @@ public interface MedicoRepository extends CrudRepository<Medico, Long>{
 	@Query("SELECT nombre FROM Medico m WHERE m.esAsignado != 1")
 	public List<Medico> obtenerListaMedicoPorNombreNoAsignados();
 	
+	@Query("SELECT m FROM Medico m WHERE m.user.id = ?1")
+	public Medico obtenerMedicoPorUsuario(@Param("id") Long id);
+	
 
 }

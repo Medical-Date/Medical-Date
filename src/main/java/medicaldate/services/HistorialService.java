@@ -3,6 +3,7 @@ package medicaldate.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import medicaldate.model.Historial;
@@ -24,6 +25,10 @@ public class HistorialService {
 
 	public Historial getHistorialById(Long id) {
 		return historialRepository.findById(id).get();
+	}
+	
+	public Historial obtenerHistorialPorPaciente(long id) {
+		return historialRepository.obtenerHistorialPorPaciente(id);
 	}
 
 }

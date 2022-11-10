@@ -3,6 +3,7 @@ package medicaldate.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import medicaldate.model.Enfermedad;
@@ -25,5 +26,10 @@ public class EnfermedadService {
 	public Enfermedad getEnfermedadById(Long id) {
 		return enfermedadRepository.findById(id).get();
 	}
+	
+	public Enfermedad getEnfermedadByNombre(String nombre) {
+		return enfermedadRepository.getEnfermedadByNombre(nombre);
+	}
+
 
 }

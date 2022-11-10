@@ -38,6 +38,10 @@ public class MedicoService {
 		return medicoRepository.obtenerListaMedicoPorNombreNoAsignados();
 	}
 	
+	public Medico obtenerMedicoPorUsuario(Long id) {
+		return medicoRepository.obtenerMedicoPorUsuario(id);
+	}
+	
 	
 
 	

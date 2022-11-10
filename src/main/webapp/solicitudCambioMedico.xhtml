@@ -39,7 +39,7 @@
 				<div class="ui-g-6 ui-md-6">
 					<h:selectOneMenu id="medico"
 						value="#{solicitudesCambioMedicoBean.medicoSelected}"
-						rendered="#{not empty  solicitudesCambioMedicoBean.listaNombreMedicos}">
+						rendered="#{not empty  solicitudesCambioMedicoBean.listaNombreMedicos}"  filter="true">
 
 						<f:selectItems
 							value="#{solicitudesCambioMedicoBean.listaNombreMedicos}" />

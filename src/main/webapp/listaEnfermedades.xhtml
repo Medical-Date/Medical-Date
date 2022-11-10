@@ -30,10 +30,16 @@
 					<p:column headerText="Gravedad">
 						<h:outputText value="#{enfermedades.gravedad}" />
 					</p:column>
-					
+					<p:column headerText="Tratamiento">
+						<p:commandButton  value="Tratamientos"
+							 actionListener="#{enfermedadTratamientosBean.seleccionarEnfermedad(enfermedades.id)}" >
+							 	<f:param name="id" value="#{enfermedades.id}" />
+						</p:commandButton>
+					</p:column>
+
 					<p:column headerText="Acciones">
-					<p:commandButton id="eliminarEnfermedad" widgetVar="eliminarEnfermedad"
-							 process="@this enfermedadesTable"
+						<p:commandButton id="eliminarEnfermedad"
+							widgetVar="eliminarEnfermedad" process="@this enfermedadesTable"
 							icon="pi pi-pencil" value="Eliminar"
 							actionListener="#{enfermedadBean.eliminarEnfermedad(enfermedades)}"
 							update="formListadoEnfermedades">
@@ -44,8 +50,8 @@
 							actionListener="#{enfermedadBean.onEditar(enfermedades.id)}">
 							<f:param name="id" value="#{enfermedades.id}" />
 						</p:commandButton>
-						
-						</p:column>
+
+					</p:column>
 				</p:dataTable>
 			</div>
 			<p:commandButton id="volver" value="Home"

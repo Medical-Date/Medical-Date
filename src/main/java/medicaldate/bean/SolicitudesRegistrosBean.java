@@ -20,6 +20,7 @@ import medicaldate.model.Medico;
 import medicaldate.model.MedicosCentroPaciente;
 import medicaldate.model.Paciente;
 import medicaldate.model.Rol;
+import medicaldate.model.RolUsuarios;
 import medicaldate.model.SolicitudesCambioMedico;
 import medicaldate.model.SolicitudesRegistros;
 import medicaldate.model.User;
@@ -27,6 +28,7 @@ import medicaldate.repository.CitaRepository;
 import medicaldate.repository.MedicoRepository;
 import medicaldate.repository.MedicosCentroPacienteRepository;
 import medicaldate.repository.PacienteRepository;
+import medicaldate.repository.RolUsuariosRepository;
 import medicaldate.repository.SolicitudesCambioMedicoRepository;
 import medicaldate.repository.SolicitudesRegistrosRepository;
 import medicaldate.repository.UserRepository;
@@ -111,6 +113,8 @@ public class SolicitudesRegistrosBean implements Serializable{
 	private CitaRepository citaRepository;
 	@Autowired
 	private MedicosCentroPacienteRepository medicosCentroPacienteRepository;
+	@Autowired
+	private RolUsuariosRepository rolUsuariosRepository;
 	
 
 
@@ -164,6 +168,7 @@ public class SolicitudesRegistrosBean implements Serializable{
 	}
 	
 	public void aceptarSolicitud(SolicitudesRegistros solReg) {
+		RolUsuarios rolUsuarios=new RolUsuarios();
 		User usuarioSolicitante=new User();
 		usuarioSolicitante= solReg.getUser();
 		solReg.setEstado(true);
@@ -177,6 +182,10 @@ public class SolicitudesRegistrosBean implements Serializable{
 			nuevoPaciente.setTieneCentro(false);
 			nuevoPaciente.setTieneMedico(false);
 			pacienteRepository.save(nuevoPaciente);
+			rolUsuarios.setRol("PACIENTE");
+			rolUsuarios.setUsername(usuarioSolicitante.getUserName());
+			rolUsuariosRepository.save(rolUsuarios);
+			
 		}
 		if(usuarioSolicitante.getRol().getRol().equals("MEDICO")) {
 			Medico nuevoMedico= new Medico();
@@ -184,6 +193,9 @@ public class SolicitudesRegistrosBean implements Serializable{
 			nuevoMedico.setUser(usuarioSolicitante);
 			nuevoMedico.setEsAsignado(false);
 			medicoRepository.save(nuevoMedico);
+			rolUsuarios.setRol("MEDICO");
+			rolUsuarios.setUsername(usuarioSolicitante.getUserName());
+			rolUsuariosRepository.save(rolUsuarios);
 		}
 		FacesContext.getCurrentInstance().addMessage(null, new 
 				FacesMessage(FacesMessage.SEVERITY_INFO, "", "La solicitud se ha aceptado correctamente"));

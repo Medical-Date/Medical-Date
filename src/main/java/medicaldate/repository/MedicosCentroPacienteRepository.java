@@ -18,5 +18,8 @@ public interface MedicosCentroPacienteRepository extends CrudRepository<MedicosC
 	@Query("SELECT m FROM MedicosCentroPaciente m WHERE m.idPaciente.id = ?1")
 	public MedicosCentroPaciente obtenerMedicoCentroPacientePorPaciente(@Param("id") long id);
 	
+	@Query("SELECT m FROM MedicosCentroPaciente m WHERE m.idMedico.id = ?1")
+	public List<MedicosCentroPaciente> obtenerListPacientePorMedico(@Param("id") long id);
+	
 
 }

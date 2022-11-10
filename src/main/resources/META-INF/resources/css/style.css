@@ -24,7 +24,7 @@
 
 .ui-tree {
 	width: 100%;
-	/* Solo a partir de este tamaño se crearia un scroll horizontal */
+	/* Solo a partir de este tamaï¿½o se crearia un scroll horizontal */
 	overflow: hidden;
 }
 
@@ -4305,7 +4305,7 @@ div#menuForm\:menuPrincipal span.ui-menuitem-text {
 	margin-right: 10px;
 }
 
-/** Hacer que el menú desaparezca en la versión móvil **/
+/** Hacer que el menï¿½ desaparezca en la versiï¿½n mï¿½vil **/
 @media screen and (min-width : 1000px) {
 	.visibleMobileOnly {
 		display: none !important;
@@ -4321,7 +4321,7 @@ div#menuForm\:menuPrincipal span.ui-menuitem-text {
 	.visibleWebOnly {
 		display: none !important;
 	}
-	/* poner las notificaciones en el centro para el móvil */
+	/* poner las notificaciones en el centro para el mï¿½vil */
 	.ui-growl {
 		top: 10px;
 		right: 10px;
@@ -4378,7 +4378,7 @@ li ul li.ui-menuitem-active>a {
 	content: "\f00d";
 }
 
-/**No está funcionando*/
+/**No estï¿½ funcionando*/
 .ui-datatable .ui-row-editor .ui-row-editor-pencil::hover {
 	background-color: #e3e3e3 !important;
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff),

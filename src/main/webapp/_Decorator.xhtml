@@ -64,9 +64,8 @@
 				<img class="user-icon" src="#{resource['/img/user.png']}" alt="" ></img>
 				<div class="user">
 					<div class="name">
-						<h:outputText value="#{LoginController.currentUser.userName} - #{LoginController.currentUser.rol.rol}"  rendered="#{LoginController.existeUsuarioLogado() eq true}" />
-					</div>
-					
+						<h:outputText value="#{LoginController.currentUser.userName} - #{LoginController.currentUser.rol.rol}"  rendered="#{LoginController.existeUsuarioLogado() eq true}" />					
+					</div>			
 				</div>		
 			</div>
 		</div>
@@ -86,7 +85,10 @@
 		<div class="footer-block">
 			<div>
 				<img alt=""
-					src="#{resource['/img/A_junta_trazado_blanco_50x50.png']}" />
+					src="#{resource['/img/MDLogo.png']}" />
+			</div>
+			<div>
+			<h:outputText value="Contacto: medicalDate@gmail.com"></h:outputText>
 			</div>
 			</div>
 			

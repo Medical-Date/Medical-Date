@@ -19,6 +19,8 @@ import lombok.Getter;
 import lombok.Setter;
 import medicaldate.model.Enfermedad;
 import medicaldate.model.Historial;
+import medicaldate.model.Medico;
+import medicaldate.model.MedicosCentroPaciente;
 import medicaldate.model.Paciente;
 import medicaldate.model.TipoSangre;
 import medicaldate.model.User;
@@ -26,6 +28,8 @@ import medicaldate.repository.HistorialRepository;
 import medicaldate.repository.UserRepository;
 import medicaldate.services.EnfermedadService;
 import medicaldate.services.HistorialService;
+import medicaldate.services.MedicoService;
+import medicaldate.services.MedicosCentroPacienteService;
 import medicaldate.services.PacienteService;
 import medicaldate.services.UserService;
 import medicaldate.util.JsfUtils;
@@ -86,10 +90,14 @@ public class HistorialBean implements Serializable {
 
 	@Autowired
 	private PacienteService pacienteService;
+	@Autowired
+	private UserRepository userRepository;
 
 	@Getter
 	@Setter
 	private String pacienteSelected;
+	
+
 
 	@PostConstruct
 	public void init() {
@@ -126,7 +134,11 @@ public class HistorialBean implements Serializable {
 			historial.setTlfContactoEmergencia(tlfContactoEmergencia);
 			historial.setTipoSangre(tipoSangre);
 			historial.setPaciente(pacienteSeleccionado);
+			historial.setUser(pacienteSeleccionado.getUser());
+			usuario= userService.getUserById(pacienteSeleccionado.getUser().getId());			
 			historialRepository.save(historial);
+			usuario.setHistorial(historial);
+			userRepository.save(usuario);
 			FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
 					.handleNavigation(FacesContext.getCurrentInstance(), null, "/listaHistoriales.xhtml");
 		}
@@ -146,5 +158,6 @@ public class HistorialBean implements Serializable {
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
 				.handleNavigation(FacesContext.getCurrentInstance(), null, "/editarHistorial.xhtml");
 	}
-
+	
+	
 }

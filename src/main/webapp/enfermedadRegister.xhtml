@@ -7,59 +7,97 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions"
-	xmlns:sec="https://joinfaces.org/security"
-	template="/template.xhtml">
+	xmlns:sec="https://joinfaces.org/security" template="/template.xhtml">
 
 	<ui:define name="content">
 		<h:form id="registerForm">
-			<table>
 
-				<tr>
-					<td><h:outputText
-							value="Introduzca el nombre de la enfermedad:" /></td>
-					<td><h:inputText id="nombre"
-							value="#{enfermedadBean.nombre}" required="true"
-							requiredMessage="Por favor introduzca el nombre de la enfermedad" /></td>
-					<td><h:message for="nombre" style="color:red" /></td>
-				</tr>
+			<p:panel id="panelCrearEnfermedad" class="ui-g-12 ui-md-12 ui-lg-12"
+				header="Crear enfermedad">
+
+				<div class="ui-g">
+					<div class="ui-g-12 ui-md-12 ui-lg-12">
+
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-4 ui-md-4">
+								<h:outputLabel for="nombre"
+									value="Introduzca el nombre de la enfermedad:"
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<h:inputText id="nombre" value="#{enfermedadBean.nombre}" />
+
+							</div>
+						</div>
+
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-4 ui-md-4">
+								<h:outputLabel for="causa"
+									value="Introduzca la causa de la enfermedad:"
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<h:inputText id="causa" value="#{enfermedadBean.causa}" />
+
+							</div>
+						</div>
+
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-4 ui-md-4">
+								<h:outputLabel for="sintomas"
+									value="Introduzca los síntomas de la enfermedad:"
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<h:inputText id="sintomas" value="#{enfermedadBean.sintomas}" />
+
+							</div>
+						</div>
+
+					<div class="ui-g-12 ui-md-6">
+
+						<div class="ui-g-4 ui-md-2">
+							<h:outputLabel for="gravedad" value="Gravedad"
+								style="font-weight:bold" />
+							<br />
+						</div>
+						<div class="ui-g-8 ui-md-4">
+
+							<h:selectOneMenu id="gravedad" value="#{enfermedadBean.gravedad}">
+								<f:selectItem itemLabel="Leve" itemValue="LEVE" />
+								<f:selectItem itemLabel="Moderada" itemValue="MODERADA" />
+								<f:selectItem itemLabel="Grave" itemValue="GRAVE" />
+							</h:selectOneMenu>
+						</div>
+					</div>
+					</div>
+
+					<!-- Botón Registrar -->
+					<div class="ui-g-12">
+						<div class="ui-g-12 ui-md-10" />
+						<div class="ui-g-12 ui-md-2 botonera-wrapper">
+
+							<p:commandButton value="Guardar"
+								action="#{enfermedadBean.guardarEnfermedad}" />
+						</div>
+						<div class="ui-g-12 ui-md-10" />
+
+						<div class="ui-g-12 ui-md-2 botonera-wrapper">
+							<p:commandButton id="volver" value="Volver"
+								onclick="document.location.href='#{request.contextPath}/welcome.xhtml'">
+							</p:commandButton>
+						</div>
+
+					</div>
+
+
+				</div>
 				
-				<tr>
-					<td><h:outputText
-							value="Introduzca la causa de la enfermedad:" /></td>
-					<td><h:inputText id="causa"
-							value="#{enfermedadBean.causa}" required="true"
-							requiredMessage="Por favor introduzca la causa de la enfermedad" /></td>
-					<td><h:message for="causa" style="color:red" /></td>
-				</tr>
-				
-				<tr>
-					<td><h:outputText
-							value="Introduzca los síntomas de la enfermedad:" /></td>
-					<td><h:inputText id="sintomas"
-							value="#{enfermedadBean.sintomas}" required="true"
-							requiredMessage="Por favor introduzca los sintomas de la enfermedad" /></td>
-					<td><h:message for="sintomas" style="color:red" /></td>
-				</tr>
+			</p:panel>
 
-				<tr>
-					<h:outputLabel for="gravedad" value="Gravedad" />
-					<h:selectOneMenu id="gravedad"
-						value="#{enfermedadBean.gravedad}">
-						<f:selectItem itemLabel="Leve" itemValue="LEVE" />
-						<f:selectItem itemLabel="Moderada" itemValue="MODERADA" />
-						<f:selectItem itemLabel="Grave" itemValue="GRAVE" />
-					</h:selectOneMenu>
-				</tr>
-
-				<tr>
-					<td />
-					<td><p:commandButton value="Guardar"
-							action="#{enfermedadBean.guardarEnfermedad}" /></td>
-				</tr>
-				<tr>
-					<td><h:outputLink value="home.xhtml">Inicio</h:outputLink></td>
-				</tr>
-			</table>
 		</h:form>
 	</ui:define>
 </ui:composition>

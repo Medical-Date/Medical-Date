@@ -28,5 +28,9 @@ public class MedicosCentroPacienteService {
 	public MedicosCentroPaciente obtenerMedicoCentroPacientePorPaciente(long id) {
 		return medicosCentroPacienteRepository.obtenerMedicoCentroPacientePorPaciente(id);
 	}
+	
+	public List<MedicosCentroPaciente> obtenerListPacientePorMedico(long id){
+		return medicosCentroPacienteRepository.obtenerListPacientePorMedico(id);
+	}
 
 }
