@@ -36,5 +36,9 @@ public class CitaService {
 		return citaRepository.getListaCitasByPaciente(id);
 		
 	}
+	
+	public Cita findById(Long id) {
+		return citaRepository.findById(id).get();
+	}
 
 }

@@ -22,9 +22,12 @@ import lombok.Setter;
 import medicaldate.model.Calendario;
 import medicaldate.model.CalendarioCitas;
 import medicaldate.model.Cita;
+import medicaldate.model.Enfermedad;
 import medicaldate.model.Medico;
+import medicaldate.model.MedicosCentroPaciente;
 import medicaldate.model.MedicosPacientes;
 import medicaldate.model.Paciente;
+import medicaldate.model.Tratamientos;
 import medicaldate.model.User;
 import medicaldate.repository.CalendarioCitasRepository;
 import medicaldate.repository.CalendarioRepository;
@@ -32,10 +35,14 @@ import medicaldate.repository.CitaRepository;
 import medicaldate.repository.MedicoRepository;
 import medicaldate.repository.PacienteRepository;
 import medicaldate.services.CitaService;
+import medicaldate.services.EnfermedadService;
 import medicaldate.services.MedicoService;
+import medicaldate.services.MedicosCentroPacienteService;
 import medicaldate.services.MedicosPacientesService;
 import medicaldate.services.PacienteService;
+import medicaldate.services.TratamientosService;
 import medicaldate.services.UserService;
+import medicaldate.util.JsfUtils;
 
 @Component
 @ViewScoped
@@ -98,9 +105,6 @@ public class CitasBean implements Serializable {
 	private MedicosPacientesService medicosPacientesService;
 	@Getter
 	@Setter
-	private MedicosPacientes medicosPacientes;
-	@Getter
-	@Setter
 	private Long idMedico;
 	@Getter
 	@Setter
@@ -111,11 +115,36 @@ public class CitasBean implements Serializable {
 	@Getter
 	@Setter
 	private List<Cita> listaMisCitas;
+	
+	@Autowired
+	private MedicosCentroPacienteService medicosCentroPacienteService;
+	@Getter
+	@Setter
+	private MedicosCentroPaciente medicoCentroPaciente;
+	
+	@Getter@Setter
+	private List<String> listaEnfermedadesString;
+	
+	@Getter@Setter
+	private List<Enfermedad> listaEnfermedades;
+	
+	@Autowired
+	private EnfermedadService enfermedadService;
+	
+	@Getter@Setter
+	private String enfermedadSelected;
+	
+	@Getter@Setter
+	private List<Tratamientos> listaTratamiento;
+	@Autowired
+	private TratamientosService tratamientosService;
 
 	@PostConstruct
 	public void init() {
+		Long idCita = (Long) JsfUtils.getFlashAttribute("idCita");
 		calendario = new Calendario();
-		medicosPacientes = new MedicosPacientes();
+		listaTratamiento= new ArrayList<>();
+		medicoCentroPaciente= new MedicosCentroPaciente();
 		cita = new Cita();
 		medicoSelected = "";
 		pacienteSelected = "";
@@ -133,15 +162,30 @@ public class CitasBean implements Serializable {
 
 			paciente = pacientesService.obtenerPacientePorUsuarioLogado(user.getId());
 			if (paciente != null) {
-				medicosPacientes = medicosPacientesService.getMedicoByPacienteLogado(paciente.getId());
+				
+				medicoCentroPaciente = medicosCentroPacienteService.obtenerMedicoCentroPacientePorPaciente(paciente.getId());
+				
 				listaMisCitas= citaService.getListaCitasByPaciente(paciente.getId());
-				if (medicosPacientes != null) {
+				if (medicoCentroPaciente != null) {
 
-					idMedico = medicosPacientes.getIdMedico().getId();
+					idMedico = medicoCentroPaciente.getIdMedico().getId();
 					listaCitasByPacienteLogado = citaService.getListaCitasMedicoByPaciente(idMedico);
 				}
 			}
 
+		}
+		
+		if(idCita!=null) {
+			cita= citaService.findById(idCita);
+			listaTratamiento= tratamientosService.getTratamientosByEnfermedad(cita.getEnfermedad().getId());
+		}
+		
+		listaEnfermedadesString= new ArrayList<>();
+		listaEnfermedades= enfermedadService.getEnfermedades();
+		if(!listaEnfermedades.isEmpty()) {
+			for(Enfermedad e: listaEnfermedades) {
+				listaEnfermedadesString.add(e.getNombre());
+			}
 		}
 
 	}
@@ -244,6 +288,33 @@ public class CitasBean implements Serializable {
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Cita cancelada con éxito"));
 		listaMisCitas= citaService.getListaCitasByPaciente(paciente.getId());
 		
+	}
+	
+	public void gestionarCita(Long idCita) {
+		JsfUtils.setFlashAttribute("idCita", idCita);
+		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+		.handleNavigation(FacesContext.getCurrentInstance(), null, "/gestionarCita.xhtml");
+
+		
+	}
+	
+	public void consultarCita(Long idCita) {
+		JsfUtils.setFlashAttribute("idCita", idCita);
+		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+		.handleNavigation(FacesContext.getCurrentInstance(), null, "/consultarCita.xhtml");
+
+		
+	}
+	
+	public void guardarDiagnostico() {
+		Enfermedad e= new Enfermedad();
+		e= enfermedadService.getEnfermedadByNombre(enfermedadSelected);
+		cita.setEnfermedad(e);
+		citaRepository.save(cita);
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Diagnóstico añadido con éxito"));
+		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+		.handleNavigation(FacesContext.getCurrentInstance(), null, "/listCitas.xhtml");
 	}
 
 }

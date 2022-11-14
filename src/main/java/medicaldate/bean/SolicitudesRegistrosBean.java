@@ -15,12 +15,15 @@ import org.springframework.stereotype.Component;
 
 import lombok.Getter;
 import lombok.Setter;
+import medicaldate.model.Centros;
 import medicaldate.model.Cita;
 import medicaldate.model.Medico;
+import medicaldate.model.MedicosCentro;
 import medicaldate.model.MedicosCentroPaciente;
 import medicaldate.model.Paciente;
 import medicaldate.model.Rol;
 import medicaldate.model.RolUsuarios;
+import medicaldate.model.SolicitudesCambioCentro;
 import medicaldate.model.SolicitudesCambioMedico;
 import medicaldate.model.SolicitudesRegistros;
 import medicaldate.model.User;
@@ -29,12 +32,15 @@ import medicaldate.repository.MedicoRepository;
 import medicaldate.repository.MedicosCentroPacienteRepository;
 import medicaldate.repository.PacienteRepository;
 import medicaldate.repository.RolUsuariosRepository;
+import medicaldate.repository.SolicitudesCambioCentroRepository;
 import medicaldate.repository.SolicitudesCambioMedicoRepository;
 import medicaldate.repository.SolicitudesRegistrosRepository;
 import medicaldate.repository.UserRepository;
 import medicaldate.services.CitaService;
 import medicaldate.services.MedicosCentroPacienteService;
+import medicaldate.services.MedicosCentroService;
 import medicaldate.services.RolService;
+import medicaldate.services.SolicitudesCambioCentroService;
 import medicaldate.services.SolicitudesCambioMedicoService;
 import medicaldate.services.SolicitudesRegistrosService;
 import medicaldate.services.UserService;
@@ -117,6 +123,8 @@ public class SolicitudesRegistrosBean implements Serializable{
 	private RolUsuariosRepository rolUsuariosRepository;
 	
 
+	
+
 
 	@PostConstruct
 	public void init() {
@@ -139,6 +147,7 @@ public class SolicitudesRegistrosBean implements Serializable{
 		listaSolicitudesRegistrosAceptadas=solicitudesRegistrosService.listaSolicitudesAceptadas();
 		
 		cargarSolicitudesCambioMedico();
+		
 		
 	}
 	
@@ -244,6 +253,7 @@ public class SolicitudesRegistrosBean implements Serializable{
 		return res;
 	}
 	
+	
 	public String obtenerMedicoNuevoPorPaciente(Paciente idPaciente) {
 		String res="";
 		medicoCentroPaciente = medicosCentroPacienteService.obtenerMedicoCentroPacientePorPaciente(idPaciente.getId());
@@ -276,6 +286,8 @@ public class SolicitudesRegistrosBean implements Serializable{
 		listaSolicitudesCambioMedico.remove(solCambiReg);
 		listaSolicitudesCambioMedicoAceptadas.add(solCambiReg);
 	}
+	
+	
 	
 
 }

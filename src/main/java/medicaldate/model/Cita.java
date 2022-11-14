@@ -3,7 +3,6 @@ package medicaldate.model;
 import java.time.LocalTime;
 import java.util.Date;
 
-import javax.enterprise.inject.Default;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,29 +25,35 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Cita {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private Long id;
-	
+
 	@Column(name = "DIA_CITA")
 	private Date diaCita;
-	
+
 	@Column(name = "HORA_CITA")
 	private LocalTime horaCita;
-	
+
 	@OneToOne
-	@JoinColumn(name="id_medico")
+	@JoinColumn(name = "id_medico")
 	private Medico medico;
-	
+
 	@OneToOne
-	@JoinColumn(name="id_paciente")
+	@JoinColumn(name = "id_paciente")
 	private Paciente paciente;
-	
+
 	@Column(name = "disponible")
 	@ColumnDefault("1")
 	private Boolean disponible;
-	
+
+	@OneToOne
+	@JoinColumn(name = "id_enfermedad")
+	private Enfermedad enfermedad;
+
+	@Column(name = "COMENTARIO")
+	private String comentario;
 
 }

@@ -238,6 +238,10 @@
 					</p:column>
 					<p:column headerText="Acciones" >
 						<p:commandButton value="Cancelar cita" action="#{citasBean.cancelarCita(cita)}" update="miPerfilForm:misCitasTable"/>
+						<p:commandButton  value="Consultar cita"
+							 actionListener="#{citasBean.consultarCita(cita.id)}" >
+							 	<f:param name="id" value="#{cita.id}" />
+						</p:commandButton>
 					</p:column>
 					
 

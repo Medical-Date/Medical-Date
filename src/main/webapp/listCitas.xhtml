@@ -35,6 +35,12 @@
 					<p:column headerText="Disponibilidad">
 						<h:outputText value="#{citasBean.mostrarDisponibilidad(cita.disponible)}" />
 					</p:column>
+					<p:column headerText="Acciones" >
+						<p:commandButton  value="Gestionar cita"
+							 actionListener="#{citasBean.gestionarCita(cita.id)}" disabled="#{cita.disponible}">
+							 	<f:param name="id" value="#{cita.id}" />
+						</p:commandButton>
+					</p:column>
 					
 
 				</p:dataTable>

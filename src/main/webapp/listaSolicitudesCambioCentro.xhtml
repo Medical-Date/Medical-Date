@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sec="https://joinfaces.org/security" template="/template.xhtml">
+
+	<ui:define name="content">
+		<h:form id="formListadoSolicitudesCambioCentro">
+			<p:messages id="mensaje" showDetail="true" autoUpdate="true"
+				closable="true" globalOnly="true" />
+			<h2>Lista de Solicitudes cambio de centro</h2>
+
+			<div class="card">
+				<p:dataTable var="solCambCentroTable"
+					value="#{listaSolicitudesCambioCentroBean.listaSolicitudesCambioCentro}"
+					id="solCambCentroTable">
+					<f:facet name="header">
+                Lista de solicitudes pendientes
+            </f:facet>
+					<p:column headerText="Nombre del médico">
+						<h:outputText
+							value="#{solCambCentroTable.medico.user.firstName} #{solCambCentroTable.medico.user.lastName}" />
+					</p:column>
+
+					<p:column headerText="Centro actual">
+						<h:outputText
+							value="#{listaSolicitudesCambioCentroBean.obtenerCentroAnterior(solCambCentroTable.medico)}" />
+					</p:column>
+
+					<p:column headerText="Nuevo centro">
+						<h:outputText
+							value="#{solCambCentroTable.centros.nombre}" />
+					</p:column>
+
+					<p:column headerText="Motivo">
+						<h:outputText value="#{solCambCentroTable.motivo}" />
+					</p:column>
+					<p:column headerText="Estado">
+						<h:outputText
+							value="#{listaSolicitudesCambioCentroBean.estadoSolicitudCambioCentro(solCambCentroTable)}" />
+					</p:column>
+					<p:column headerText="Acciones">
+						<p:commandButton id="aceptarSolicitudCambioCentro"
+							widgetVar="aceptarSolicitudCambioCentro" icon="pi pi-pencil" value="Aceptar"
+							action="#{listaSolicitudesCambioCentroBean.aceptarSolicitudCambioCentro(solCambCentroTable)}"
+							update="formListadoSolicitudesCambioCentro:solCambCentroTable,formListadoSolicitudesCambioCentro:solCambCentroAceptadaTable">
+							<f:param name="idAceptarSolicitudCambioMed" value="#{solCambCentroTable.id}" />
+						</p:commandButton>
+
+					</p:column>
+				</p:dataTable>
+
+			</div>
+			
+				<p:spacer height="100"/>
+				<div class="card">
+				<p:dataTable var="solCambCentroAceptada" value="#{listaSolicitudesCambioCentroBean.listaSolicitudesCambioCentroAceptadas}" id="solCambCentroAceptadaTable">
+				  <f:facet name="header">
+                Lista de solicitudes cambio centro aceptada
+            </f:facet>
+			<p:column headerText="Nombre del médico">
+						<h:outputText
+							value="#{solCambCentroAceptada.medico.user.firstName} #{solCambCentroAceptada.medico.user.lastName}" />
+					</p:column>
+
+
+					<p:column headerText="Centro solicitado">
+						<h:outputText
+							value="#{solCambCentroAceptada.centros.nombre}" />
+					</p:column>
+
+					<p:column headerText="Motivo">
+						<h:outputText value="#{solCambCentroAceptada.motivo}" />
+					</p:column>
+					<p:column headerText="Estado">
+						<h:outputText
+							value="#{listaSolicitudesCambioCentroBean.estadoSolicitudCambioCentro(solCambCentroAceptada)}" />
+					</p:column>
+				</p:dataTable>
+			</div>
+			
+
+			
+			
+			
+			<p:commandButton id="volver" value="Home"
+				onclick="document.location.href='#{request.contextPath}/welcome.xhtml'">
+			</p:commandButton>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -30,5 +30,9 @@ public class MedicosCentroService {
 	public List<MedicosCentro> obtenerMedicoPorCentro(Long id){
 		return medicosCentroRepository.obtenerMedicoPorCentro(id);
 	}
+	
+	public MedicosCentro obtenerMedico(long id) {
+		return medicosCentroRepository.obtenerMedico(id);
+	}
 
 }

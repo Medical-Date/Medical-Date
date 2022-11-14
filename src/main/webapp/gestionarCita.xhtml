@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:sec="https://joinfaces.org/security" template="/template.xhtml">
+
+	<ui:define name="content">
+		<h:form id="gestionarCitaForm">
+
+			<p:panel id="panelGestionarCita" class="ui-g-12 ui-md-12 ui-lg-12"
+				header="Gestionar cita">
+
+				<div class="ui-g">
+					<div class="ui-g-12 ui-md-12 ui-lg-12">
+
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-4 ui-md-4">
+								<h:outputLabel for="paciente" value="Paciente:"
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<h:inputText id="paciente"
+									value="#{citasBean.cita.paciente.user.firstName} #{citasBean.cita.paciente.user.lastName}"
+									disabled="true" />
+
+							</div>
+						</div>
+
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-4 ui-md-4">
+								<h:outputLabel for="diaCita" value="Día de la cita:"
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<h:inputText id="diaCita"
+									value="#{citasBean.mostrarDiaCita(citasBean.cita.diaCita)}"
+									disabled="true" />
+
+							</div>
+						</div>
+
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-4 ui-md-4">
+								<h:outputLabel for="horaCita" value="Hora de la cita:"
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<h:inputText id="horaCita" value="#{citasBean.cita.horaCita}"
+									disabled="true" />
+
+							</div>
+						</div>
+						
+						
+
+
+					</div>
+
+
+
+
+				</div>
+
+				<p:fieldset legend="Diagnóstico" toggleable="true" toggleSpeed="500">
+
+					<div class="ui-g-4 ui-md-4">
+
+						<p:outputLabel for="@next" value="Enfermedad diagnosticada: " />
+
+						<p:selectOneMenu id="listEnfermedades"
+							value="#{citasBean.enfermedadSelected}"
+							filter="true">
+
+							<f:selectItems
+								value="#{citasBean.listaEnfermedadesString}" />
+
+
+						</p:selectOneMenu>
+
+					</div>
+					<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-2 ui-md-2">
+								<h:outputLabel for="comentarioCita" value="Comentarios:"
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-10 ui-md-4">
+								<p:inputTextarea rows="10" cols="50" id="comentarioCita"
+									value="#{citasBean.cita.comentario}" />
+
+							</div>
+						</div>
+
+
+				</p:fieldset>
+
+				<div class="ui-g-12">
+
+					<div class="ui-g-12 ui-md-10" />
+					<div class="ui-g-12 ui-md-2 botonera-wrapper">
+
+						<p:commandButton icon="pi pi-save" id="saveUsuario"
+							value="Guardar" actionListener="#{citasBean.guardarDiagnostico()}"/>
+					</div>
+					<div class="ui-g-12 ui-md-10" />
+
+
+					<div class="ui-g-12 ui-md-2 botonera-wrapper">
+						<p:commandButton id="volver" value="Volver"
+							onclick="document.location.href='#{request.contextPath}/listCitas.xhtml'">
+						</p:commandButton>
+					</div>
+				</div>
+
+			</p:panel>
+
+		</h:form>
+	</ui:define>
+</ui:composition>
