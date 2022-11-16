@@ -287,6 +287,15 @@ public class SolicitudesRegistrosBean implements Serializable{
 		listaSolicitudesCambioMedicoAceptadas.add(solCambiReg);
 	}
 	
+	public void rechazarSolicitudCambioMedico(SolicitudesCambioMedico solCambiReg) {
+		solCambiReg.setEstado(false);
+		solicitudesCambioMedicoRepository.save(solCambiReg);
+		listaSolicitudesCambioMedicoRechazadas.add(solCambiReg);
+		listaSolicitudesCambioMedico.remove(solCambiReg);
+		FacesContext.getCurrentInstance().addMessage(null, new 
+				FacesMessage(FacesMessage.SEVERITY_INFO, "", "La solicitud se ha rechazado correctamente"));
+	}
+	
 	
 	
 

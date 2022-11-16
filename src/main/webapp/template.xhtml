@@ -17,20 +17,20 @@
 				<p:menuitem value="Inicio" outcome="welcome.xhtml" icon="fa fa-home" />
 				<p:submenu label="Gestión de solicitudes">
 
-					<p:menuitem value="Lista de solicitudes de registros" outcome="listaSolicitudes.xhtml" />
-					<p:menuitem value="Solicitud cambio de médico" outcome="solicitudCambioMedico.xhtml" />
-					<p:menuitem value="Lista de solicitudes cambio de médico" outcome="listaSolicitudesCambioMedico.xhtml" />
-					<p:menuitem value="Solicitud cambio de centro" outcome="solicitudCambioCentro.xhtml" />
-					<p:menuitem value="Lista de solicitudes cambio de centro" outcome="listaSolicitudesCambioCentro.xhtml" />
+					<p:menuitem value="Lista de solicitudes de registros" outcome="listaSolicitudes.xhtml" rendered="#{LoginController.currentUser.rol.rol== 'ADMINISTRADOR'}"/>
+					<p:menuitem value="Solicitud cambio de médico" outcome="solicitudCambioMedico.xhtml" rendered="#{LoginController.currentUser.rol.rol== 'PACIENTE' or LoginController.currentUser.rol.rol== 'ADMINISTRADOR'}"/>
+					<p:menuitem value="Lista de solicitudes cambio de médico" outcome="listaSolicitudesCambioMedico.xhtml" rendered="#{LoginController.currentUser.rol.rol== 'ADMINISTRADOR'}"/>
+					<p:menuitem value="Solicitud cambio de centro" outcome="solicitudCambioCentro.xhtml" rendered="#{LoginController.currentUser.rol.rol== 'MEDICO' or LoginController.currentUser.rol.rol== 'ADMINISTRADOR'}"/>
+					<p:menuitem value="Lista de solicitudes cambio de centro" outcome="listaSolicitudesCambioCentro.xhtml" rendered="#{LoginController.currentUser.rol.rol== 'ADMINISTRADOR'}"/>
 
 				</p:submenu>
 
-				<p:submenu label="Gestión de usuarios">
+				<p:submenu label="Gestión de usuarios" rendered="#{LoginController.currentUser.rol.rol== 'ADMINISTRADOR'}">
 
 					<p:menuitem value="Lista de usuarios" outcome="listUsers.xhtml" />
 
 				</p:submenu>
-				<p:submenu label="Gestión de pacientes">
+				<p:submenu label="Gestión de pacientes" rendered="#{LoginController.currentUser.rol.rol== 'ADMINISTRADOR'}">
 					<p:menuitem value="Lista de pacientes"
 						outcome="listPacientes.xhtml" />
 					<p:menuitem value="Asignar médico"	outcome="asignarMedico.xhtml" />
@@ -41,7 +41,7 @@
 				</p:submenu>
 
 
-				<p:submenu label="Gestión de medicos">
+				<p:submenu label="Gestión de medicos" rendered="#{LoginController.currentUser.rol.rol== 'ADMINISTRADOR'}">
 					<p:menuitem value="Lista de medicos" outcome="listMedicos.xhtml" />
 
 
@@ -52,13 +52,13 @@
 
 
 				</p:submenu>
-				<p:submenu label="Calendario">
+				<p:submenu label="Calendario" rendered="#{LoginController.currentUser.rol.rol== 'ADMINISTRADOR'}">
 					<p:menuitem value="Añadir un calendario" outcome="asignacionCalendario.xhtml" />
 
 
 				</p:submenu>
 
-				<p:submenu label="Gestión de historiales">
+				<p:submenu label="Gestión de historiales" rendered="#{LoginController.currentUser.rol.rol== 'ADMINISTRADOR' or (LoginController.currentUser.rol.rol== 'MEDICO')}">
 					<p:menuitem value="Historial Clínico"
 						outcome="listaHistoriales.xhtml" />
 						<p:menuitem value="Añadir historial clínico"
@@ -67,11 +67,11 @@
 				</p:submenu>
 				<p:submenu label="Vademécum">
 					<p:menuitem value="Lista de enfermedades" outcome="listaEnfermedades.xhtml" />
-					<p:menuitem value="Añadir enfermedad" outcome="enfermedadRegister.xhtml" />
-					<p:menuitem value="Añadir tratamientos" outcome="crearTratamientos.xhtml" />
+					<p:menuitem value="Añadir enfermedad" outcome="enfermedadRegister.xhtml" rendered="#{LoginController.currentUser.rol.rol== 'ADMINISTRADOR'}"/>
+					<p:menuitem value="Añadir tratamientos" outcome="crearTratamientos.xhtml" rendered="#{LoginController.currentUser.rol.rol== 'ADMINISTRADOR'}"/>
 				</p:submenu>
 				
-				<p:submenu label="Gestión de centros">
+				<p:submenu label="Gestión de centros" rendered="#{LoginController.currentUser.rol.rol== 'ADMINISTRADOR'}">
 					<p:menuitem value="Añadir centro" outcome="crearCentro.xhtml" />
 					<p:menuitem value="Lista de centros" outcome="listCentros.xhtml" />
 					<p:menuitem value="Asignar médico a centro" outcome="asignarMedicoCentro.xhtml" />

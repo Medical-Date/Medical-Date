@@ -10,44 +10,48 @@
 
 	<ui:define name="content">
 		<h:form id="formListadoSolicitudes">
-		<p:messages id="mensaje" showDetail="true" autoUpdate="true" 
-			closable="true" globalOnly="true"/>
+			<p:messages id="mensaje" showDetail="true" autoUpdate="true"
+				closable="true" globalOnly="true" />
 			<h2>Lista de Solicitudes de Registro</h2>
 
 			<div class="card">
-				<p:dataTable var="solReg" value="#{solicitudesRegistrosBean.listaSolicitudesRegistros}" id="solRegTable">
-				  <f:facet name="header">
+				<p:dataTable var="solReg"
+					value="#{solicitudesRegistrosBean.listaSolicitudesRegistros}"
+					id="solRegTable">
+					<f:facet name="header">
                 Lista de solicitudes pendientes
             </f:facet>
-				<p:column headerText="Nombre de usuario.">
+					<p:column headerText="Nombre de usuario.">
 						<h:outputText value="#{solReg.user.userName}" />
 					</p:column>
 					<p:column headerText="Nombre">
-						<h:outputText value="#{solReg.user.firstName} #{solReg.user.lastName}" />
+						<h:outputText
+							value="#{solReg.user.firstName} #{solReg.user.lastName}" />
 					</p:column>
 
 					<p:column headerText="D.N.I.">
 						<h:outputText value="#{solReg.user.dni}" />
 					</p:column>
-					
+
 					<p:column headerText="Petición">
 						<h:outputText value="El usuario desea ser #{solReg.rol.rol}" />
 					</p:column>
 					<p:column headerText="Estado">
-						<h:outputText value="#{solicitudesRegistrosBean.estadoSolicitud(solReg)}" />
+						<h:outputText
+							value="#{solicitudesRegistrosBean.estadoSolicitud(solReg)}" />
 					</p:column>
 
 					<p:column headerText="Acciones">
-					<p:commandButton id="aceptarSolicitud" widgetVar="aceptarSolicitud"
-							icon="pi pi-pencil" value="Aceptar"
+						<p:commandButton id="aceptarSolicitud"
+							widgetVar="aceptarSolicitud" icon="pi pi-pencil" value="Aceptar"
 							action="#{solicitudesRegistrosBean.aceptarSolicitud(solReg)}"
-							update="formListadoSolicitudes:solRegTable,formListadoSolicitudes:solRegAceptadaTable"
-							>
+							update="formListadoSolicitudes:solRegTable,formListadoSolicitudes:solRegAceptadaTable">
 							<f:param name="idAceptarSolicitud" value="#{solReg.id}" />
 						</p:commandButton>
-						
-							<p:commandButton id="rechazarSolicitud" widgetVar="rechazarSolicitud"
-							icon="pi pi-pencil" value="Rechazar"
+
+						<p:commandButton id="rechazarSolicitud"
+							widgetVar="rechazarSolicitud" icon="pi pi-pencil"
+							value="Rechazar"
 							action="#{solicitudesRegistrosBean.rechazarSolicitud(solReg)}"
 							update="formListadoSolicitudes:solRegTable,formListadoSolicitudes:solRegRechazadaTable">
 							<f:param name="idRechazarSolicitud" value="#{solReg.id}" />
@@ -57,61 +61,76 @@
 
 				</p:dataTable>
 			</div>
-			
-			<p:spacer height="100"/>
-				<div class="card">
-				<p:dataTable var="solRegRechazada" value="#{solicitudesRegistrosBean.listaSolicitudesRegistrosRechazadas}" id="solRegRechazadaTable">
-				  <f:facet name="header">
-                Lista de solicitudes rechazadas
-            </f:facet>
-				<p:column headerText="Nombre de usuario.">
-						<h:outputText value="#{solRegRechazada.user.userName}" />
-					</p:column>
-					<p:column headerText="Nombre">
-						<h:outputText value="#{solRegRechazada.user.firstName} #{solReg.user.lastName}" />
-					</p:column>
 
-					<p:column headerText="D.N.I.">
-						<h:outputText value="#{solRegRechazada.user.dni}" />
-					</p:column>
-					
-					<p:column headerText="Petición">
-						<h:outputText value="El usuario deseaba ser #{solRegRechazada.rol.rol}" />
-					</p:column>
-					<p:column headerText="Estado">
-						<h:outputText value="#{solicitudesRegistrosBean.estadoSolicitud(solRegRechazada)}" />
-					</p:column>
+			<p:spacer height="100" />
+			
 
-				</p:dataTable>
-			</div>
 			
-			<p:spacer height="100"/>
-			
+
 			<div class="card">
-				<p:dataTable var="solRegAceptada" value="#{solicitudesRegistrosBean.listaSolicitudesRegistrosAceptadas}" id="solRegAceptadaTable">
-				   <f:facet name="header">
+				<p:dataTable var="solRegAceptada"
+					value="#{solicitudesRegistrosBean.listaSolicitudesRegistrosAceptadas}"
+					id="solRegAceptadaTable">
+					<f:facet name="header">
                 Lista de solicitudes aceptadas
             </f:facet>
-				<p:column headerText="Nombre de usuario.">
+					<p:column headerText="Nombre de usuario.">
 						<h:outputText value="#{solRegAceptada.user.userName}" />
 					</p:column>
 					<p:column headerText="Nombre">
-						<h:outputText value="#{solRegAceptada.user.firstName} #{solReg.user.lastName}" />
+						<h:outputText
+							value="#{solRegAceptada.user.firstName} #{solReg.user.lastName}" />
 					</p:column>
 
 					<p:column headerText="D.N.I.">
 						<h:outputText value="#{solRegAceptada.user.dni}" />
 					</p:column>
-					
+
 					<p:column headerText="Petición">
-						<h:outputText value="El usuario deseaba ser #{solRegAceptada.rol.rol}" />
+						<h:outputText
+							value="El usuario deseaba ser #{solRegAceptada.rol.rol}" />
 					</p:column>
 					<p:column headerText="Estado">
-						<h:outputText value="#{solicitudesRegistrosBean.estadoSolicitud(solRegAceptada)}" />
+						<h:outputText
+							value="#{solicitudesRegistrosBean.estadoSolicitud(solRegAceptada)}" />
 					</p:column>
 
 				</p:dataTable>
 			</div>
+			
+			<p:spacer height="100" />
+			
+			<div class="card">
+				<p:dataTable var="solRegRechazada"
+					value="#{solicitudesRegistrosBean.listaSolicitudesRegistrosRechazadas}"
+					id="solRegRechazadaTable">
+					<f:facet name="header">
+                Lista de solicitudes rechazadas
+            </f:facet>
+					<p:column headerText="Nombre de usuario.">
+						<h:outputText value="#{solRegRechazada.user.userName}" />
+					</p:column>
+					<p:column headerText="Nombre">
+						<h:outputText
+							value="#{solRegRechazada.user.firstName} #{solReg.user.lastName}" />
+					</p:column>
+
+					<p:column headerText="D.N.I.">
+						<h:outputText value="#{solRegRechazada.user.dni}" />
+					</p:column>
+
+					<p:column headerText="Petición">
+						<h:outputText
+							value="El usuario deseaba ser #{solRegRechazada.rol.rol}" />
+					</p:column>
+					<p:column headerText="Estado">
+						<h:outputText
+							value="#{solicitudesRegistrosBean.estadoSolicitud(solRegRechazada)}" />
+					</p:column>
+
+				</p:dataTable>
+			</div>
+			
 			<p:commandButton id="volver" value="Home"
 				onclick="document.location.href='#{request.contextPath}/welcome.xhtml'">
 			</p:commandButton>

@@ -33,8 +33,8 @@ public class PacienteService {
 		return  pacienteRepository.obtenerPacientePorNombre(nombre);
 	}
 	
-	public List<Paciente> obtenerListaPacientePorNombreSinCentroAsignado(){
-		return pacienteRepository.obtenerListaPacientePorNombreSinCentroAsignado();
+	public List<Paciente> obtenerListaPacientePorNombreSinCentroAsignadoSinMedico(){
+		return pacienteRepository.obtenerListaPacientePorNombreSinCentroAsignadoSinMedico();
 	}
 	public Paciente obtenerPacientePorUsuarioLogado(Long id) {
 		return pacienteRepository.obtenerPacientePorUsuarioLogado(id);

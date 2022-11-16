@@ -83,7 +83,7 @@ public class HistorialBean implements Serializable {
 
 	@Getter
 	@Setter
-	private List<Paciente> listaPaciente;
+	private List<String> listaPaciente;
 
 	@Autowired
 	private UserService userService;
@@ -96,31 +96,51 @@ public class HistorialBean implements Serializable {
 	@Getter
 	@Setter
 	private String pacienteSelected;
-	
 
+	@Getter
+	@Setter
+	private List<MedicosCentroPaciente> listaPacienteSinHistorial;
+
+	@Autowired
+	private MedicosCentroPacienteService medicosCentroPacienteService;
+	@Autowired
+	private MedicoService medicoService;
 
 	@PostConstruct
 	public void init() {
 		Long idHistorial = (Long) JsfUtils.getFlashAttribute("idHistorial");
+		User user = userService.getCurrentUser();
+		Medico medicoLogado = medicoService.obtenerMedicoPorUsuario(user.getId());
+		if (medicoLogado != null) {
 
-		historial = new Historial();
-		usuario = new User();
-		pacienteSelected = "";
+			historial = new Historial();
+			usuario = new User();
+			pacienteSelected = "";
 
-		id = historial.getId();
-		contactoEmergencia = historial.getContactoEmergencia();
-		tlfContactoEmergencia = historial.getTlfContactoEmergencia();
-		tipoSangre = historial.getTipoSangre();
-		listaHistorial = new ArrayList<Historial>();
-		listaHistorial = historialService.getHistoriales();
-		listaEnfermedad = new ArrayList<Enfermedad>();
-		listaEnfermedad = enfermedadService.getEnfermedades();
-		listaPaciente = new ArrayList<>();
-		listaPaciente = pacienteService.getListaPacientesPorNombre();
+			id = historial.getId();
+			contactoEmergencia = historial.getContactoEmergencia();
+			tlfContactoEmergencia = historial.getTlfContactoEmergencia();
+			tipoSangre = historial.getTipoSangre();
+			listaHistorial = new ArrayList<Historial>();
+			listaHistorial = historialService.getHistoriales();
+			listaEnfermedad = new ArrayList<Enfermedad>();
+			listaEnfermedad = enfermedadService.getEnfermedades();
+			listaPaciente = new ArrayList<>();
+			listaPacienteSinHistorial = new ArrayList<>();
+			listaPacienteSinHistorial = medicosCentroPacienteService
+					.obtenerListPacientePorMedicoSinHistorial(medicoLogado.getId());
+			for (MedicosCentroPaciente mcp : listaPacienteSinHistorial) {
+				listaPaciente.add(mcp.getIdPaciente().getNombre());
+			}
 
-		if (idHistorial != null) {
-			historial = historialService.getHistorialById(idHistorial);
+			if (idHistorial != null) {
+				historial = historialService.getHistorialById(idHistorial);
+			}
 		}
+		listaHistorial = new ArrayList<Historial>();
+		listaEnfermedad = new ArrayList<Enfermedad>();
+		listaPaciente = new ArrayList<>();
+		listaPacienteSinHistorial = new ArrayList<>();
 	}
 
 	public void guardarHistorial() {
@@ -135,7 +155,7 @@ public class HistorialBean implements Serializable {
 			historial.setTipoSangre(tipoSangre);
 			historial.setPaciente(pacienteSeleccionado);
 			historial.setUser(pacienteSeleccionado.getUser());
-			usuario= userService.getUserById(pacienteSeleccionado.getUser().getId());			
+			usuario = userService.getUserById(pacienteSeleccionado.getUser().getId());
 			historialRepository.save(historial);
 			usuario.setHistorial(historial);
 			userRepository.save(usuario);
@@ -158,6 +178,5 @@ public class HistorialBean implements Serializable {
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
 				.handleNavigation(FacesContext.getCurrentInstance(), null, "/editarHistorial.xhtml");
 	}
-	
-	
+
 }

@@ -37,7 +37,7 @@
 						</p:commandButton>
 					</p:column>
 
-					<p:column headerText="Acciones">
+					<p:column headerText="Acciones" rendered="#{LoginController.currentUser.rol.rol== 'ADMINISTRADOR'}">
 						<p:commandButton id="eliminarEnfermedad"
 							widgetVar="eliminarEnfermedad" process="@this enfermedadesTable"
 							icon="pi pi-pencil" value="Eliminar"

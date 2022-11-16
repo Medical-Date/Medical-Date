@@ -50,6 +50,13 @@
 							update="formListadoSolicitudesCambioCentro:solCambCentroTable,formListadoSolicitudesCambioCentro:solCambCentroAceptadaTable">
 							<f:param name="idAceptarSolicitudCambioMed" value="#{solCambCentroTable.id}" />
 						</p:commandButton>
+						
+						<p:commandButton id="rechazarSolicitudCambioCentro" widgetVar="rechazarSolicitudCambioCentro"
+							icon="pi pi-pencil" value="Rechazar"
+							action="#{listaSolicitudesCambioCentroBean.rechazarSolicitudCambioCentro(solCambCentroTable)}"
+							update="formListadoSolicitudesCambioCentro:solCambCentroTable,formListadoSolicitudesCambioCentro:solCambCentroRechazadaTable">
+							<f:param name="idRechazarSolicitudCambioCentro" value="#{solCambCentroTable.id}" />
+						</p:commandButton>
 
 					</p:column>
 				</p:dataTable>
@@ -79,6 +86,33 @@
 					<p:column headerText="Estado">
 						<h:outputText
 							value="#{listaSolicitudesCambioCentroBean.estadoSolicitudCambioCentro(solCambCentroAceptada)}" />
+					</p:column>
+				</p:dataTable>
+			</div>
+			
+			<p:spacer height="100"/>
+				<div class="card">
+				<p:dataTable var="solCambCentroRechazada" value="#{listaSolicitudesCambioCentroBean.listaSolicitudesCambioCentroRechazadas}" id="solCambCentroRechazadaTable">
+				  <f:facet name="header">
+                Lista de solicitudes cambio centro aceptada
+            </f:facet>
+			<p:column headerText="Nombre del médico">
+						<h:outputText
+							value="#{solCambCentroRechazada.medico.user.firstName} #{solCambCentroRechazada.medico.user.lastName}" />
+					</p:column>
+
+
+					<p:column headerText="Centro solicitado">
+						<h:outputText
+							value="#{solCambCentroRechazada.centros.nombre}" />
+					</p:column>
+
+					<p:column headerText="Motivo">
+						<h:outputText value="#{solCambCentroRechazada.motivo}" />
+					</p:column>
+					<p:column headerText="Estado">
+						<h:outputText
+							value="#{listaSolicitudesCambioCentroBean.estadoSolicitudCambioCentro(solCambCentroRechazada)}" />
 					</p:column>
 				</p:dataTable>
 			</div>

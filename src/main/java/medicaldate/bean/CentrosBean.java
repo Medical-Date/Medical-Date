@@ -131,6 +131,10 @@ public class CentrosBean implements Serializable {
 	@Autowired
 	private PacienteService pacienteService;
 	
+	@Getter
+	@Setter
+	private List<Paciente> listaPacienteSinMedicoYCentro;
+	
 
 	@PostConstruct
 	public void init() {
@@ -142,11 +146,15 @@ public class CentrosBean implements Serializable {
 
 		listaMedicosPorCentroSeleccionado = new ArrayList<>();
 		listaMedicosCentroPorCentroSeleccionado = new ArrayList<>();
+		listaPacienteSinMedicoYCentro= new ArrayList<>();
 
 		listaMedicosPorNombreNoAsignados = medicoService.getListaMedicosPorNombreNoAsignados();
 		listaCentrosPorNombre = centrosServices.getListaCentrosPorNombre();
 
-		listaPacientePorNombreSinCentroAsignado = pacienteService.obtenerListaPacientePorNombreSinCentroAsignado();
+		listaPacienteSinMedicoYCentro = pacienteService.obtenerListaPacientePorNombreSinCentroAsignadoSinMedico();
+		
+		//solo pacientes sin medico
+		
 
 	}
 
@@ -227,7 +235,7 @@ public class CentrosBean implements Serializable {
 	public void asignarCentroYMedico() {
 		medicosCentroPaciente= new MedicosCentroPaciente();
 		if(medico != null && paciente!=null && centro!=null) {
-			Paciente pacienteSeleccionado = pacienteService.getPacientesPorNombre(pacienteSelected);
+			Paciente pacienteSeleccionado = pacienteService.getPacientesPorNombre(pacienteSelected); 
 			Medico medicoSeleccionado = medicoService.getMedicosPorNombre(medicoSelected);
 			Centros centroSeleccionado= centrosServices.getCentrosPorNombre(centroSelected);
 			paciente= pacienteSeleccionado;

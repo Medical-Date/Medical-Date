@@ -50,6 +50,13 @@
 							update="formListadoSolicitudesCambioMedico:solCambMedTable,formListadoSolicitudesCambioMedico:solCambMedAceptadaTable">
 							<f:param name="idAceptarSolicitudCambioMed" value="#{solCambMed.id}" />
 						</p:commandButton>
+						
+						<p:commandButton id="rechazarSolicitudCambioMed" widgetVar="rechazarSolicitud"
+							icon="pi pi-pencil" value="Rechazar"
+							action="#{solicitudesRegistrosBean.rechazarSolicitud(solReg)}"
+							update="formListadoSolicitudesCambioMedico:solCambMedTable,formListadoSolicitudesCambioMedico:solCambMedRechazadaTable">
+							<f:param name="idRechazarSolicitudCambioMed" value="#{solCambMed.id}" />
+						</p:commandButton>
 
 					</p:column>
 				</p:dataTable>
@@ -79,6 +86,36 @@
 						<h:outputText
 							value="#{solicitudesRegistrosBean.estadoSolicitudCambioMedico(solCambMedAceptada)}" />
 					</p:column>
+				</p:dataTable>
+			</div>
+			
+			<p:spacer height="100" />
+			
+			<div class="card">
+				<p:dataTable var="solCambMedRechazada"
+					value="#{solicitudesRegistrosBean.listaSolicitudesCambioMedicoRechazadas}"
+					id="solCambMedRechazadaTable">
+					<f:facet name="header">
+                Lista de solicitudes rechazadas
+            </f:facet>
+					<p:column headerText="Nombre del paciente">
+						<h:outputText
+							value="#{solCambMedRechazada.paciente.user.firstName} #{solCambMedRechazada.paciente.user.lastName}" />
+					</p:column>
+
+					<p:column headerText="Médico solicitado">
+						<h:outputText
+							value="#{solCambMedRechazada.medico.user.firstName} #{solCambMedRechazada.medico.user.lastName}" />
+					</p:column>
+
+					<p:column headerText="Motivo">
+						<h:outputText value="#{solCambMedRechazada.motivo}" />
+					</p:column>
+					<p:column headerText="Estado">
+						<h:outputText
+							value="#{solicitudesRegistrosBean.estadoSolicitudCambioMedico(solCambMedRechazada)}" />
+					</p:column>
+
 				</p:dataTable>
 			</div>
 			

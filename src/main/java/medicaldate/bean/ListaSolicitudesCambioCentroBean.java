@@ -173,5 +173,14 @@ public class ListaSolicitudesCambioCentroBean  implements Serializable{
 		listaSolicitudesCambioCentro.remove(solCambiCentro);
 		listaSolicitudesCambioCentroAceptadas.add(solCambiCentro);
 	}
+	
+	public void rechazarSolicitudCambioCentro(SolicitudesCambioCentro solCambiCentro) {
+		solCambiCentro.setEstado(false);
+		solicitudesCambioCentroRepository.save(solCambiCentro);
+		listaSolicitudesCambioCentroRechazadas.add(solCambiCentro);
+		listaSolicitudesCambioCentro.remove(solCambiCentro);
+		FacesContext.getCurrentInstance().addMessage(null, new 
+				FacesMessage(FacesMessage.SEVERITY_INFO, "", "La solicitud se ha rechazado correctamente"));
+	}
 
 }

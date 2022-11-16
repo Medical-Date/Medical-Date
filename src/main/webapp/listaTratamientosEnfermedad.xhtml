@@ -23,7 +23,7 @@
 						<h:outputText value="#{tratEnf.descripcion}" />
 					</p:column>
 
-					<p:column headerText="Acciones">
+					<p:column headerText="Acciones" rendered="#{LoginController.currentUser.rol.rol== 'ADMINISTRADOR'}">
 						
 						<p:commandButton id="editarTratamiento"
 							widgetVar="editarTratamiento" icon="pi pi-pencil" value="Editar"  process="@this tratamientosEnfermedadTable"

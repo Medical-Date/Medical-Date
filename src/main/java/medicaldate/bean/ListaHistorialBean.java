@@ -68,7 +68,9 @@ public class ListaHistorialBean implements Serializable {
 				for (Paciente p : listaPacientes) {
 					Historial hPorPaciente = new Historial();
 					hPorPaciente = historialService.obtenerHistorialPorPaciente(p.getId());
+					if(hPorPaciente!=null) {
 					listaHistorial.add(hPorPaciente);
+						}
 				}
 			}
 		} else {

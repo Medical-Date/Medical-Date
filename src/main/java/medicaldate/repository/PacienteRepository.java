@@ -19,10 +19,11 @@ public interface PacienteRepository extends CrudRepository<Paciente, Long>{
 	@Query("SELECT p FROM Paciente p WHERE p.nombre = ?1")
 	public Paciente obtenerPacientePorNombre(@Param("nombre") String nombre);
 	
-	@Query("SELECT nombre FROM Paciente p WHERE p.tieneCentro != 1")
-	public List<Paciente> obtenerListaPacientePorNombreSinCentroAsignado();
+	@Query("SELECT nombre FROM Paciente p WHERE p.tieneCentro != 1 and p.tieneMedico != 1")
+	public List<Paciente> obtenerListaPacientePorNombreSinCentroAsignadoSinMedico();
 	
 	@Query("SELECT p FROM Paciente p WHERE p.user.id = ?1")
 	public Paciente obtenerPacientePorUsuarioLogado(@Param("id") Long id);
+	
 
 }

@@ -36,5 +36,9 @@ public class MedicosCentroPacienteService {
 	public MedicosCentroPaciente obtenerMedicoCentroPacientePorMedico(long id) {
 		return medicosCentroPacienteRepository.obtenerMedicoCentroPacientePorMedico(id);
 	}
+	
+	public List<MedicosCentroPaciente> obtenerListPacientePorMedicoSinHistorial(long id){
+		return medicosCentroPacienteRepository.obtenerListPacientePorMedicoSinHistorial(id);
+	}
 
 }
