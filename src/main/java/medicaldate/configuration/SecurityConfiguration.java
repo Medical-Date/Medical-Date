@@ -39,7 +39,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		.antMatchers("/historialRegister.xhtml").hasAnyAuthority("ADMINISTRADOR","MEDICO")
 		.antMatchers("/enfermedadRegister.xhtml").hasAnyAuthority("ADMINISTRADOR")
 		.antMatchers("/crearTratamientos.xhtml").hasAnyAuthority("ADMINISTRADOR")
-		.antMatchers("/listaEnfermedades.xhtml").hasAnyAuthority("ADMINISTRADOR","MEDICO")
+		.antMatchers("/listaEnfermedades.xhtml").hasAnyAuthority("ADMINISTRADOR","MEDICO","PACIENTE")
 		.antMatchers("/crearCentro.xhtml").hasAnyAuthority("ADMINISTRADOR")
 		.antMatchers("/listCentros.xhtml").hasAnyAuthority("ADMINISTRADOR")
 		.antMatchers("/asignarMedicoCentro.xhtml").hasAnyAuthority("ADMINISTRADOR")

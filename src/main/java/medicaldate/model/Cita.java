@@ -1,5 +1,6 @@
 package medicaldate.model;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 
@@ -32,7 +33,7 @@ public class Cita {
 	private Long id;
 
 	@Column(name = "DIA_CITA")
-	private Date diaCita;
+	private LocalDate diaCita;
 
 	@Column(name = "HORA_CITA")
 	private LocalTime horaCita;

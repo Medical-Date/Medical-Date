@@ -111,30 +111,34 @@ public class CitasBean implements Serializable {
 	private Paciente paciente;
 	@Autowired
 	private PacienteService pacientesService;
-	
+
 	@Getter
 	@Setter
 	private List<Cita> listaMisCitas;
-	
+
 	@Autowired
 	private MedicosCentroPacienteService medicosCentroPacienteService;
 	@Getter
 	@Setter
 	private MedicosCentroPaciente medicoCentroPaciente;
-	
-	@Getter@Setter
+
+	@Getter
+	@Setter
 	private List<String> listaEnfermedadesString;
-	
-	@Getter@Setter
+
+	@Getter
+	@Setter
 	private List<Enfermedad> listaEnfermedades;
-	
+
 	@Autowired
 	private EnfermedadService enfermedadService;
-	
-	@Getter@Setter
+
+	@Getter
+	@Setter
 	private String enfermedadSelected;
-	
-	@Getter@Setter
+
+	@Getter
+	@Setter
 	private List<Tratamientos> listaTratamiento;
 	@Autowired
 	private TratamientosService tratamientosService;
@@ -143,14 +147,14 @@ public class CitasBean implements Serializable {
 	public void init() {
 		Long idCita = (Long) JsfUtils.getFlashAttribute("idCita");
 		calendario = new Calendario();
-		listaTratamiento= new ArrayList<>();
-		medicoCentroPaciente= new MedicosCentroPaciente();
+		listaTratamiento = new ArrayList<>();
+		medicoCentroPaciente = new MedicosCentroPaciente();
 		cita = new Cita();
 		medicoSelected = "";
 		pacienteSelected = "";
 		listaMedicos = new ArrayList<>();
 		listaPacientes = new ArrayList<>();
-		listaMisCitas= new ArrayList<>();
+		listaMisCitas = new ArrayList<>();
 
 		listaMedicos = medicoService.getListaMedicosPorNombre();
 		listaPacientes = pacienteService.getListaPacientesPorNombre();
@@ -162,10 +166,11 @@ public class CitasBean implements Serializable {
 
 			paciente = pacientesService.obtenerPacientePorUsuarioLogado(user.getId());
 			if (paciente != null) {
-				
-				medicoCentroPaciente = medicosCentroPacienteService.obtenerMedicoCentroPacientePorPaciente(paciente.getId());
-				
-				listaMisCitas= citaService.getListaCitasByPaciente(paciente.getId());
+
+				medicoCentroPaciente = medicosCentroPacienteService
+						.obtenerMedicoCentroPacientePorPaciente(paciente.getId());
+
+				listaMisCitas = citaService.getListaCitasByPaciente(paciente.getId());
 				if (medicoCentroPaciente != null) {
 
 					idMedico = medicoCentroPaciente.getIdMedico().getId();
@@ -174,16 +179,21 @@ public class CitasBean implements Serializable {
 			}
 
 		}
-		
-		if(idCita!=null) {
-			cita= citaService.findById(idCita);
-			listaTratamiento= tratamientosService.getTratamientosByEnfermedad(cita.getEnfermedad().getId());
+
+		if (idCita != null) {
+			cita = citaService.findById(idCita);
+			if(cita.getEnfermedad()==null) {
+				listaTratamiento= new ArrayList<>();
+			}else if (cita.getEnfermedad().getId() != null || cita.getEnfermedad()!=null) {
+			
+				listaTratamiento = tratamientosService.getTratamientosByEnfermedad(cita.getEnfermedad().getId());
+			}
 		}
-		
-		listaEnfermedadesString= new ArrayList<>();
-		listaEnfermedades= enfermedadService.getEnfermedades();
-		if(!listaEnfermedades.isEmpty()) {
-			for(Enfermedad e: listaEnfermedades) {
+
+		listaEnfermedadesString = new ArrayList<>();
+		listaEnfermedades = enfermedadService.getEnfermedades();
+		if (!listaEnfermedades.isEmpty()) {
+			for (Enfermedad e : listaEnfermedades) {
 				listaEnfermedadesString.add(e.getNombre());
 			}
 		}
@@ -193,10 +203,12 @@ public class CitasBean implements Serializable {
 	public void crearCalendario() {
 
 		Medico medicoSeleccionado = medicoService.getMedicosPorNombre(medicoSelected);
-		Date dia = calendario.getDia();
+		Date diaInicio = calendario.getDiaInicio();
+		Date diaFin = calendario.getDiaFin();
 		Date horaEntrada = calendario.getHoraEntrada();
 		Date horaSalida = calendario.getHoraSalida();
-		calendario.setDia(dia);
+		calendario.setDiaInicio(diaInicio);
+		calendario.setDiaFin(diaFin);
 		calendario.setHoraEntrada(horaEntrada);
 		calendario.setHoraSalida(horaSalida);
 		calendario.setMedico(medicoSeleccionado);
@@ -214,19 +226,21 @@ public class CitasBean implements Serializable {
 			horario = (double) (horaSalidaInt - horaEntradaInt);
 			LocalTime horaEntrada2 = horaEntrada.toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
 			LocalTime horaSalida2 = horaSalida.toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
-
+			LocalDate diaInicio2 = diaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			LocalDate diaFin2 = diaFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			
+			for(LocalDate j = diaInicio2; j.isBefore(diaFin2.plusDays(1)); j=j.plusDays(1)) {
 			for (LocalTime i = horaEntrada2; i.isBefore(horaSalida2); i = i.plusMinutes(15)) {
 				CalendarioCitas calendarioCitas = new CalendarioCitas();
 				Cita citas = new Cita();
 				calendarioCitas.setIdCalendario(calendario);
-				citas.setDiaCita(dia);
+				citas.setDiaCita(j);
 				citas.setHoraCita(i);
 				citas.setMedico(medicoSeleccionado);
 				citas.setDisponible(true);
 				citaRepository.save(citas);
 				calendarioCitas.setIdCitas(citas);
 				calendarioCitas.setIdCalendario(calendario);
-				calendarioCitas.setIdCitas(citas);
 
 				calendarioCitasRepository.save(calendarioCitas);
 
@@ -234,12 +248,13 @@ public class CitasBean implements Serializable {
 						new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Calendario y citas creados con éxito"));
 
 			}
+			}
 
 		}
 
 	}
 
-	public String mostrarDiaCita(Date diaCita) {
+	public String mostrarDiaCita(LocalDate diaCita) {
 		String res = "";
 
 		if (diaCita != null) {
@@ -248,7 +263,7 @@ public class CitasBean implements Serializable {
 			Integer mes = null;
 			Integer anyo = null;
 
-			LocalDate fecha = diaCita.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			LocalDate fecha = diaCita;
 
 			dia = fecha.getDayOfMonth();
 			mes = fecha.getMonthValue();
@@ -271,50 +286,49 @@ public class CitasBean implements Serializable {
 		return res;
 
 	}
-	
+
 	public void seleccionarCita(Cita cita) {
 		cita.setPaciente(paciente);
 		cita.setDisponible(false);
 		citaRepository.save(cita);
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Cita reservada con éxito"));
-		
+
 	}
+
 	public void cancelarCita(Cita cita) {
 		cita.setPaciente(null);
 		cita.setDisponible(true);
 		citaRepository.save(cita);
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Cita cancelada con éxito"));
-		listaMisCitas= citaService.getListaCitasByPaciente(paciente.getId());
-		
+		listaMisCitas = citaService.getListaCitasByPaciente(paciente.getId());
+
 	}
-	
+
 	public void gestionarCita(Long idCita) {
 		JsfUtils.setFlashAttribute("idCita", idCita);
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
-		.handleNavigation(FacesContext.getCurrentInstance(), null, "/gestionarCita.xhtml");
+				.handleNavigation(FacesContext.getCurrentInstance(), null, "/gestionarCita.xhtml");
 
-		
 	}
-	
+
 	public void consultarCita(Long idCita) {
 		JsfUtils.setFlashAttribute("idCita", idCita);
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
-		.handleNavigation(FacesContext.getCurrentInstance(), null, "/consultarCita.xhtml");
+				.handleNavigation(FacesContext.getCurrentInstance(), null, "/consultarCita.xhtml");
 
-		
 	}
-	
+
 	public void guardarDiagnostico() {
-		Enfermedad e= new Enfermedad();
-		e= enfermedadService.getEnfermedadByNombre(enfermedadSelected);
+		Enfermedad e = new Enfermedad();
+		e = enfermedadService.getEnfermedadByNombre(enfermedadSelected);
 		cita.setEnfermedad(e);
 		citaRepository.save(cita);
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Diagnóstico añadido con éxito"));
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
-		.handleNavigation(FacesContext.getCurrentInstance(), null, "/listCitas.xhtml");
+				.handleNavigation(FacesContext.getCurrentInstance(), null, "/listCitas.xhtml");
 	}
 
 }

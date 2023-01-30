@@ -36,17 +36,33 @@
 						</div>
 
 						<div class="ui-g-4 ui-md-2">
-							<h:outputLabel for="dia"
-								value="Introduzca el día:"
+							<h:outputLabel for="diaInicio"
+								value="Introduzca el día de inicio:"
 								style="font-weight:bold" />
 							<br />
 						</div>
 
 						<div class="ui-g-2 ui-md-2">
-							<p:calendar id="dia" value="#{citasBean.calendario.dia}"
+							<p:calendar id="diaInicio" value="#{citasBean.calendario.diaInicio}"
 								locale="de" navigator="true" pattern="dd/MM/yyyy" />
 
 						</div>
+						
+						<div class="ui-g-4 ui-md-2">
+							<h:outputLabel for="diaFin"
+								value="Introduzca el día de fin:"
+								style="font-weight:bold" />
+							<br />
+						</div>
+
+						<div class="ui-g-2 ui-md-2">
+							<p:calendar id="diaFin" value="#{citasBean.calendario.diaFin}"
+								locale="de" navigator="true" pattern="dd/MM/yyyy" />
+
+						</div>
+						
+						
+						
 						<div class="ui-g-4 ui-md-2">
 							<h:outputLabel for="horaEntrada"
 								value="Introduzca la hora de entrada:"

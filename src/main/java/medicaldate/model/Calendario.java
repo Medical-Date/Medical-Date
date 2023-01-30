@@ -33,8 +33,11 @@ public class Calendario {
 	@JoinColumn(name="medico_id")
 	private Medico medico;
 	
-	@Column(name = "dia")
-	Date dia;
+	@Column(name = "dia_inicio")
+	Date diaInicio;
+	
+	@Column(name = "dia_fin")
+	Date diaFin;
 	
 	@Column(name = "hora_entrada")
 	Date horaEntrada;

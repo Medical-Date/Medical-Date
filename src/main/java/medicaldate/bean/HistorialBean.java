@@ -136,11 +136,12 @@ public class HistorialBean implements Serializable {
 			if (idHistorial != null) {
 				historial = historialService.getHistorialById(idHistorial);
 			}
+		} else {
+			listaHistorial = new ArrayList<Historial>();
+			listaEnfermedad = new ArrayList<Enfermedad>();
+			listaPaciente = new ArrayList<>();
+			listaPacienteSinHistorial = new ArrayList<>();
 		}
-		listaHistorial = new ArrayList<Historial>();
-		listaEnfermedad = new ArrayList<Enfermedad>();
-		listaPaciente = new ArrayList<>();
-		listaPacienteSinHistorial = new ArrayList<>();
 	}
 
 	public void guardarHistorial() {
