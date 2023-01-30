@@ -1,6 +1,7 @@
 package medicaldate.bean;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -159,9 +160,9 @@ public class ListaSolicitudesCambioCentroBean  implements Serializable{
 	    List<Cita> citasPenditesMedico= new ArrayList<>();
 	    
 	    citasPenditesMedico= citaService.getListaCitasMedicoByPaciente(solCambiCentro.getMedico().getId());
-		Date fechaActual= new Date();
+	    LocalDate fechaActual= LocalDate.now();
 		for(Cita c: citasPenditesMedico) {
-			if(c.getDiaCita().after(fechaActual)) {
+			if(c.getDiaCita().isAfter(fechaActual)) {
 				citaRepository.delete(c);
 			}
 		}	
