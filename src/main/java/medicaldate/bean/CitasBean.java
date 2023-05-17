@@ -419,6 +419,8 @@ public class CitasBean implements Serializable {
 		String nombrePaciente=trozos[1];
 		p= pacienteService.getPacientesPorNombre(nombrePaciente);
 		listaCitasByMedicoLogado= citaService.getListaCitasByPaciente(p.getId());
+		}else {
+			listaCitasByMedicoLogado = citaService.getListaCitasByUsuario(usuarioLogado.getId());
 		}
 		
 	}
