@@ -146,7 +146,7 @@
 
 						<p:commandButton icon="pi pi-save" id="saveUsuario"
 							value="Guardar"
-							actionListener="#{citasBean.guardarDiagnostico()}" />
+							actionListener="#{citasBean.guardarDiagnostico()}" rendered="#{LoginController.currentUser.rol.rol != 'PACIENTE'}"/>
 					</div>
 					<div class="ui-g-12 ui-md-10" />
 

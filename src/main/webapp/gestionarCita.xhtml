@@ -71,13 +71,15 @@
 
 				<p:fieldset legend="Diagnóstico" toggleable="true" toggleSpeed="500">
 
-					<div class="ui-g-4 ui-md-4">
+					<div class="ui-g-3 ui-md-3">
 
 						<p:outputLabel for="@next" value="Enfermedad diagnosticada: " />
 
 						<p:selectOneMenu id="listEnfermedades"
 							value="#{citasBean.enfermedadSelected}"
 							filter="true">
+							
+							<p:ajax listener="#{citasBean.tratamientoChange}" update="tratamientosCita"/>
 
 							<f:selectItems
 								value="#{citasBean.listaEnfermedadesString}" />
@@ -86,7 +88,22 @@
 						</p:selectOneMenu>
 
 					</div>
-					<div class="ui-g-12 ui-md-6">
+					
+					<div class="ui-g-4 ui-md-4">
+							<div class="ui-g-2 ui-md-2">
+								<h:outputLabel for="tratamientosCita" value="Tratamientos:"
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-10 ui-md-4">
+								<p:inputTextarea rows="10" cols="50" id="tratamientosCita"
+									value="#{citasBean.tratamientosString}" disabled="true"/>
+
+							</div>
+					</div>
+		
+					
+					<div class="ui-g-4 ui-md-4">
 							<div class="ui-g-2 ui-md-2">
 								<h:outputLabel for="comentarioCita" value="Comentarios:"
 									style="font-weight:bold" />

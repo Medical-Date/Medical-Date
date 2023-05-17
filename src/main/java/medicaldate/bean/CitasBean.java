@@ -19,11 +19,14 @@ import org.springframework.stereotype.Component;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.java.Log;
 import medicaldate.model.Calendario;
 import medicaldate.model.CalendarioCitas;
+import medicaldate.model.Centros;
 import medicaldate.model.Cita;
 import medicaldate.model.Enfermedad;
 import medicaldate.model.Medico;
+import medicaldate.model.MedicosCentro;
 import medicaldate.model.MedicosCentroPaciente;
 import medicaldate.model.MedicosPacientes;
 import medicaldate.model.Paciente;
@@ -112,6 +115,7 @@ public class CitasBean implements Serializable {
 	@Autowired
 	private PacienteService pacientesService;
 
+
 	@Getter
 	@Setter
 	private List<Cita> listaMisCitas;
@@ -142,6 +146,31 @@ public class CitasBean implements Serializable {
 	private List<Tratamientos> listaTratamiento;
 	@Autowired
 	private TratamientosService tratamientosService;
+	
+	@Getter
+	@Setter
+	private List<String> listaTratamientosString;
+	
+	@Getter
+	@Setter
+	private String tratamientosString;
+	
+	@Getter
+	@Setter
+	private String filtroPaciente;
+	
+	@Getter
+	@Setter
+	private List<String> listPacientesPorMedico;
+	
+	@Getter
+	@Setter
+	private User usuarioLogado;
+	
+	@Getter
+	@Setter
+	private Medico medicoLogado;
+
 
 	@PostConstruct
 	public void init() {
@@ -155,16 +184,23 @@ public class CitasBean implements Serializable {
 		listaMedicos = new ArrayList<>();
 		listaPacientes = new ArrayList<>();
 		listaMisCitas = new ArrayList<>();
+		listaTratamientosString= new ArrayList<>();
+		listPacientesPorMedico= new ArrayList<>();
+		usuarioLogado= new User();
+		medicoLogado= new Medico();
 
 		listaMedicos = medicoService.getListaMedicosPorNombre();
 		listaPacientes = pacienteService.getListaPacientesPorNombre();
 
 		listaCitasByMedicoLogado = new ArrayList();
-		User user = userService.getCurrentUser();
-		if (user != null) {
-			listaCitasByMedicoLogado = citaService.getListaCitasByUsuario(user.getId());
+		usuarioLogado = userService.getCurrentUser();
+		if (usuarioLogado != null) {
+			listaCitasByMedicoLogado = citaService.getListaCitasByUsuario(usuarioLogado.getId());
+			medicoLogado= medicoService.obtenerMedicoPorUsuario(usuarioLogado.getId());
+			
 
-			paciente = pacientesService.obtenerPacientePorUsuarioLogado(user.getId());
+			paciente = pacientesService.obtenerPacientePorUsuarioLogado(usuarioLogado.getId());
+			
 			if (paciente != null) {
 
 				medicoCentroPaciente = medicosCentroPacienteService
@@ -174,6 +210,7 @@ public class CitasBean implements Serializable {
 				if (medicoCentroPaciente != null) {
 
 					idMedico = medicoCentroPaciente.getIdMedico().getId();
+
 					listaCitasByPacienteLogado = citaService.getListaCitasMedicoByPaciente(idMedico);
 				}
 			}
@@ -187,6 +224,12 @@ public class CitasBean implements Serializable {
 			}else if (cita.getEnfermedad().getId() != null || cita.getEnfermedad()!=null) {
 			
 				listaTratamiento = tratamientosService.getTratamientosByEnfermedad(cita.getEnfermedad().getId());
+				
+				if(!listaTratamiento.isEmpty()) {
+					for(Tratamientos t: listaTratamiento) {
+						listaTratamientosString.add(t.getDescripcion());
+					}
+				}
 			}
 		}
 
@@ -197,7 +240,23 @@ public class CitasBean implements Serializable {
 				listaEnfermedadesString.add(e.getNombre());
 			}
 		}
+		
+		obtenerListaPacientesPorMedico();
 
+	}
+	
+	public List<String> obtenerListaPacientesPorMedico(){
+		List<MedicosCentroPaciente> listMedicoCentroPaciente= new ArrayList<>();
+		listMedicoCentroPaciente= medicosCentroPacienteService.obtenerListPacientePorMedico(medicoLogado.getId());
+		
+		for(MedicosCentroPaciente m: listMedicoCentroPaciente) {
+			Paciente p= new Paciente();
+			p=m.getIdPaciente();
+			String nombreCompletoPaciente=p.getUser().getLastName()+","+ p.getUser().getFirstName();
+			listPacientesPorMedico.add(nombreCompletoPaciente);
+		}
+		return listPacientesPorMedico;
+		
 	}
 
 	public void crearCalendario() {
@@ -329,6 +388,39 @@ public class CitasBean implements Serializable {
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Diagnóstico añadido con éxito"));
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
 				.handleNavigation(FacesContext.getCurrentInstance(), null, "/listCitas.xhtml");
+	}
+	
+	public void tratamientoChange() {
+		listaTratamientosString = new ArrayList<>();
+		listaTratamiento= new ArrayList<>();
+		tratamientosString="";
+		if (enfermedadSelected != null) {
+			Enfermedad e = enfermedadService.getEnfermedadByNombre(enfermedadSelected);
+			Long idEnfermedad = e.getId();
+			listaTratamiento = tratamientosService.getTratamientosByEnfermedad(idEnfermedad);
+			if (listaTratamiento.isEmpty()) {
+				listaTratamientosString = new ArrayList<>();
+			} else {
+				for (Tratamientos t : listaTratamiento) {
+					listaTratamientosString.add(t.getDescripcion());
+				}
+				for(String s: listaTratamientosString) {
+					tratamientosString+="\n"+s;
+				}
+			}
+
+		}
+	}
+	
+	public void filtroListaCitas() {
+		Paciente p= new Paciente();
+		if(!pacienteSelected.isEmpty()) {
+		String[] trozos=pacienteSelected.split(",");
+		String nombrePaciente=trozos[1];
+		p= pacienteService.getPacientesPorNombre(nombrePaciente);
+		listaCitasByMedicoLogado= citaService.getListaCitasByPaciente(p.getId());
+		}
+		
 	}
 
 }

@@ -11,25 +11,45 @@
 	<ui:define name="content">
 		<h:form id="formListadoCitas">
 			<h2>Lista de Cita</h2>
-
+			
+			<div class="ui-g-12 ui-md-12 ui-lg-12">
+			
+			<div class="ui-g-2 ui-md-2 ui-lg-2">
+			
+			<p:selectOneMenu id="paciente"
+									value="#{citasBean.pacienteSelected}">
+									<f:selectItem itemLabel="Seleccione un paciente" itemValue="" />
+									<f:selectItems value="#{citasBean.listPacientesPorMedico}" />
+									</p:selectOneMenu>
+			</div>
+			<div class="ui-g-1 ui-md-1 ui-lg-1">
+			<p:commandButton  value="Filtrar"
+							 actionListener="#{citasBean.filtroListaCitas}"
+							 update="citasTable" />
+							 </div>
+			</div>
+			
+			<p:spacer height="10px" />
+			
+			
 			<div class="card">
 				<p:dataTable var="cita" value="#{citasBean.listaCitasByMedicoLogado}"  rendered="#{LoginController.currentUser.rol.rol == 'MEDICO'}"
-					id="citasTable">
+					id="citasTable" widgetVar="citasTable">
 
 					<p:column headerText="Medico">
 						<h:outputText value="#{cita.medico.nombre}" />
 					</p:column>
 					
 					<p:column headerText="Paciente">
-						<h:outputText value="#{cita.paciente.nombre}" />
+						<h:outputText value="#{cita.paciente.user.firstName}  #{cita.paciente.user.lastName}" />
 					</p:column>
 					
-					<p:column headerText="Día" sortBy="#{citasBean.cita.diaCita}" filterBy="#{citasBean.cita.diaCita}">
+					<p:column headerText="Día" sortBy="#{citasBean.cita.diaCita}">
 						<h:outputText value="#{citasBean.mostrarDiaCita(cita.diaCita)}"/>
 						
 					</p:column>
 					
-					<p:column headerText="Hora" filterBy="#{cita.horaCita}" sortBy="#{cita.horaCita}" filterBy="#{cita.horaCita}">
+					<p:column headerText="Hora" sortBy="#{cita.horaCita}">
 						<h:outputText value="#{cita.horaCita}" />
 					</p:column>
 					
