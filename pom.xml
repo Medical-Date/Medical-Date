@@ -10,7 +10,7 @@
 	<groupId>medicaldate</groupId>
 	<artifactId>medicaldate</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>medicaldate</name>
 	<description>medicaldate</description>
 	<properties>

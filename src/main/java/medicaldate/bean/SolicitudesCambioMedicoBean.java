@@ -18,7 +18,6 @@ import medicaldate.model.Centros;
 import medicaldate.model.Medico;
 import medicaldate.model.MedicosCentro;
 import medicaldate.model.MedicosCentroPaciente;
-import medicaldate.model.MedicosPacientes;
 import medicaldate.model.Paciente;
 import medicaldate.model.Rol;
 import medicaldate.model.SolicitudesCambioMedico;
@@ -28,7 +27,6 @@ import medicaldate.repository.SolicitudesCambioMedicoRepository;
 import medicaldate.services.MedicoService;
 import medicaldate.services.MedicosCentroPacienteService;
 import medicaldate.services.MedicosCentroService;
-import medicaldate.services.MedicosPacientesService;
 import medicaldate.services.PacienteService;
 import medicaldate.services.UserService;
 

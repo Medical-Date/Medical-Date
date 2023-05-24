@@ -14,9 +14,7 @@ import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
 import medicaldate.model.MedicosCentro;
-import medicaldate.model.MedicosPacientes;
 import medicaldate.services.MedicosCentroService;
-import medicaldate.services.MedicosPacientesService;
 
 @Component
 @SessionScoped

@@ -15,8 +15,8 @@ public class ImagenesBean {
 	    @PostConstruct
 	    public void init() {
 	        images = new ArrayList<String>();
-	        for (int i = 1; i <= 3; i++) {
-	            images.add("paisaje" + i + ".jpg");
+	        for (int i = 1; i <= 2; i++) {
+	            images.add("medicalDate" + i + ".jpg");
 	        }
 	    }
 	 

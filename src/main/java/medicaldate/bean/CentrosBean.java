@@ -19,7 +19,6 @@ import medicaldate.model.Centros;
 import medicaldate.model.Medico;
 import medicaldate.model.MedicosCentro;
 import medicaldate.model.MedicosCentroPaciente;
-import medicaldate.model.MedicosPacientes;
 import medicaldate.model.Paciente;
 import medicaldate.repository.CentrosRepository;
 import medicaldate.repository.MedicoRepository;

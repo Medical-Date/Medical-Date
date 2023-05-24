@@ -20,10 +20,10 @@
 				<h:commandLink value="Cierra sesión" action="#{userBean.logout}" />
 
 			</p>
-			<div class="card">
+			<div class="card" style="text-align:center">
 				<p:imageSwitch effect="shuffle">
 					<ui:repeat value="#{imagenesBean.images}" var="image">
-						<p:graphicImage name="/img/#{image}"/>
+						<p:graphicImage name="/img/#{image}" style="width: 100%"/>
 					</ui:repeat>
 				</p:imageSwitch>
 				

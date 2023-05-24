@@ -35,7 +35,7 @@ public class MedicosCentroPaciente {
 	private Centros idCentro;
 	
 	@ManyToOne( fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_paciente", foreignKey = @ForeignKey(name = "FK_MEDICOSPACIENTES_PACIENTE"))
+	@JoinColumn(name = "id_paciente", foreignKey = @ForeignKey(name = "FK_MEDICOSCENTRO_PACIENTE"))
 	private Paciente idPaciente;
 
 }

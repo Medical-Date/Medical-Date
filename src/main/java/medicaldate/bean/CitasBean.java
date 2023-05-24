@@ -28,7 +28,6 @@ import medicaldate.model.Enfermedad;
 import medicaldate.model.Medico;
 import medicaldate.model.MedicosCentro;
 import medicaldate.model.MedicosCentroPaciente;
-import medicaldate.model.MedicosPacientes;
 import medicaldate.model.Paciente;
 import medicaldate.model.Tratamientos;
 import medicaldate.model.User;
@@ -41,7 +40,6 @@ import medicaldate.services.CitaService;
 import medicaldate.services.EnfermedadService;
 import medicaldate.services.MedicoService;
 import medicaldate.services.MedicosCentroPacienteService;
-import medicaldate.services.MedicosPacientesService;
 import medicaldate.services.PacienteService;
 import medicaldate.services.TratamientosService;
 import medicaldate.services.UserService;
@@ -103,9 +101,6 @@ public class CitasBean implements Serializable {
 	private UserService userService;
 	@Autowired
 	private CitaService citaService;
-
-	@Autowired
-	private MedicosPacientesService medicosPacientesService;
 	@Getter
 	@Setter
 	private Long idMedico;

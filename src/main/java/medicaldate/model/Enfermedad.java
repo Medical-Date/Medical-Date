@@ -46,7 +46,4 @@ public class Enfermedad {
 	@NotNull
 	private Gravedad gravedad;
 
-	@ManyToMany(mappedBy = "enfermedad")
-    private List<Historial> historial;
-
 }

@@ -7,7 +7,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import medicaldate.model.MedicosCentro;
-import medicaldate.model.MedicosPacientes;
 import medicaldate.repository.MedicoRepository;
 import medicaldate.repository.MedicosCentroRepository;
 

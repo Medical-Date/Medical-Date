@@ -16,13 +16,10 @@ import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
 import medicaldate.model.Medico;
-import medicaldate.model.MedicosPacientes;
 import medicaldate.model.Paciente;
 import medicaldate.repository.MedicoRepository;
-import medicaldate.repository.MedicosPacientesRepository;
 import medicaldate.repository.PacienteRepository;
 import medicaldate.services.MedicoService;
-import medicaldate.services.MedicosPacientesService;
 import medicaldate.services.PacienteService;
 
 @Component
@@ -45,25 +42,13 @@ public class MedicoBean implements Serializable {
 	private Medico medico;
 	@Getter
 	@Setter
-	private Paciente paciente;
-	
-	@Getter
-	@Setter
-	private MedicosPacientes medicoPaciente;
-	
+	private Paciente paciente;	
 
 	@Autowired
 	private MedicoService medicoService;
 	
 	@Autowired
 	private MedicoRepository medicoRepository;
-	
-	@Autowired
-	private MedicosPacientesService medicosPacientesService;
-	
-	@Autowired
-	private MedicosPacientesRepository medicosPacientesRepository;
-	
 	
 	@Autowired
 	private PacienteRepository pacienteRepository;
