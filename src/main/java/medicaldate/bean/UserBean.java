@@ -66,8 +66,8 @@ public class UserBean implements Serializable {
 
 			try {
 				con = DriverManager.getConnection(
-						"jdbc:mysql://localhost:3306/medicaldate?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-						"root", "r00t-P@$$w0rd");
+						"jdbc:mysql://34.175.195.199:3306/medicaldate",
+						"root", "medicaldate2023marcosjosecarlos");
 				if (con != null) {
 					String sql = "select userName,password from user where userName = '" + uName + "'";
 					ps = con.prepareStatement(sql);

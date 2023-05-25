@@ -16,16 +16,16 @@
 			
 			<div class="ui-g-2 ui-md-2 ui-lg-2">
 			
-			<p:selectOneMenu id="paciente"
+			<p:selectOneMenu id="paciente" rendered="#{LoginController.currentUser.rol.rol == 'MEDICO'}"
 									value="#{citasBean.pacienteSelected}">
-									<f:selectItem itemLabel="Seleccione un paciente" itemValue="" />
+									<f:selectItem itemLabel="Seleccione un paciente" itemValue=""  />
 									<f:selectItems value="#{citasBean.listPacientesPorMedico}" />
 									</p:selectOneMenu>
 			</div>
 			<div class="ui-g-1 ui-md-1 ui-lg-1">
 			<p:commandButton  value="Filtrar"
 							 actionListener="#{citasBean.filtroListaCitas}"
-							 update="citasTable" />
+							 update="citasTable" rendered="#{LoginController.currentUser.rol.rol == 'MEDICO'}" />
 							 </div>
 			</div>
 			

@@ -235,8 +235,11 @@ public class CitasBean implements Serializable {
 				listaEnfermedadesString.add(e.getNombre());
 			}
 		}
+		if(medicoLogado!=null) {
+			obtenerListaPacientesPorMedico();
+		}
 		
-		obtenerListaPacientesPorMedico();
+
 
 	}
 	

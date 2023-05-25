@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
     <Resource name="jdbc/database" auth="Container" type="javax.sql.DataSource"
-        username="root" password="r00t-P@$$w0rd" driverClassName="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://localhost:3306/medicaldate" />
+        username="root" password="medicaldate2023marcosjosecarlos" driverClassName="com.mysql.jdbc.Driver"
+        url="jdbc:mysql://34.175.195.199:3306/medicaldate" />
 </Context>

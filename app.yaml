@@ -1,2 +1,2 @@
-runtime: java11
+runtime: java1.8
 instance_class: F2

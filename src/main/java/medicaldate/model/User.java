@@ -80,6 +80,9 @@ public class User {
 	
 	boolean enabled;
 	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	private Set<Authorities> authorities;
+	
 	
 	@OneToOne
 	@JoinColumn(name="historial_id")
@@ -92,6 +95,18 @@ public class User {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+	
+	public User(){
+		authorities=new HashSet<Authorities>();
+	}
+	
+	public Set<Authorities> getAuthorities() {
+		return authorities;
+	}
+
+	public void setAuthorities(Set<Authorities> authorities) {
+		this.authorities = authorities;
 	}
 
 }

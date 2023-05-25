@@ -27,15 +27,15 @@ public class MedicosCentroPaciente {
 	private Long id;
 	
 	@ManyToOne( fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_medico", foreignKey = @ForeignKey(name = "FK_MEDICOSCENTRO_MEDICO"))
+	@JoinColumn(name = "id_medico", foreignKey = @ForeignKey(name = "FK_MEDICOSCENTROPACIENTE_MEDICO"))
 	private Medico idMedico;
 	
 	@ManyToOne( fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_centro", foreignKey = @ForeignKey(name = "FK_MEDICOSCENTRO_CENTRO"))
+	@JoinColumn(name = "id_centro", foreignKey = @ForeignKey(name = "FK_MEDICOSCENTROPACIENTE_CENTRO"))
 	private Centros idCentro;
 	
 	@ManyToOne( fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_paciente", foreignKey = @ForeignKey(name = "FK_MEDICOSCENTRO_PACIENTE"))
+	@JoinColumn(name = "id_paciente", foreignKey = @ForeignKey(name = "FK_MEDICOSCENTROPACIENTE_PACIENTE"))
 	private Paciente idPaciente;
 
 }

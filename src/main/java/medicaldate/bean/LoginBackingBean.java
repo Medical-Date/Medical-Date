@@ -7,6 +7,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.PrimeFaces;
+import org.primefaces.component.log.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
@@ -77,6 +78,7 @@ public class LoginBackingBean {
 		} else {
 			result = "login.xhtml";
 		}
+		System.out.println("ROL ACTUAL="+ currentUser.getRol());
 
 		return result;
 	}
