@@ -301,11 +301,14 @@ public class CitasBean implements Serializable {
 
 				calendarioCitasRepository.save(calendarioCitas);
 
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Calendario y citas creados con éxito"));
+
 
 			}
 			}
+			medicoSelected="";
+			calendario=new Calendario();
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Calendario y citas creados con éxito"));
 
 		}
 

@@ -16,16 +16,12 @@
 				class="ui-g-12 ui-md-12 ui-lg-12">
 
 				<div class="ui-g">
-					<div class="ui-g-12 ui-md-12 ui-lg-12">
+					<div class="ui-g-12 ui-md-12 ui-lg-12" style="text-align: center;">
 
 
-						<div class="ui-g-4 ui-md-1">
+						<div class="ui-g-12 ui-md-12">
 							<h:outputLabel for="medicos" value="Medicos"
 								style="font-weight:bold" />
-							<br />
-						</div>
-
-						<div class="ui-g-2 ui-md-2">
 							<h:selectOneMenu id="medico" value="#{citasBean.medicoSelected}">
 								<f:selectItem itemLabel="" itemValue="" />
 								<f:selectItems value="#{citasBean.listaMedicos}" />
@@ -34,28 +30,23 @@
 
 
 						</div>
+						</div>
+						
+						<div class="ui-g-12 ui-md-12 ui-lg-12">
 
-						<div class="ui-g-4 ui-md-2">
+						<div class="ui-g-3 ui-md-3">
 							<h:outputLabel for="diaInicio"
 								value="Introduzca el día de inicio:"
 								style="font-weight:bold" />
-							<br />
-						</div>
-
-						<div class="ui-g-2 ui-md-2">
 							<p:calendar id="diaInicio" value="#{citasBean.calendario.diaInicio}"
 								locale="de" navigator="true" pattern="dd/MM/yyyy" />
 
 						</div>
 						
-						<div class="ui-g-4 ui-md-2">
+						<div class="ui-g-3 ui-md-3">
 							<h:outputLabel for="diaFin"
 								value="Introduzca el día de fin:"
 								style="font-weight:bold" />
-							<br />
-						</div>
-
-						<div class="ui-g-2 ui-md-2">
 							<p:calendar id="diaFin" value="#{citasBean.calendario.diaFin}"
 								locale="de" navigator="true" pattern="dd/MM/yyyy" />
 
@@ -63,30 +54,23 @@
 						
 						
 						
-						<div class="ui-g-4 ui-md-2">
+						<div class="ui-g-3 ui-md-3">
 							<h:outputLabel for="horaEntrada"
 								value="Introduzca la hora de entrada:"
 								style="font-weight:bold" />
-							<br />
-						</div>
-						
-						<div class="ui-g-2 ui-md-2">
 							<p:calendar id="horaEntrada" value="#{citasBean.calendario.horaEntrada}"
 								pattern="HH:mm" timeOnly="true" />
 
 						</div>
 						
-						<div class="ui-g-4 ui-md-2">
+						<div class="ui-g-3 ui-md-3">
 							<h:outputLabel for="horaSalida"
 								value="Introduzca la hora de salida:"
 								style="font-weight:bold" />
-							<br />
-						</div>
-						
-						<div class="ui-g-2 ui-md-2">
 							<p:calendar id="horaSalida" value="#{citasBean.calendario.horaSalida}"
 								pattern="HH:mm" timeOnly="true" />
 
+						</div>
 						</div>
 						
 						
@@ -95,7 +79,7 @@
 							<div class="ui-g-12 ui-md-10" />
 							<div class="ui-g-12 ui-md-2 botonera-wrapper">
 
-								<p:commandButton value="Crear calendario" action="#{citasBean.crearCalendario}" />
+								<p:commandButton value="Crear calendario" action="#{citasBean.crearCalendario}" update="formFormularioAdignacionCalendario"/>
 							</div>
 							<div class="ui-g-12 ui-md-10" />
 
@@ -115,7 +99,6 @@
 
 					</div>
 
-				</div>
 
 
 

@@ -15,6 +15,15 @@
 			<div class="card">
 				<p:dataTable var="historial"
 					value="#{listaHistorialBean.listaHistorial}" id="historialTable">
+					
+					
+					<p:column headerText="Nombre del paciente">
+						<h:outputText value="#{historial.paciente.user.firstName}" />
+					</p:column>
+					
+					<p:column headerText="Apellidos del paciente">
+						<h:outputText value="#{historial.paciente.user.lastName}" />
+					</p:column>
 
 					<p:column headerText="Contacto de emergencia">
 						<h:outputText value="#{historial.contactoEmergencia}" />
@@ -28,13 +37,6 @@
 						<h:outputText value="#{historial.tipoSangre}" />
 					</p:column>
 
-					<p:column headerText="Nombre del paciente">
-						<h:outputText value="#{historial.paciente.nombre}" />
-					</p:column>
-					
-					<p:column headerText="Apellidos del paciente">
-						<h:outputText value="#{historial.paciente.user.lastName}" />
-					</p:column>
 
 					<p:column headerText="D.N.I.">
 						<h:outputText value="#{historial.paciente.user.dni}" />

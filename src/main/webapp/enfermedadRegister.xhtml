@@ -30,34 +30,8 @@
 
 							</div>
 						</div>
-
+						
 						<div class="ui-g-12 ui-md-6">
-							<div class="ui-g-4 ui-md-4">
-								<h:outputLabel for="causa"
-									value="Introduzca la causa de la enfermedad:"
-									style="font-weight:bold" />
-								<br />
-							</div>
-							<div class="ui-g-8 ui-md-2">
-								<h:inputText id="causa" value="#{enfermedadBean.causa}" />
-
-							</div>
-						</div>
-
-						<div class="ui-g-12 ui-md-6">
-							<div class="ui-g-4 ui-md-4">
-								<h:outputLabel for="sintomas"
-									value="Introduzca los síntomas de la enfermedad:"
-									style="font-weight:bold" />
-								<br />
-							</div>
-							<div class="ui-g-8 ui-md-2">
-								<h:inputText id="sintomas" value="#{enfermedadBean.sintomas}" />
-
-							</div>
-						</div>
-
-					<div class="ui-g-12 ui-md-6">
 
 						<div class="ui-g-4 ui-md-2">
 							<h:outputLabel for="gravedad" value="Gravedad"
@@ -73,7 +47,41 @@
 							</h:selectOneMenu>
 						</div>
 					</div>
+
+						
+								
 					</div>
+					
+					<div class="ui-g-12 ui-md-12 ui-lg-12">
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-4 ui-md-4">
+								<h:outputLabel for="sintomas"
+									value="Introduzca los síntomas de la enfermedad:"
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<p:inputTextarea rows="10" cols="50" id="sintomas" value="#{enfermedadBean.sintomas}" />
+
+							</div>
+						</div>
+						
+						<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-4 ui-md-4">
+								<h:outputLabel for="causa"
+									value="Introduzca la causa de la enfermedad:"
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<p:inputTextarea rows="10" cols="50" id="causa" value="#{enfermedadBean.causa}" />
+
+							</div>
+						</div>
+
+					
+				</div>
+				
 
 					<!-- Botón Registrar -->
 					<div class="ui-g-12">

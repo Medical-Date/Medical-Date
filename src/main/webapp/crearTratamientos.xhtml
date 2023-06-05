@@ -21,6 +21,22 @@
 				header="Crear tratamiento">
 				<div class="ui-g">
 					<div class="ui-g-12 ui-md-12 ui-lg-12">
+					
+					<div class="ui-g-4 ui-md-4">
+
+							<p:outputLabel for="@next" value="Enfermedad asociada: " />
+					
+								<p:selectOneMenu id="listEnfermedades"
+									value="#{enfermedadTratamientosBean.enfermedadSelected}"
+									 filter="true">
+
+									<f:selectItems
+										value="#{enfermedadTratamientosBean.listaEnfermedadesString}" />
+
+								
+								</p:selectOneMenu>
+
+							</div>
 
 						<div class="ui-g-4 ui-md-4">
 							<div class="ui-g-4 ui-md-4">
@@ -48,21 +64,7 @@
 						</div>
 
 
-						<div class="ui-g-4 ui-md-4">
-
-							<p:outputLabel for="@next" value="Enfermedad asociada: " />
-					
-								<p:selectOneMenu id="listEnfermedades"
-									value="#{enfermedadTratamientosBean.enfermedadSelected}"
-									 filter="true">
-
-									<f:selectItems
-										value="#{enfermedadTratamientosBean.listaEnfermedadesString}" />
-
-								
-								</p:selectOneMenu>
-
-							</div>
+						
 						<!-- Botón Registrar -->
 						<div class="ui-g-12">
 							<div class="ui-g-12 ui-md-10" />

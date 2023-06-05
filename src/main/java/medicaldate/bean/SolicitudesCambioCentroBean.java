@@ -127,7 +127,7 @@ public class SolicitudesCambioCentroBean implements Serializable {
 		solicitudCambioCentro.setCentros(nuevoCentro);
 		solicitudCambioCentro.setMedico(medicoLogado);
 		solicitudesCambioCentroRepository.save(solicitudCambioCentro);
-		res="solicitudEspera.xhtml";
+		res="welcome.xhtml";
 		FacesContext.getCurrentInstance().addMessage(null, new 
 				FacesMessage(FacesMessage.SEVERITY_INFO, "", "Su solicitud se ha enviado correctamente"));
 		return res;

@@ -56,19 +56,14 @@
 				<img class="logo"
 					src="#{resource['/img/LogoMD.PNG']}" alt=""></img>
 			</div>
-			<div class="ui-g-4 ui-md-4 ui-lg-4">
+			<div class="ui-g-4 ui-md-4 ui-lg-4" style="text-align: center;">
 				<h:outputText value="MEDICAL DATE" class="textoMedicalDate"/>
 			</div>
-			
-			<div class="user-menu">
-				<img class="user-icon" src="#{resource['/img/user.png']}" alt="" ></img>
-				<div class="user">
-					<div class="name">
-						<h:outputText value="#{LoginController.currentUser.userName} - #{LoginController.currentUser.rol.rol}"  rendered="#{LoginController.existeUsuarioLogado() eq true}" />	
-								
-					</div>			
-				</div>		
+			<div>
+				<img class="logo"
+					src="#{resource['/img/LogoMD.PNG']}" alt=""></img>
 			</div>
+			
 		</div>
 		
 		 <p:growl id="growl-sticky" for="sticky-key" showDetail="true" sticky="true" />

@@ -15,11 +15,11 @@
 			<div class="card">
 				<p:dataTable var="medico" value="#{medicoBean.listaMedicos}" id="medicosTable">
 					<p:column headerText="Nombre">
-						<h:outputText value="#{medico.nombre}" />
+						<h:outputText value="#{medico.user.firstName}" />
 					</p:column>
 
 					<p:column headerText="Apellido">
-						<h:outputText value="#{medico.user.firstName}" />
+						<h:outputText value="#{medico.user.lastName}" />
 					</p:column>
 
 					<p:column headerText="Email">

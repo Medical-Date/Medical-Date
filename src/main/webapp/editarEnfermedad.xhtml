@@ -15,29 +15,31 @@
 			
 			<p:panel id="panelEnfermedad"  class="ui-g-12 ui-md-12 ui-lg-12"
 				header="Editar enfermedad">
-
-			<!-- PANEL DIALOG SUJETOS OBLIGADOS -->
+				
+				<div class="ui-g">
+					<div class="ui-g-12 ui-md-12 ui-lg-12">
 	   		
-					<div>
-						<div class="celda-form">
+						<div class="ui-g-3 ui-md-3">
+						
 							<p:outputLabel for="nombre" value="Nombre" />
 							<p:inputText id="nombre"
 								value="#{enfermedadBean.enfermedad.nombre}" />
 						</div>
 
-						<div class="celda-form">
+						<div class="ui-g-3 ui-md-3">
 							<p:outputLabel for="causa" value="Causa" />
 							<p:inputText id="causa"
 								value="#{enfermedadBean.enfermedad.causa}" />
 						</div>
 
-						<div class="celda-form">
+						<div class="ui-g-3 ui-md-3">
 							<p:outputLabel for="sintomas" value="Síntomas" />
 							<p:inputText id="sintomas"
 								value="#{enfermedadBean.enfermedad.sintomas}" />
 						</div>
+			
 
-						<div class="celda-form">
+						<div class="ui-g-3 ui-md-3">
 							<p:outputLabel for="gravedad" value="Gravedad" />
 							<h:selectOneMenu id="gravedad" value="#{enfermedadBean.enfermedad.gravedad}">
 								<f:selectItem itemLabel="Leve" itemValue="LEVE" />
@@ -45,22 +47,27 @@
 								<f:selectItem itemLabel="Grave" itemValue="GRAVE" />
 							</h:selectOneMenu>
 						</div>
+				 	</div>
+				</div>
+					<!-- Botón Registrar -->
+						<div class="ui-g-12">
+							<div class="ui-g-12 ui-md-10" />
+							<div class="ui-g-12 ui-md-2 botonera-wrapper">
 
-						<p:commandButton icon="pi pi-save" id="saveEnfermedad"
-							value="Guardar"
-							actionListener="#{enfermedadBean.editarEnfermedad()}" />
+								<p:commandButton value="Guardar"
+									actionListener="#{enfermedadBean.editarEnfermedad()}" />
+							</div>
+							<div class="ui-g-12 ui-md-10" />
 
-					</div>
+							<div class="ui-g-12 ui-md-2 botonera-wrapper">
+								<p:commandButton id="volver" value="Volver"
+									onclick="document.location.href='#{request.contextPath}/listaEnfermedades.xhtml'">
+								</p:commandButton>
+							</div>
 
-			
-			<p:spacer height="10px" />
-			
+						</div>
+
 			</p:panel>
-
-			<br/>
-			<p:commandButton id="volver" value="volver"
-				onclick="document.location.href='#{request.contextPath}/listaEnfermedades.xhtml'">
-			</p:commandButton>	
 			
 		</h:form>
 	

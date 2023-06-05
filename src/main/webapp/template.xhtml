@@ -10,12 +10,19 @@
 
 	<ui:define name="body">
 		<!-- ********************** MENU BAR **************** -->
+				<div>			
+					<div  style="text-align: center;">
+					<img class="user-icon" src="#{resource['/img/user.png']}" alt="" ></img>
+						<h:outputText value="#{LoginController.currentUser.userName} - #{LoginController.currentUser.rol.rol}"  rendered="#{LoginController.existeUsuarioLogado() eq true}" />	
+								
+					</div>			
+				</div>		
 		<h:form id="formMenu">
 			<!-- Menú para la versión Web (pantalla más grande) -->
 			<p:menubar class="menuBar visibleWebOnly" autoDisplay="false">
 
 				<p:menuitem value="Inicio" outcome="welcome.xhtml" icon="fa fa-home" />
-				<p:submenu label="Gestión de solicitudes">
+				<p:submenu label="Gestión de solicitudes" rendered="#{LoginController.currentUser.rol.rol!= 'USUARIO'}">
 
 					<p:menuitem value="Lista de solicitudes de registros" outcome="listaSolicitudes.xhtml" rendered="#{LoginController.currentUser.rol.rol== 'ADMINISTRADOR'}"/>
 					<p:menuitem value="Solicitud cambio de médico" outcome="solicitudCambioMedico.xhtml" rendered="#{LoginController.currentUser.rol.rol== 'PACIENTE' or LoginController.currentUser.rol.rol== 'ADMINISTRADOR'}"/>
@@ -47,7 +54,7 @@
 
 				</p:submenu>
 
-				<p:submenu label="Gestión de citas">
+				<p:submenu label="Gestión de citas" rendered="#{LoginController.currentUser.rol.rol!= 'USUARIO' and LoginController.currentUser.rol.rol!= 'ADMINISTRADOR'}">
 					<p:menuitem value="Lista de citas" outcome="listCitas.xhtml" />
 
 
@@ -58,14 +65,14 @@
 
 				</p:submenu>
 
-				<p:submenu label="Gestión de historiales" rendered="#{LoginController.currentUser.rol.rol== 'ADMINISTRADOR' or (LoginController.currentUser.rol.rol== 'MEDICO')}">
+				<p:submenu label="Gestión de historiales" rendered="#{LoginController.currentUser.rol.rol!= 'ADMINISTRADOR' or (LoginController.currentUser.rol.rol== 'MEDICO')}">
 					<p:menuitem value="Historial Clínico"
 						outcome="listaHistoriales.xhtml" />
 						<p:menuitem value="Añadir historial clínico"
-						outcome="historialRegister.xhtml" />
+						outcome="historialRegister.xhtml" rendered="#{LoginController.currentUser.rol.rol!= 'PACIENTE'}"/>
 
 				</p:submenu>
-				<p:submenu label="Vademécum">
+				<p:submenu label="Vademécum" rendered="#{LoginController.currentUser.rol.rol!= 'USUARIO'}">
 					<p:menuitem value="Lista de enfermedades" outcome="listaEnfermedades.xhtml" />
 					<p:menuitem value="Añadir enfermedad" outcome="enfermedadRegister.xhtml" rendered="#{LoginController.currentUser.rol.rol== 'ADMINISTRADOR'}"/>
 					<p:menuitem value="Añadir tratamientos" outcome="crearTratamientos.xhtml" rendered="#{LoginController.currentUser.rol.rol== 'ADMINISTRADOR'}"/>
@@ -80,8 +87,8 @@
 				
 				
 
-            <p:menuitem value="Mi perfil" outcome="miPerfil.xhtml" icon="pi pi-fw pi-power-off"/>
-            <p:menuitem value="Cierra sesión" action="#{userBean.logout}"/>
+            <p:menuitem value="Mi perfil" outcome="miPerfil.xhtml" icon="pi pi-fw pi-power-off" rendered="#{LoginController.currentUser.rol.rol!= 'USUARIO'}"/>
+            <p:menuitem value="Cerrar sesión" action="#{userBean.logout}"/>
 
             
 

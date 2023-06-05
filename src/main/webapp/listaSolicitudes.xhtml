@@ -10,8 +10,6 @@
 
 	<ui:define name="content">
 		<h:form id="formListadoSolicitudes">
-			<p:messages id="mensaje" showDetail="true" autoUpdate="true"
-				closable="true" globalOnly="true" />
 			<h2>Lista de Solicitudes de Registro</h2>
 
 			<div class="card">
@@ -21,7 +19,7 @@
 					<f:facet name="header">
                 Lista de solicitudes pendientes
             </f:facet>
-					<p:column headerText="Nombre de usuario.">
+					<p:column headerText="Nombre de usuario">
 						<h:outputText value="#{solReg.user.userName}" />
 					</p:column>
 					<p:column headerText="Nombre">
@@ -74,7 +72,7 @@
 					<f:facet name="header">
                 Lista de solicitudes aceptadas
             </f:facet>
-					<p:column headerText="Nombre de usuario.">
+					<p:column headerText="Nombre de usuario">
 						<h:outputText value="#{solRegAceptada.user.userName}" />
 					</p:column>
 					<p:column headerText="Nombre">
@@ -107,7 +105,7 @@
 					<f:facet name="header">
                 Lista de solicitudes rechazadas
             </f:facet>
-					<p:column headerText="Nombre de usuario.">
+					<p:column headerText="Nombre de usuario">
 						<h:outputText value="#{solRegRechazada.user.userName}" />
 					</p:column>
 					<p:column headerText="Nombre">

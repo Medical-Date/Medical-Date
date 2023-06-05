@@ -17,7 +17,9 @@ import org.springframework.web.context.annotation.SessionScope;
 
 import lombok.Getter;
 import lombok.Setter;
+import medicaldate.model.SolicitudesRegistros;
 import medicaldate.model.User;
+import medicaldate.services.SolicitudesRegistrosService;
 import medicaldate.services.UserService;
 import medicaldate.util.JsfUtils;
 
@@ -40,9 +42,17 @@ public class LoginBackingBean {
 	@Getter
 	@Setter
 	String repeatNewPassword;
+	
+	@Getter
+	@Setter
+	SolicitudesRegistros solicitud = new SolicitudesRegistros();
+	
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	SolicitudesRegistrosService solicitudesRegistrosService;
 
 	public void setCurrentUser(User currentUser) {
 		this.currentUser = currentUser;
@@ -59,7 +69,6 @@ public class LoginBackingBean {
 
 	public String doLogin() {
 		String result = "welcome.xhtml";
-
 		Boolean esValido = validacionesGuardar();
 		if (esValido) {
 
@@ -72,8 +81,11 @@ public class LoginBackingBean {
 				sc.setAuthentication(authReq);
 				clear();
 			}
-			if (user.getRol().getRol().equals("USUARIO")) {
+			solicitud= solicitudesRegistrosService.comprobarSiExisteSolicitudPorUsuario(currentUser.getId());
+			if (user.getRol().getRol().equals("USUARIO") && solicitud!=null) {
 				result = "solicitudEspera.xhtml";
+			}else if(user.getRol().getRol().equals("USUARIO") && solicitud==null) {
+				result= "solicitudRegistro.xhtml";
 			}
 		} else {
 			result = "login.xhtml";

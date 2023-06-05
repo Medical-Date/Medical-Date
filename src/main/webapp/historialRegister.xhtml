@@ -16,6 +16,24 @@
 
 				<div class="ui-g">
 					<div class="ui-g-12 ui-md-12 ui-lg-12">
+					
+									<div class="ui-g-12 ui-md-6">
+							<div class="ui-g-4 ui-md-4">
+								<h:outputLabel  for="paciente"
+									value="Pacientes" style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<h:selectOneMenu id="paciente"
+									value="#{historialBean.pacienteSelected}">
+									<f:selectItem itemLabel="" itemValue="" />
+									<f:selectItems value="#{historialBean.listaPaciente}" />
+
+								</h:selectOneMenu>
+
+
+							</div>
+						</div>
 
 						<div class="ui-g-12 ui-md-6">
 							<div class="ui-g-4 ui-md-4">
@@ -73,23 +91,7 @@
 							</div>
 						</div>
 
-						<div class="ui-g-12 ui-md-6">
-							<div class="ui-g-4 ui-md-4">
-								<h:outputLabel  for="paciente"
-									value="Pacientes" style="font-weight:bold" />
-								<br />
-							</div>
-							<div class="ui-g-8 ui-md-2">
-								<h:selectOneMenu id="paciente"
-									value="#{historialBean.pacienteSelected}">
-									<f:selectItem itemLabel="" itemValue="" />
-									<f:selectItems value="#{historialBean.listaPaciente}" />
-
-								</h:selectOneMenu>
-
-
-							</div>
-						</div>
+		
 						
 						<!-- Botón Registrar -->
 						<div class="ui-g-12">

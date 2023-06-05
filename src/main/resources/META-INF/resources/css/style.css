@@ -4514,5 +4514,8 @@ max-presupuesto{
 .textoMedicalDate{
 	font-weight: bold;
     font-size: 50px;
+    color: #008000;
+    font-family: -webkit-body;
+    
 }
-
+}

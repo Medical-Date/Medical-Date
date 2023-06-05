@@ -10,7 +10,7 @@
 
 	<ui:define name="content">
 		<h:form id="formListadoCitas">
-			<h2>Lista de Cita</h2>
+			<h2>Lista de Citas</h2>
 			
 			<div class="ui-g-12 ui-md-12 ui-lg-12">
 			
@@ -80,7 +80,7 @@
 						<h:outputText value="#{citasBean.mostrarDiaCita(cita.diaCita)}"/>
 					</p:column>
 					
-					<p:column headerText="Hora" sortBy="#{cita.horaCita}" filterBy="#{cita.horaCita}">
+					<p:column headerText="Hora" sortBy="#{cita.horaCita}">
 						<h:outputText value="#{cita.horaCita}" />
 					</p:column>
 					

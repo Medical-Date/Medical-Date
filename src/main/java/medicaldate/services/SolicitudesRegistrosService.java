@@ -34,5 +34,8 @@ private SolicitudesRegistrosRepository solicitudesRegistrosRepository;
 	public List<SolicitudesRegistros> listaSolicitudesAceptadas(){
 		return solicitudesRegistrosRepository.listaSolicitudesAceptadas();
 	}
+	public SolicitudesRegistros comprobarSiExisteSolicitudPorUsuario(Long id){
+		return solicitudesRegistrosRepository.comprobarSiExisteSolicitudPorUsuario(id);
+	}
 
 }

@@ -11,21 +11,22 @@
 
 	<ui:define name="content">
 		<h:form id="welcomeForm">
-			<div>
+			<div class="ui-g-12 ui-md-12 ui-lg-12"  style="text-align: center;">
 				<h:outputText
-					value="Bienvenido a Medical Date #{LoginController.currentUser.userName}" />
+					value="Bienvenido a Medical Date" style="font-size: 50px; font-weight: bold;"/>
 			</div>
-			<p>
-
-				<h:commandLink value="Cierra sesión" action="#{userBean.logout}" />
-
-			</p>
+			<div class="ui-g-12 ui-md-12 ui-lg-12"  style="text-align: center;">
+			<h:outputText
+					value="#{LoginController.currentUser.firstName} #{LoginController.currentUser.lastName}" style="font-size: 25px;" />
+			</div>
+			<div class="ui-g-12 ui-md-12 ui-lg-12">
 			<div class="card" style="text-align:center">
 				<p:imageSwitch effect="shuffle">
 					<ui:repeat value="#{imagenesBean.images}" var="image">
 						<p:graphicImage name="/img/#{image}" style="width: 100%"/>
 					</ui:repeat>
 				</p:imageSwitch>
+				</div>
 				
 			</div>
 		</h:form>

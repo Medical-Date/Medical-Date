@@ -13,41 +13,87 @@
 		<h:form id="formFormularioHistoriales">
 
 			
-				<p:panel id="panelHistorial"  class="ui-g-12 ui-md-12 ui-lg-12"
+			<p:panel id="panelHistorial"  class="ui-g-12 ui-md-12 ui-lg-12"
 				header="Editar historial">
-
-			<!-- PANEL DIALOG SUJETOS OBLIGADOS -->
-					<div>
-						<div class="celda-form">
-							<p:outputLabel for="contactoEmergencia"
-								value="Contacto de Emergencia" />
-							<p:inputText id="contactoEmergencia"
-								value="#{historialBean.historial.contactoEmergencia}" />
-						</div>
-						
-						<div class="celda-form">
-							<p:outputLabel for="tlfContactoEmergencia"
-								value="Tlf. Contacto Emergencia" />
-							<p:inputText id="tlfContactoEmergencia"
-								value="#{historialBean.historial.tlfContactoEmergencia}" />
-						</div>
-						
-						<p:commandButton  icon="pi pi-save"
-									id="saveHistorial" value="Guardar"
-									actionListener="#{historialBean.editarHistorial()}" />							
-
 				
-					</div>					
-					
-			
-			<p:spacer height="10px" />
+					<div class="ui-g">
+					<div class="ui-g-12 ui-md-12 ui-lg-12">
+
+						<div class="ui-g-4 ui-md-4">
+							<div class="ui-g-4 ui-md-4">
+								<h:outputLabel for="contactoEmergencia"
+									value="Contacto de emergencia:"
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-4 ui-md-4">
+								<h:inputText id="contactoEmergencia"
+									value="#{historialBean.historial.contactoEmergencia}" />
+
+							</div>
+						</div>
+						
+						<div class="ui-g-4 ui-md-4">
+							<div class="ui-g-4 ui-md-4">
+								<h:outputLabel for="tlfContactoEmergencia"
+									value="Teléfono del contacto de emergencia:"
+									style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-4 ui-md-4">
+								<h:inputText id="tlfContactoEmergencia"
+									value="#{historialBean.historial.tlfContactoEmergencia}" />
+
+							</div>
+						</div>
+						
+						<div class="ui-g-4 ui-md-4">
+							<div class="ui-g-4 ui-md-4">
+								<h:outputLabel  for="tipoSangre"
+									value="Tipo de Sangre" style="font-weight:bold" />
+								<br />
+							</div>
+							<div class="ui-g-8 ui-md-2">
+								<h:selectOneMenu id="tipoSangre"
+									value="#{historialBean.historial.tipoSangre}">
+									<f:selectItem itemLabel="A+" itemValue="APOSITIVO" />
+									<f:selectItem itemLabel="A-" itemValue="ANEGATIVO" />
+									<f:selectItem itemLabel="B+" itemValue="BPOSITIVO" />
+									<f:selectItem itemLabel="B-" itemValue="BNEGATIVO" />
+									<f:selectItem itemLabel="B+" itemValue="ABPOSITIVO" />
+									<f:selectItem itemLabel="B-" itemValue="ABNEGATIVO" />
+									<f:selectItem itemLabel="0+" itemValue="CEROPOSITIVO" />
+									<f:selectItem itemLabel="0-" itemValue="CERONEGATIVO" />
+								</h:selectOneMenu>
+
+
+							</div>
+						</div>
+
+
+						<!-- Botón Registrar -->
+						<div class="ui-g-12">
+							<div class="ui-g-12 ui-md-10" />
+							<div class="ui-g-12 ui-md-2 botonera-wrapper">
+
+								<p:commandButton value="Guardar"
+										actionListener="#{historialBean.editarHistorial()}" />
+							</div>
+							<div class="ui-g-12 ui-md-10" />
+
+							<div class="ui-g-12 ui-md-2 botonera-wrapper">
+								<p:commandButton id="volver" value="Volver"
+									onclick="document.location.href='#{request.contextPath}/listaHistoriales.xhtml'">
+								</p:commandButton>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+									
 			
 			</p:panel>
-
-			<br/>
-			<p:commandButton id="volver" value="volver"
-				onclick="document.location.href='#{request.contextPath}/listaHistoriales.xhtml'">
-			</p:commandButton>	
 			
 		</h:form>
 	

@@ -13,11 +13,16 @@
 		<h:form id="SolicitudRegForm">
 		<p:messages id="mensaje" showDetail="true" autoUpdate="true" 
 			closable="true" globalOnly="true"/>
-			<div>
-				<h:outputText value="Bienvenido a Medical Date #{LoginController.currentUser.userName}" />
+			<div class="ui-g-12 ui-md-12 ui-lg-12"  style="text-align: center;">
+				<h:outputText
+					value="Bienvenido a Medical Date" style="font-size: 50px; font-weight: bold;"/>
+			</div>
+			<div class="ui-g-12 ui-md-12 ui-lg-12"  style="text-align: center;">
+			<h:outputText
+					value="#{LoginController.currentUser.firstName} #{LoginController.currentUser.lastName}" style="font-size: 25px;"/>
 			</div>
 			
-			<div>
+			<div class="ui-g-12 ui-md-12 ui-lg-12"  style="text-align: center;">
 				<p:outputLabel for="rol" value="¿Cómo desea registrarse?"/>
                 <p:selectOneMenu id="rol" value="#{solicitudesRegistrosBean.rolesSelected}">
                     <f:selectItems value="#{solicitudesRegistrosBean.listaRolesPorNombre}" />
@@ -26,20 +31,11 @@
 				
 			</div>
 			
-			<div>
+			<div class="ui-g-12 ui-md-12 ui-lg-12"  style="text-align: center;">
 			<p:commandButton value="Enviar solicitud" action="#{solicitudesRegistrosBean.enviarSolicitud}" />
 			
 			
 			</div>
-			
-			
-
-		
-				<p>
-
-					<h:commandLink value="Cierra sesión" action="#{userBean.logout}" />
-
-				</p>
 		</h:form>
 	</ui:define>
 </ui:composition>

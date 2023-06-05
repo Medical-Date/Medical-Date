@@ -172,7 +172,7 @@
 
 					</div>
 				</div>
-				<p:fieldset legend="Historial clínico" toggleable="true" toggleSpeed="500" rendered="#{LoginController.currentUser.historial != null}" >
+				<p:fieldset legend="Historial clínico" toggleable="true" toggleSpeed="500"  >
 			
 							<div class="ui-g-12 ui-md-12 ui-lg-12">
 
@@ -220,7 +220,7 @@
 				
 				</p:fieldset>
 				
-				<p:fieldset legend="Mis citas" toggleable="true" toggleSpeed="500" rendered="#{LoginController.currentUser.historial != null}">
+				<p:fieldset legend="Mis citas" toggleable="true" toggleSpeed="500">
 			
 							<p:dataTable var="cita" value="#{citasBean.listaMisCitas}"
 					id="misCitasTable" >

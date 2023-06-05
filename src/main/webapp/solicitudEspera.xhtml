@@ -11,22 +11,19 @@
 
 	<ui:define name="content">
 		<h:form id="SolicitudEsperaForm">
-			<div>
-				<h:outputText value="Bienvenido a Medical Date #{LoginController.currentUser.userName}" />
+			<div class="ui-g-12 ui-md-12 ui-lg-12"  style="text-align: center;">
+				<h:outputText
+					value="Bienvenido a Medical Date" style="font-size: 50px; font-weight: bold;"/>
+			</div>
+			<div class="ui-g-12 ui-md-12 ui-lg-12"  style="text-align: center;">
+			<h:outputText
+					value="#{LoginController.currentUser.firstName} #{LoginController.currentUser.lastName}" style="font-size: 25px;" />
 			</div>
 			
-				<div>
-				<h:outputText value="Su solicitud se está tramitando" />
+				<div class="ui-g-12 ui-md-12 ui-lg-12"  style="text-align: center;">
+				<h:outputText value="Su solicitud se está tramitando" rendered="#{LoginController.solicitud.estado eq null}"/>
+				<h:outputText value="Su solicitud ha sido rechazada, contacte con nosotros a través de este email medicalDate@gmail.com" rendered="#{LoginController.solicitud.estado eq false}"/>
 			</div>
-			
-			
-
-		
-				<p>
-
-					<h:commandLink value="Cierra sesión" action="#{userBean.logout}" />
-
-				</p>
 		</h:form>
 	</ui:define>
 </ui:composition>
