@@ -76,17 +76,26 @@ public class ListaCentrosBean implements Serializable{
 	
 	public void editarCentro() {
 		if (centro != null) {
-			centro = centrosRepository.save(centro);
-			
-			FacesMessage msg = new FacesMessage("Centro editado con éxito");
-			FacesContext.getCurrentInstance().addMessage("formListadoCentros", msg);
-			
-			FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
-			.handleNavigation(FacesContext.getCurrentInstance(), null, "/listCentros.xhtml");
+			if(validacionesEditarCentro()) {
+				centro = centrosRepository.save(centro);
+				
+				FacesContext.getCurrentInstance().addMessage(null, new 
+						FacesMessage(FacesMessage.SEVERITY_INFO, "", "Centro editado correctamente"));
 
-
+			}
 		}
 	}	
+	
+	public Boolean validacionesEditarCentro() {
+		Boolean esValido=true;
+		if(centro.getNombre().isBlank() || centro.getNombre().isEmpty() || centro.getCodigoPostal().isBlank() || centro.getCodigoPostal().isEmpty() || centro.getProvincia().isBlank() || centro.getProvincia().isEmpty() || centro.getLocalidad().isBlank() || centro.getLocalidad().isEmpty() || centro.getDireccion().isBlank() || centro.getDireccion().isEmpty() || centro.getTelefono().isBlank() || centro.getTelefono().isEmpty()) {
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Debe rellenar los campos obligatorios"));
+			esValido=false;
+		}
+		return esValido;
+		
+	}
 	
 
 }

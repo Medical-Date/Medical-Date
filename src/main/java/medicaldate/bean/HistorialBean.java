@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 
@@ -149,29 +150,62 @@ public class HistorialBean implements Serializable {
 		historial = new Historial();
 
 		if (historial != null) {
-			Paciente pacienteSeleccionado = pacienteService.getPacientesPorNombre(pacienteSelected);
+			if(validacionGuardarHistorial()) {
+				Paciente pacienteSeleccionado = pacienteService.getPacientesPorNombre(pacienteSelected);
 
-			historial.setContactoEmergencia(contactoEmergencia);
-			historial.setTlfContactoEmergencia(tlfContactoEmergencia);
-			historial.setTipoSangre(tipoSangre);
-			historial.setPaciente(pacienteSeleccionado);
-			historial.setUser(pacienteSeleccionado.getUser());
-			usuario = userService.getUserById(pacienteSeleccionado.getUser().getId());
-			historialRepository.save(historial);
-			usuario.setHistorial(historial);
-			userRepository.save(usuario);
-			FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
-					.handleNavigation(FacesContext.getCurrentInstance(), null, "/listaHistoriales.xhtml");
+				historial.setContactoEmergencia(contactoEmergencia);
+				historial.setTlfContactoEmergencia(tlfContactoEmergencia);
+				historial.setTipoSangre(tipoSangre);
+				historial.setPaciente(pacienteSeleccionado);
+				historial.setUser(pacienteSeleccionado.getUser());
+				usuario = userService.getUserById(pacienteSeleccionado.getUser().getId());
+				historialRepository.save(historial);
+				usuario.setHistorial(historial);
+				userRepository.save(usuario);
+				FacesContext.getCurrentInstance().addMessage(null, new 
+						FacesMessage(FacesMessage.SEVERITY_INFO, "", "Historial añadido con éxito"));
+			}
+
 		}
 
+	}
+	
+	public Boolean validacionGuardarHistorial() {
+		Boolean esValido=true;
+		if(listaPaciente.isEmpty()) {
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "No tiene pacientes sin historial asignado"));
+			esValido=false;
+		}
+		if(pacienteSelected==null || contactoEmergencia.isBlank() || contactoEmergencia.isEmpty() || tlfContactoEmergencia.isBlank() || tlfContactoEmergencia.isEmpty() ) {
+			
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Debe rellenar los campos obligatorios"));
+			esValido=false;
+			
+		}
+		return esValido;
 	}
 
 	public void editarHistorial() {
 		if (historial != null) {
-			historial = historialRepository.save(historial);
-			FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
-					.handleNavigation(FacesContext.getCurrentInstance(), null, "/listaHistoriales.xhtml");
+			if(validacionesEditarHistorial()) {
+				historial = historialRepository.save(historial);
+				FacesContext.getCurrentInstance().addMessage(null, new 
+						FacesMessage(FacesMessage.SEVERITY_INFO, "", "Historial editado con éxito"));
+			}
+
 		}
+	}
+	
+	public Boolean validacionesEditarHistorial() {
+		Boolean esValido=true;
+		if(historial.getContactoEmergencia().isBlank() || historial.getContactoEmergencia().isBlank() || historial.getTlfContactoEmergencia().isBlank() || historial.getTlfContactoEmergencia().isEmpty()) {
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Debe rellenar los campos obligatorios"));
+			esValido=false;
+		}
+		return esValido;
 	}
 
 	public void onEditar(Long idHistorial) {

@@ -269,49 +269,71 @@ public class CitasBean implements Serializable {
 		calendario.setHoraEntrada(horaEntrada);
 		calendario.setHoraSalida(horaSalida);
 		calendario.setMedico(medicoSeleccionado);
+		if(validacionesCrearCalendario()) {
 		Integer horaSalidaInt = calendario.getHoraSalida().getHours();
 		Integer horaEntradaInt = calendario.getHoraEntrada().getHours();
-		calendarioRepository.save(calendario);
+		
+			calendarioRepository.save(calendario);
 
-		if (horaSalidaInt - horaEntradaInt > 8) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
-					"No puede crear un calendario con más de 8 horas diarias"));
+			if (horaSalidaInt - horaEntradaInt > 8) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "",
+						"No puede crear un calendario con más de 8 horas diarias"));
 
-		} else {
-			// calendarioRepository.save(calendario);
-			Double horario = null;
-			horario = (double) (horaSalidaInt - horaEntradaInt);
-			LocalTime horaEntrada2 = horaEntrada.toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
-			LocalTime horaSalida2 = horaSalida.toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
-			LocalDate diaInicio2 = diaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-			LocalDate diaFin2 = diaFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-			
-			for(LocalDate j = diaInicio2; j.isBefore(diaFin2.plusDays(1)); j=j.plusDays(1)) {
-			for (LocalTime i = horaEntrada2; i.isBefore(horaSalida2); i = i.plusMinutes(15)) {
-				CalendarioCitas calendarioCitas = new CalendarioCitas();
-				Cita citas = new Cita();
-				calendarioCitas.setIdCalendario(calendario);
-				citas.setDiaCita(j);
-				citas.setHoraCita(i);
-				citas.setMedico(medicoSeleccionado);
-				citas.setDisponible(true);
-				citaRepository.save(citas);
-				calendarioCitas.setIdCitas(citas);
-				calendarioCitas.setIdCalendario(calendario);
+			} else {
+				// calendarioRepository.save(calendario);
+				Double horario = null;
+				horario = (double) (horaSalidaInt - horaEntradaInt);
+				LocalTime horaEntrada2 = horaEntrada.toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
+				LocalTime horaSalida2 = horaSalida.toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
+				LocalDate diaInicio2 = diaInicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+				LocalDate diaFin2 = diaFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+				
+				for(LocalDate j = diaInicio2; j.isBefore(diaFin2.plusDays(1)); j=j.plusDays(1)) {
+				for (LocalTime i = horaEntrada2; i.isBefore(horaSalida2); i = i.plusMinutes(15)) {
+					CalendarioCitas calendarioCitas = new CalendarioCitas();
+					Cita citas = new Cita();
+					calendarioCitas.setIdCalendario(calendario);
+					citas.setDiaCita(j);
+					citas.setHoraCita(i);
+					citas.setMedico(medicoSeleccionado);
+					citas.setDisponible(true);
+					citaRepository.save(citas);
+					calendarioCitas.setIdCitas(citas);
+					calendarioCitas.setIdCalendario(calendario);
 
-				calendarioCitasRepository.save(calendarioCitas);
+					calendarioCitasRepository.save(calendarioCitas);
 
 
+
+				}
+				}
+				medicoSelected="";
+				calendario=new Calendario();
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Calendario y citas creados con éxito"));
 
 			}
-			}
-			medicoSelected="";
-			calendario=new Calendario();
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Calendario y citas creados con éxito"));
 
 		}
-
+		
+	}
+	
+	public Boolean validacionesCrearCalendario() {
+		Boolean esValido=true;
+		Medico medicoSeleccionado = medicoService.getMedicosPorNombre(medicoSelected);
+		Date diaInicio = calendario.getDiaInicio();
+		Date diaFin = calendario.getDiaFin();
+		Date horaEntrada = calendario.getHoraEntrada();
+		Date horaSalida = calendario.getHoraSalida();
+		
+		if(medicoSeleccionado==null || diaInicio==null || diaFin==null || horaEntrada==null || horaSalida==null) {
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Debe rellenar los campos obligatorios"));
+			esValido=false;
+			
+		}
+		return esValido;
+		
 	}
 
 	public String mostrarDiaCita(LocalDate diaCita) {
@@ -387,8 +409,6 @@ public class CitasBean implements Serializable {
 		citaRepository.save(cita);
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Diagnóstico añadido con éxito"));
-		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
-				.handleNavigation(FacesContext.getCurrentInstance(), null, "/listCitas.xhtml");
 	}
 	
 	public void tratamientoChange() {

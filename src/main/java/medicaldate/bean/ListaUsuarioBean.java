@@ -1,11 +1,6 @@
 package medicaldate.bean;
 
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 //import java.util.Date;
@@ -21,14 +16,24 @@ import org.springframework.stereotype.Component;
 
 import lombok.Getter;
 import lombok.Setter;
+import medicaldate.model.Historial;
 import medicaldate.model.Medico;
 import medicaldate.model.Paciente;
 import medicaldate.model.Rol;
+import medicaldate.model.SolicitudesRegistros;
 import medicaldate.model.User;
+import medicaldate.repository.HistorialRepository;
 import medicaldate.repository.MedicoRepository;
+import medicaldate.repository.MedicosCentroPacienteRepository;
 import medicaldate.repository.PacienteRepository;
+import medicaldate.repository.SolicitudesRegistrosRepository;
 import medicaldate.repository.UserRepository;
+import medicaldate.services.HistorialService;
+import medicaldate.services.MedicoService;
+import medicaldate.services.MedicosCentroPacienteService;
+import medicaldate.services.PacienteService;
 import medicaldate.services.RolService;
+import medicaldate.services.SolicitudesRegistrosService;
 import medicaldate.services.UserService;
 import medicaldate.util.JsfUtils;
 
@@ -109,6 +114,27 @@ public class ListaUsuarioBean implements Serializable {
 	private MedicoRepository medicoRepository;
 	@Autowired
 	private PacienteRepository pacienteRepository;
+	
+	@Autowired
+	private MedicosCentroPacienteRepository medicoCentroPacienteRepository;
+	
+	@Autowired
+	private MedicosCentroPacienteService medicoCentroPacienteService;
+	
+	@Autowired
+	private HistorialRepository historialRepository;
+	
+	@Autowired
+	private SolicitudesRegistrosRepository solicitudesRegistrosRepository;
+	
+	@Autowired
+	private HistorialService historialService;
+	
+	@Autowired
+	private MedicoService medicoService;
+	
+	@Autowired
+	private SolicitudesRegistrosService solicitudesRegistrosService;
 
 	@Getter
 	@Setter
@@ -139,6 +165,9 @@ public class ListaUsuarioBean implements Serializable {
 	@Getter
 	@Setter
 	private List<String> listaRolesPorNombre;
+	
+	@Autowired
+	private PacienteService pacienteService;
 
 	@PostConstruct
 	public void init() {
@@ -167,19 +196,40 @@ public class ListaUsuarioBean implements Serializable {
 		JsfUtils.setFlashAttribute("idUsuario", idUsuario);
 	}
 
-
+	public void confirmarEliminarUser() {
+		System.out.println("hola");
+	}
 	public void eliminarUser(User usuarioSeleccionado) {
 		if (usuarioSeleccionado != null) {
+			eliminarUserCompleto(usuarioSeleccionado);
 			userRepository.delete(usuarioSeleccionado);
-
+			FacesContext.getCurrentInstance().addMessage("", new FacesMessage("Usuario borrado correctamente"));
 			FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
 					.handleNavigation(FacesContext.getCurrentInstance(), null, "/listUsers.xhtml");
 
-			FacesContext.getCurrentInstance().addMessage("", new FacesMessage("Usuario borrado correctamente"));
-
-			// PrimeFaces.current().ajax().update("formListadoUsers:usuariosTable");
+		}
+	}
+	
+	public void eliminarUserCompleto(User usuarioSeleccionado) {
+		Long idUsuario= usuarioSeleccionado.getId();
+		Historial historial= historialService.obtenerHistorialPorUsuario(idUsuario);
+		Medico medico= medicoService.obtenerMedicoPorUsuario(idUsuario);
+		Paciente paciente= pacienteService.obtenerPacientePorUsuarioLogado(idUsuario);
+		SolicitudesRegistros solRegistro= solicitudesRegistrosService.comprobarSiExisteSolicitudPorUsuario(idUsuario);
+		if(solRegistro!=null) {
+			solicitudesRegistrosRepository.delete(solRegistro);
+		}
+		if(historial!=null) {
+			historialRepository.delete(historial);
+		}
+		if(medico!=null) {
+			
 
 		}
+		if(paciente!=null) {
+			pacienteRepository.delete(paciente);
+		}		
+		
 	}
 	
 }

@@ -159,21 +159,33 @@ public class CentrosBean implements Serializable {
 
 	public void saveCentro() {
 		centro = new Centros();
+		if(validacionesCrearCentro()) {
+			centro.setNombre(nombre);
+			centro.setCodigoPostal(codigoPostal);
+			centro.setProvincia(provincia);
+			centro.setLocalidad(localidad);
+			centro.setDireccion(direccion);
+			centro.setTelefono(telefono);
 
-		centro.setNombre(nombre);
-		centro.setCodigoPostal(codigoPostal);
-		centro.setProvincia(provincia);
-		centro.setLocalidad(localidad);
-		centro.setDireccion(direccion);
-		centro.setTelefono(telefono);
+			centrosRepository.save(centro);
 
-		centrosRepository.save(centro);
+			FacesMessage msg = new FacesMessage("Centro creado con éxito");
+			FacesContext.getCurrentInstance().addMessage("formListadoCentros", msg);
 
-		FacesMessage msg = new FacesMessage("Centro creado con éxito");
-		FacesContext.getCurrentInstance().addMessage("formListadoCentros", msg);
-
-		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
-				.handleNavigation(FacesContext.getCurrentInstance(), null, "/listCentros.xhtml");
+			FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+					.handleNavigation(FacesContext.getCurrentInstance(), null, "/listCentros.xhtml");
+		}
+	}
+	
+	public Boolean validacionesCrearCentro() {
+		Boolean esValido=true;
+		if(nombre.isBlank() || nombre.isEmpty() || codigoPostal.isBlank() || codigoPostal.isEmpty() || provincia.isBlank() || provincia.isEmpty() || localidad.isBlank() || localidad.isEmpty() || direccion.isBlank() || direccion.isEmpty() || telefono.isBlank() || telefono.isEmpty()) {
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Debe rellenar los campos obligatorios"));
+			esValido=false;
+		}
+		return esValido;
+		
 	}
 
 	public void asignarMedicoCentro() {
@@ -185,8 +197,11 @@ public class CentrosBean implements Serializable {
 			medico = medicoSeleccionado;
 
 			if (medico == null) {
-				FacesMessage msg = new FacesMessage("No hay médicos para asignar");
-				FacesContext.getCurrentInstance().addMessage("formFormularioAsignarMedicoCentro", msg);
+				FacesContext.getCurrentInstance().addMessage(null, new 
+						FacesMessage(FacesMessage.SEVERITY_ERROR, "", "No hay médicos para asignar"));
+			}else if(centro==null) {
+				FacesContext.getCurrentInstance().addMessage(null, new 
+						FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Debe elegir un centro"));
 			} else {
 				medicoCentro.setIdMedico(medico);
 				medicoCentro.setIdCentro(centro);
@@ -196,9 +211,15 @@ public class CentrosBean implements Serializable {
 				medico.setEsAsignado(true);
 
 				medicoRepository.save(medico);
+				
+				centro=null;
+				medico=null;
 
 				FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(
 						FacesContext.getCurrentInstance(), null, "/listMedicosCentrosAsignados.xhtml");
+				
+				FacesContext.getCurrentInstance().addMessage(null, new 
+						FacesMessage(FacesMessage.SEVERITY_INFO, "", "Centro asignado al médico correctamente"));
 
 			}
 
@@ -240,21 +261,41 @@ public class CentrosBean implements Serializable {
 			paciente= pacienteSeleccionado;
 			medico=medicoSeleccionado;
 			centro=centroSeleccionado;
+			if(validacionAsignarCentroYMedico()) {
+				medicosCentroPaciente.setIdCentro(centroSeleccionado);
+				medicosCentroPaciente.setIdMedico(medicoSeleccionado);
+				medicosCentroPaciente.setIdPaciente(pacienteSeleccionado);
+				
+				medicosCentroPacienteRepository.save(medicosCentroPaciente);
+				
+				paciente.setTieneCentro(true);
+				paciente.setTieneMedico(true);
+				
+				pacienteRepository.save(paciente);
+				
+				medico=new Medico();
+				paciente= new Paciente();
+				listaCentrosPorNombre= new ArrayList<>();
+				
+				FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+				.handleNavigation(FacesContext.getCurrentInstance(), null, "/listaMedicosPacienteCentro.xhtml");
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Médico y centro asignado a paciente correctamente"));
+			}
 			
-			medicosCentroPaciente.setIdCentro(centroSeleccionado);
-			medicosCentroPaciente.setIdMedico(medicoSeleccionado);
-			medicosCentroPaciente.setIdPaciente(pacienteSeleccionado);
 			
-			medicosCentroPacienteRepository.save(medicosCentroPaciente);
-			
-			paciente.setTieneCentro(true);
-			paciente.setTieneMedico(true);
-			
-			pacienteRepository.save(paciente);
-			
-			FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
-			.handleNavigation(FacesContext.getCurrentInstance(), null, "/listaMedicosPacienteCentro.xhtml");
 		}
+		
+	}
+	
+	public Boolean validacionAsignarCentroYMedico() {
+		Boolean esValido=true;
+		if(paciente==null || medico==null || centro == null) {
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Debe rellenar los campos obligatorios"));
+			esValido=false;
+		}
+		return esValido;
 		
 	}
 

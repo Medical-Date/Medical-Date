@@ -20,7 +20,7 @@
 									<div class="ui-g-12 ui-md-6">
 							<div class="ui-g-4 ui-md-4">
 								<h:outputLabel  for="paciente"
-									value="Pacientes" style="font-weight:bold" />
+									value="Pacientes (*)" style="font-weight:bold" />
 								<br />
 							</div>
 							<div class="ui-g-8 ui-md-2">
@@ -36,16 +36,15 @@
 						</div>
 
 						<div class="ui-g-12 ui-md-6">
-							<div class="ui-g-4 ui-md-4">
+							<div class="ui-g-5 ui-md-5">
 								<h:outputLabel for="contacto"
-									value="Introduzca su contacto de emergencia:"
+									value="Introduzca su contacto de emergencia: (*)"
 									style="font-weight:bold" />
 								<br />
 							</div>
 							<div class="ui-g-8 ui-md-2">
 								<h:inputText id="contacto"
-									value="#{historialBean.contactoEmergencia}" required="true"
-									requiredMessage="Por favor introduzca su contacto de emergencia" />
+									value="#{historialBean.contactoEmergencia}"/>
 
 
 							</div>
@@ -54,15 +53,14 @@
 						<div class="ui-g-12 ui-md-6">
 							<div class="ui-g-4 ui-md-4">
 								<h:outputLabel for="telefono"
-									value="Introduzca el teléfono de su contacto de emergencia:"
+									value="Introduzca el teléfono de su contacto de emergencia: (*)"
 									style="font-weight:bold" />
 								<br />
 							</div>
 							<div class="ui-g-8 ui-md-2">
 								<p:inputNumber id="telefono" maxValue="999999999"
 									decimalPlaces="0"
-									value="#{historialBean.tlfContactoEmergencia}" required="true"
-									requiredMessage="Por favor introduzca el teléfono de su contacto de emergencia" />
+									value="#{historialBean.tlfContactoEmergencia}" />
 
 
 							</div>

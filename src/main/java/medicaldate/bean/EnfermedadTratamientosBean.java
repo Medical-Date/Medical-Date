@@ -78,13 +78,27 @@ public class EnfermedadTratamientosBean implements Serializable{
 		Enfermedad e= new Enfermedad();
 		e= enfermedadService.getEnfermedadByNombre(enfermedadSelected);
 		tratamientos.setEnfermedad(e);
-		tratamientosRepository.save(tratamientos);
-		FacesContext.getCurrentInstance().addMessage(null, new 
-				FacesMessage(FacesMessage.SEVERITY_INFO, "", "El tratamiento se ha creado correctamente"));
-		tratamientos= new Tratamientos();
-		enfermedadSelected="";
-		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
-		.handleNavigation(FacesContext.getCurrentInstance(), null, "/listaEnfermedades.xhtml");
+		if(validacionesCrearTratamientos()) {
+			tratamientosRepository.save(tratamientos);
+			tratamientos= new Tratamientos();
+			enfermedadSelected="";
+			FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+			.handleNavigation(FacesContext.getCurrentInstance(), null, "/listaEnfermedades.xhtml");
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_INFO, "", "El tratamiento se ha creado correctamente"));
+		}
+
+		
+	}
+	
+	public Boolean validacionesCrearTratamientos() {
+		Boolean esValido=true;
+		if(tratamientos.getEnfermedad()==null || tratamientos.getDescripcion().isBlank() || tratamientos.getDescripcion().isEmpty() || tratamientos.getNombre().isBlank() || tratamientos.getNombre().isEmpty()) {
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Debe rellenar los campos obligatorios"));
+			esValido=false;
+		}
+		return esValido;
 		
 	}
 	public void seleccionarEnfermedad(Long idEnfermedad) {
@@ -101,11 +115,25 @@ public class EnfermedadTratamientosBean implements Serializable{
 				.handleNavigation(FacesContext.getCurrentInstance(), null, "/editarTratamiento.xhtml");
 	}
 	public void editarTratamientos() {
-		tratamientosRepository.save(tratamientos);
-		FacesContext.getCurrentInstance().addMessage(null, new 
-				FacesMessage(FacesMessage.SEVERITY_INFO, "", "El tratamiento se ha editado correctamente"));
+		if(validacionesEditarTratamientos()) {
+			tratamientosRepository.save(tratamientos);
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_INFO, "", "El tratamiento se ha editado correctamente"));
+		}
+		
 
 	}
+	
+	public Boolean validacionesEditarTratamientos() {
+		Boolean esValido=true;
+		if(tratamientos.getDescripcion().isBlank() || tratamientos.getDescripcion().isEmpty() || tratamientos.getNombre().isBlank() || tratamientos.getNombre().isEmpty()) {
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Debe rellenar los campos obligatorios"));
+			esValido=false;
+		}
+		return esValido;
+	}
+		
 	public void eliminarTratamiento(Tratamientos t) {
 		tratamientosRepository.delete(t);
 		

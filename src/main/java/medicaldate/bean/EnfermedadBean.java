@@ -16,6 +16,7 @@ import javax.faces.view.ViewScoped;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import antlr.StringUtils;
 import lombok.Getter;
 import lombok.Setter;
 import medicaldate.model.Enfermedad;
@@ -88,24 +89,55 @@ public class EnfermedadBean implements Serializable {
 	public void guardarEnfermedad() {
 
 		enfermedad = new Enfermedad();
-		if (enfermedad != null) {
-			enfermedad.setCausa(causa);
-			enfermedad.setGravedad(gravedad);
-			enfermedad.setNombre(nombre);
-			enfermedad.setSintomas(sintomas);
-			enfermedadRepository.save(enfermedad);
-			FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
-					.handleNavigation(FacesContext.getCurrentInstance(), null, "/listaEnfermedades.xhtml");
+
+			if (enfermedad != null) {
+				if(validacionesEnfermedad()) {
+				enfermedad.setCausa(causa);
+				enfermedad.setGravedad(gravedad);
+				enfermedad.setNombre(nombre);
+				enfermedad.setSintomas(sintomas);
+				enfermedadRepository.save(enfermedad);
+				FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+						.handleNavigation(FacesContext.getCurrentInstance(), null, "/listaEnfermedades.xhtml");
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Enfermedad creada con éxito"));
+			}
 		}
 
+
+	}
+	
+	public Boolean validacionesEnfermedad() {
+		Boolean esValido=true;
+		if(causa.isBlank() || causa.isEmpty() || nombre.isBlank() || nombre.isEmpty() || sintomas.isBlank() || sintomas.isEmpty() || gravedad==null) {
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Debe rellenar los campos obligatorios"));
+			esValido=false;
+		}
+		return esValido;
 	}
 
 	public void editarEnfermedad() {
 		if (enfermedad != null) {
-			enfermedad = enfermedadRepository.save(enfermedad);
-			FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
-					.handleNavigation(FacesContext.getCurrentInstance(), null, "/listaEnfermedades.xhtml");
+			if(validacionesEditarEnfermedad()) {
+				enfermedad = enfermedadRepository.save(enfermedad);
+				FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+						.handleNavigation(FacesContext.getCurrentInstance(), null, "/listaEnfermedades.xhtml");
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Enfermedad editada con éxito"));
+			}
+
 		}
+	}
+	
+	public Boolean validacionesEditarEnfermedad() {
+		Boolean esValido=true;
+		if(enfermedad.getCausa().isBlank() || enfermedad.getCausa().isEmpty() || enfermedad.getNombre().isBlank() || enfermedad.getNombre().isEmpty() || enfermedad.getSintomas().isBlank() || enfermedad.getSintomas().isEmpty() || enfermedad.getGravedad()==null) {
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Debe rellenar los campos obligatorios"));
+			esValido=false;
+		}
+		return esValido;
 	}
 
 	public void onEditar(Long idEnfermedad) {

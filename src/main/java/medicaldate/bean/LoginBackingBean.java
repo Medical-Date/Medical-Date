@@ -90,7 +90,6 @@ public class LoginBackingBean {
 		} else {
 			result = "login.xhtml";
 		}
-		System.out.println("ROL ACTUAL="+ currentUser.getRol());
 
 		return result;
 	}
@@ -275,9 +274,6 @@ public class LoginBackingBean {
 			
 			FacesContext.getCurrentInstance().addMessage(null, new 
 					FacesMessage(FacesMessage.SEVERITY_INFO, "", "Su perfil se ha actualizado correctamente"));
-			
-			FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
-			.handleNavigation(FacesContext.getCurrentInstance(), null, "/miPerfil.xhtml");
 		}
 
 

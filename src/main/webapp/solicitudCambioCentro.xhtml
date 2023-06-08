@@ -10,16 +10,13 @@
 	xmlns:sec="https://joinfaces.org/security" template="/template.xhtml">
 
 	<ui:define name="content">
-		<h:form id="solicitudCambioCentroForm">
-			<p:messages id="mensaje" showDetail="true" autoUpdate="true"
-				closable="true" globalOnly="true" />
-				
+		<h:form id="solicitudCambioCentroForm">				
 				<p:panel id="panelSolCambCentro" header="Solicitud cambio de Centro"
 				class="ui-g-12 ui-md-12 ui-lg-12">
 
 			<div class="ui-g-12 ui-md-12">
 				<h:outputText
-					value=" #{solicitudesCambioCentroBean.medicoLogado.nombre} su centro actual es #{solicitudesCambioCentroBean.centroAnterior.nombre}"
+					value=" #{solicitudesCambioCentroBean.medicoLogado.user.firstName} #{solicitudesCambioCentroBean.medicoLogado.user.lastName} su centro actual es #{solicitudesCambioCentroBean.centroAnterior.nombre}"
 					style="font-weight:bold" />
 			</div>
 
@@ -44,7 +41,7 @@
 			<div class="ui-g-12 ui-md-12">
 				<div class="ui-g-2 ui-md-2">
 					<h:outputText
-						value="Indique el motivo de la solicitud de cambio de centro"
+						value="Indique el motivo de la solicitud de cambio de centro (*)"
 						rendered="#{not empty solicitudesCambioCentroBean.listaCentrosPorNombre}" />
 				</div>
 				<div class="ui-g-2 ui-md-2">

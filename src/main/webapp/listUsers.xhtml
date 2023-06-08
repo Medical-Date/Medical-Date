@@ -44,15 +44,13 @@
 					</p:column>
 
 					<p:column headerText="Acciones">
-						
-							<p:commandButton id="eliminarUsuarios" widgetVar="eliminarUsuarios"
-							 process="@this usuariosTable"
-							icon="pi pi-pencil" value="Eliminar"
-							actionListener="#{listaUsuarioBean.eliminarUser(usuarios)}"
-							update="formListadoUsers">
-							<f:param name="idEliminar" value="#{usuarios.id}" />
-						</p:commandButton>
-
+    					<p:commandButton id="eliminarUsuarios" widgetVar="eliminarUsuarios"
+      					  icon="pi pi-pencil" value="Eliminar"
+        				actionListener="#{listaUsuarioBean.eliminarUser(usuarios)}"
+       						 update="formListadoUsers">
+       						  <p:confirm header="Confirmation" message="¿Desea eliminar este usuario? Si pulsa 'Sí', se eliminará de todo el sistema."/>
+      					  <f:param name="idEliminar" value="#{usuarios.id}" />
+    					</p:commandButton>
 					</p:column>
 
 				</p:dataTable>
@@ -60,6 +58,10 @@
 			<p:commandButton id="volver" value="Home"
 				onclick="document.location.href='#{request.contextPath}/welcome.xhtml'">
 			</p:commandButton>
+				<p:confirmDialog widgetVar="confirmDialog" global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+   					 <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat" onclick="confirmDialog.hide()"/>
+   				 <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes"  />
+				</p:confirmDialog>
 
 		</h:form>
 	</ui:define>

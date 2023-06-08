@@ -112,13 +112,19 @@ public class SolicitudesCambioMedicoBean implements Serializable {
 	public String enviarSolicitud() {
 		String res="";
 		Medico medicoNuevo= new Medico();
-		medicoNuevo= medicosService.getMedicosPorNombre(medicoSelected);
-		solicitudCambioMedico.setMedico(medicoNuevo);
-		solicitudCambioMedico.setPaciente(pacienteLogado);
-		solicitudesCambioMedicoRepository.save(solicitudCambioMedico);
-		res="solicitudEspera.xhtml";
-		FacesContext.getCurrentInstance().addMessage(null, new 
-				FacesMessage(FacesMessage.SEVERITY_INFO, "", "Su solicitud se ha enviado correctamente"));
+		if(solicitudCambioMedico.getMotivo().isBlank() || solicitudCambioMedico.getMotivo().isEmpty()) {
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Debe rellenar los campos obligatorios"));
+		}else {
+			medicoNuevo= medicosService.getMedicosPorNombre(medicoSelected);
+			solicitudCambioMedico.setMedico(medicoNuevo);
+			solicitudCambioMedico.setPaciente(pacienteLogado);
+			solicitudesCambioMedicoRepository.save(solicitudCambioMedico);
+			res="solicitudEspera.xhtml";
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_INFO, "", "Su solicitud se ha enviado correctamente"));
+		}
+
 		return res;
 	}
 	

@@ -65,9 +65,9 @@
 
 				</p:submenu>
 
-				<p:submenu label="Gestión de historiales" rendered="#{LoginController.currentUser.rol.rol!= 'ADMINISTRADOR' or (LoginController.currentUser.rol.rol== 'MEDICO')}">
+				<p:submenu label="Gestión de historiales" rendered="#{LoginController.currentUser.rol.rol!= 'USUARIO' and LoginController.currentUser.rol.rol!= 'ADMINISTRADOR' and LoginController.currentUser.rol.rol!= 'PACIENTE'}">
 					<p:menuitem value="Historial Clínico"
-						outcome="listaHistoriales.xhtml" />
+						outcome="listaHistoriales.xhtml"  />
 						<p:menuitem value="Añadir historial clínico"
 						outcome="historialRegister.xhtml" rendered="#{LoginController.currentUser.rol.rol!= 'PACIENTE'}"/>
 

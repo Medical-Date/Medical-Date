@@ -27,9 +27,6 @@
 
 		<h:form id="miPerfilForm">
 
-			<p:messages id="mensaje" showDetail="true" autoUpdate="true"
-				closable="true" globalOnly="true" />
-
 			<p:panel id="panelMiPerfil" header="Mi perfil"
 				class="ui-g-12 ui-md-12 ui-lg-12">
 
@@ -237,7 +234,7 @@
 						<h:outputText value="#{cita.horaCita}" />
 					</p:column>
 					<p:column headerText="Acciones" >
-						<p:commandButton value="Cancelar cita" action="#{citasBean.cancelarCita(cita)}" update="miPerfilForm:misCitasTable"/>
+						<p:commandButton value="Cancelar cita" action="#{citasBean.cancelarCita(cita)}" update="miPerfilForm:misCitasTable" disabled="#{cita.enfermedad !=null}"/>
 						<p:commandButton  value="Consultar cita"
 							 actionListener="#{citasBean.consultarCita(cita.id)}" disabled="#{cita.enfermedad ==null}">
 							 	<f:param name="id" value="#{cita.id}" />

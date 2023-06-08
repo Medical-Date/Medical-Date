@@ -13,5 +13,8 @@ public interface HistorialRepository extends CrudRepository<Historial, Long> {
 	
 	@Query("SELECT h FROM Historial h WHERE h.paciente.id = ?1")
 	public Historial obtenerHistorialPorPaciente(@Param("id") long id);
+	
+	@Query("SELECT h FROM Historial h WHERE h.user.id = ?1")
+	public Historial obtenerHistorialPorUsuario(@Param("id") long id);
 
 }

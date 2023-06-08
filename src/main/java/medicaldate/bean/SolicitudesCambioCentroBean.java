@@ -123,13 +123,19 @@ public class SolicitudesCambioCentroBean implements Serializable {
 	public String enviarSolicitud() {
 		String res="";
 		Centros nuevoCentro = new Centros();
-		nuevoCentro= centroService.getCentrosPorNombre(centroSelected);
-		solicitudCambioCentro.setCentros(nuevoCentro);
-		solicitudCambioCentro.setMedico(medicoLogado);
-		solicitudesCambioCentroRepository.save(solicitudCambioCentro);
-		res="welcome.xhtml";
-		FacesContext.getCurrentInstance().addMessage(null, new 
-				FacesMessage(FacesMessage.SEVERITY_INFO, "", "Su solicitud se ha enviado correctamente"));
+		if(solicitudCambioCentro.getMotivo().isEmpty() || solicitudCambioCentro.getMotivo().isBlank()) {
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Debe indicar el motivo de la solicitud"));
+		}else {
+			nuevoCentro= centroService.getCentrosPorNombre(centroSelected);
+			solicitudCambioCentro.setCentros(nuevoCentro);
+			solicitudCambioCentro.setMedico(medicoLogado);
+			solicitudesCambioCentroRepository.save(solicitudCambioCentro);
+			res="welcome.xhtml";
+			FacesContext.getCurrentInstance().addMessage(null, new 
+					FacesMessage(FacesMessage.SEVERITY_INFO, "", "Su solicitud se ha enviado correctamente"));
+		}
+
 		return res;
 	}
 

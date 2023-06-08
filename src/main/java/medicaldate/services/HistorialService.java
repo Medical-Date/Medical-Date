@@ -30,5 +30,8 @@ public class HistorialService {
 	public Historial obtenerHistorialPorPaciente(long id) {
 		return historialRepository.obtenerHistorialPorPaciente(id);
 	}
+	public Historial obtenerHistorialPorUsuario(long id) {
+		return historialRepository.obtenerHistorialPorUsuario(id);
+	}
 
 }

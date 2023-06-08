@@ -10,11 +10,8 @@
 	xmlns:sec="https://joinfaces.org/security" template="/template.xhtml">
 
 	<ui:define name="content">
-		<h:form id="solicitudCambioMedicoForm">
-			<p:messages id="mensaje" showDetail="true" autoUpdate="true"
-				closable="true" globalOnly="true" />
-				
-				<p:panel id="panelSolCambMedico" header="Solicitud cambio de Médico"
+		<h:form id="solicitudCambioMedicoForm">				
+				<p:panel id="panelSolCambMedico" header="Solicitud cambio de médico"
 				class="ui-g-12 ui-md-12 ui-lg-12">
 
 			<div class="ui-g-12 ui-md-12">
@@ -25,7 +22,7 @@
 
 			<div class="ui-g-12 ui-md-12">
 				<h:outputText
-					value=" #{solicitudesCambioMedicoBean.pacienteLogado.nombre} su médico actual es #{solicitudesCambioMedicoBean.medicoAnterior.nombre}"
+					value=" #{solicitudesCambioMedicoBean.pacienteLogado.user.firstName} #{solicitudesCambioMedicoBean.pacienteLogado.user.lastName} su médico actual es #{solicitudesCambioMedicoBean.medicoAnterior.nombre}"
 					style="font-weight:bold" />
 			</div>
 
@@ -55,7 +52,7 @@
 			<div class="ui-g-12 ui-md-12">
 				<div class="ui-g-2 ui-md-2">
 					<h:outputText
-						value="Indique el motivo de la solicitud de cambio de médico"
+						value="Indique el motivo de la solicitud de cambio de médico (*)"
 						rendered="#{not empty  solicitudesCambioMedicoBean.listaNombreMedicos}" />
 				</div>
 				<div class="ui-g-2 ui-md-2">

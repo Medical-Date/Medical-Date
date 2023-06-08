@@ -19,7 +19,7 @@
 					<div class="ui-g-12 ui-md-12 ui-lg-12">
 					
 					<div class="ui-g-4 ui-md-1">
-							<h:outputLabel for="paciente" value="Pacientes"
+							<h:outputLabel for="paciente" value="Pacientes (*)"
 								style="font-weight:bold" />
 							<br />
 						</div>
@@ -37,7 +37,7 @@
 						</div>
 						
 						<div class="ui-g-4 ui-md-1">
-							<h:outputLabel for="centro" value="Centro"
+							<h:outputLabel for="centro" value="Centro  (*)"
 								style="font-weight:bold" />
 							<br />
 						</div>
@@ -55,7 +55,7 @@
 
 
 						<div class="ui-g-4 ui-md-1">
-							<h:outputLabel for="medicos" value="Medicos"
+							<h:outputLabel for="medicos" value="Medicos  (*)"
 								style="font-weight:bold" />
 							<br />
 						</div>
@@ -78,7 +78,7 @@
 							<div class="ui-g-12 ui-md-10" />
 							<div class="ui-g-12 ui-md-2 botonera-wrapper">
 
-								<p:commandButton value="Registrar" action="#{centrosBean.asignarCentroYMedico}" />
+								<p:commandButton value="Registrar" action="#{centrosBean.asignarCentroYMedico}" update="formFormularioAsignarMedico"/>
 							</div>
 							<div class="ui-g-12 ui-md-10" />
 

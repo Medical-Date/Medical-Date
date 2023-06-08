@@ -21,26 +21,26 @@
 	   		
 						<div class="ui-g-3 ui-md-3">
 						
-							<p:outputLabel for="nombre" value="Nombre" />
+							<p:outputLabel for="nombre" value="Nombre (*)" />
 							<p:inputText id="nombre"
 								value="#{enfermedadBean.enfermedad.nombre}" />
 						</div>
 
 						<div class="ui-g-3 ui-md-3">
-							<p:outputLabel for="causa" value="Causa" />
-							<p:inputText id="causa"
+							<p:outputLabel for="causa" value="Causa (*)" />
+							<p:inputTextarea rows="10" cols="50" id="causa"
 								value="#{enfermedadBean.enfermedad.causa}" />
 						</div>
 
 						<div class="ui-g-3 ui-md-3">
-							<p:outputLabel for="sintomas" value="Síntomas" />
-							<p:inputText id="sintomas"
+							<p:outputLabel for="sintomas" value="Síntomas (*)" />
+							<p:inputTextarea rows="10" cols="50" id="sintomas"
 								value="#{enfermedadBean.enfermedad.sintomas}" />
 						</div>
 			
 
 						<div class="ui-g-3 ui-md-3">
-							<p:outputLabel for="gravedad" value="Gravedad" />
+							<p:outputLabel for="gravedad" value="Gravedad (*)" />
 							<h:selectOneMenu id="gravedad" value="#{enfermedadBean.enfermedad.gravedad}">
 								<f:selectItem itemLabel="Leve" itemValue="LEVE" />
 								<f:selectItem itemLabel="Moderada" itemValue="MODERADA" />
